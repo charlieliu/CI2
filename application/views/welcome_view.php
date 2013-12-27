@@ -3,11 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="title" content="Welcome to CodeIgniter" />
-	<meta name="description" content="Welcome to CodeIgniter" />
+	<meta name="title" content="{title}" />
+	<meta name="description" content="{title}" />
 
-	<title>Welcome to CodeIgniter</title>
-	<link rel="shortcut icon" href="images/joba.jpg">
+	<title>{title}</title>
+	<link rel="shortcut icon" href="./images/joba.jpg" type="image/x-icon" />
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -71,11 +71,14 @@
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter</h1>
+	<h1>{title}</h1>
 
 	<div id="body">
-		test index
+		<div>{title}</div>
+		<img src="./images/joba.jpg" />
 	</div>
+
+	<p>{content}</p>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>

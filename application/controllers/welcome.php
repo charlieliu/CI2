@@ -2,26 +2,31 @@
 
 class Welcome extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->library('session');
+	}
+
 	/**
 	 * Index Page for this controller.
 	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
+	 * @author Charlie Liu <liuchangli0107@gmail.com>
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		// load parser
+		$this->load->library('parser');
+
+		$session_id = $this->session->userdata('session_id');
+
+		$data = array(
+			'title' => 'Welcome to CodeIgniter',
+			'current_page' => strtolower(__CLASS__),
+			'content' => $session_id
+		);
+
+		// Template parser class
+		$this->parser->parse('welcome_view', $data);
 	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
