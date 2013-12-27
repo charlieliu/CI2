@@ -7,7 +7,7 @@
 	<meta name="description" content="{title}" />
 
 	<title>{title}</title>
-	<link rel="shortcut icon" href="./images/joba.jpg" type="image/x-icon" />
+	<link rel="shortcut icon" href="images/joba.jpg" type="image/x-icon" />
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -75,10 +75,10 @@
 
 	<div id="body">
 		<div>{title}</div>
-		<img src="./images/joba.jpg" />
+		<p>{content}</p>
 	</div>
 
-	<p>{content}</p>
+	
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>

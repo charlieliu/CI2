@@ -6,6 +6,7 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('session');
+		$this->load->helper('url');
 	}
 
 	/**
@@ -17,13 +18,29 @@ class Welcome extends CI_Controller {
 	{
 		// load parser
 		$this->load->library('parser');
+		/*
+		$content = '';
 
-		$session_id = $this->session->userdata('session_id');
+		$session_ary = $this->session->userdata() ;
+		if( isset($session_ary) )
+		{
+			foreach ($session_ary as $key => $value)
+			{
+				$content .= $key.'=>'.$value.'<br />' ;
+			}
+		}
+		*/
+		$content = '' ;
+		$content .= 'session_id : '.$this->session->userdata('session_id').'<br />' ;
+		$content .= 'ip_address : '.$this->session->userdata('ip_address').'<br />' ;
+		$content .= 'user_agent : '.$this->session->userdata('user_agent').'<br />' ;
+		$content .= 'last_activity : '.$this->session->userdata('last_activity').'<br />' ;
+		$content .= 'user_data : '.$this->session->userdata('user_data').'<br />' ;
 
 		$data = array(
 			'title' => 'Welcome to CodeIgniter',
 			'current_page' => strtolower(__CLASS__),
-			'content' => $session_id
+			'content' => $content 
 		);
 
 		// Template parser class
