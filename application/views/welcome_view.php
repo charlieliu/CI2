@@ -75,6 +75,7 @@
 
 	<div id="body">
 		<div>{title}</div>
+		<p>{current_page}/{current_fun}</p>
 		<p>{content}</p>
 	</div>
 
