@@ -74,10 +74,15 @@ class Welcome extends CI_Controller {
 			'last_activity' => $last_activity,
 			'user_data' => $user_data,
 		);
+
+		// 
+		$date_test = $this->_date_test() ;
+
 		// 顯示資料
 		$content = '' ;
 		$content .= 'ci_sessions : '.print_r($ci_sessions,true).'<br /><br />' ;
 		$content .= 'SESSION_LOGS : '.print_r($SESSION_LOGS,true).'<br /><br />' ;
+		$content .= 'Date : '.print_r($date_test,true).'<br /><br />' ;
 
 		// 標題 內容顯示
 		$data = array(
@@ -156,5 +161,32 @@ class Welcome extends CI_Controller {
 		{
 			$this->db->delete('SESSION_LOGS');
 		}
+	}
+
+	private function _date_test()
+	{
+		$this->load->helper('date') ;
+		$date_ary = array() ;
+
+		$time = time() ;
+
+		// eturns the current time as a Unix timestamp
+		$date_ary['now'] = now() ;
+
+		// If a timestamp is not included in the second parameter the current time will be used.
+		$datestring = "Year: %Y Month: %m Day: %d - %h:%i %a" ;
+		$date_ary['mdate'] = mdate($datestring, $time);
+
+		// Lets you generate a date string in one of several standardized formats
+		$format = 'DATE_RFC822';
+		$date_ary['standard_date'] = standard_date($format, $time) ;
+
+		// Takes a Unix timestamp as input and returns it as GMT
+		$date_ary['local_to_gmt'] = local_to_gmt($time) ;
+
+		// Takes a timezone reference (for a list of valid timezones，see the "Timezone Reference" below) and returns the number of hours offset from UTC.
+		$date_ary['timezones'] = timezones('UM8') ;
+
+		return $date_ary ;
 	}
 }
