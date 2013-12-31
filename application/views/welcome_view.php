@@ -67,6 +67,7 @@
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
+	<link rel="stylesheet" type="text/css" href="css/welcome.css">
 </head>
 <body>
 
@@ -79,7 +80,7 @@
 
 		<!-- Variable Pairs -->
 		{content}
-		<div>
+		<div class="content_block">
 			<b>{content_title} : </b>
 			<div>{content_value}</div>
 		</div>
