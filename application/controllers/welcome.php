@@ -198,6 +198,8 @@ class Welcome extends CI_Controller {
 		$this->load->helper('date') ;
 		$date_ary = array() ;
 
+		$date_ary['date'] = date('Y-m-d H i s') ;
+
 		$time = time() ;
 		$date_ary['time'] = $time ;
 
