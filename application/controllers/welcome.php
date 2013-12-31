@@ -178,8 +178,22 @@ class Welcome extends CI_Controller {
 		$date_ary['mdate'] = mdate($datestring, $time);
 
 		// Lets you generate a date string in one of several standardized formats
-		$format = 'DATE_RFC822';
-		$date_ary['standard_date'] = standard_date($format, $time) ;
+		$date_ary['standard_date'] = array() ;
+		$format = array() ;
+		$format[] = 'DATE_ATOM';
+		$format[] = 'DATE_COOKIE';
+		$format[] = 'DATE_ISO8601';
+		$format[] = 'DATE_RFC822';
+		$format[] = 'DATE_RFC850';
+		$format[] = 'DATE_RFC1036';
+		$format[] = 'DATE_RFC1123';
+		$format[] = 'DATE_RFC2822';
+		$format[] = 'DATE_RSS';
+		$format[] = 'DATE_W3C';
+		foreach ($format as $value) {
+			$date_ary['standard_date'][$value] = standard_date($value, $time) ;
+		}
+		
 
 		// Takes a Unix timestamp as input and returns it as GMT
 		$date_ary['local_to_gmt'] = local_to_gmt($time) ;
