@@ -119,7 +119,10 @@ class Welcome extends CI_Controller {
 		
 
 		// Template parser class
-		$this->parser->parse('welcome_view', $data);
+		$content_div = $this->parser->parse('welcome_view', $data, true);
+
+		$html_date = array( 'content_div' => $content_div ) ;
+		$this->parser->parse('index_view', $html_date ) ;
 		
 	}
 
