@@ -122,7 +122,8 @@ class Welcome extends CI_Controller {
 		// 中間挖掉的部分
 		$content_div = $this->parser->parse('welcome_view', $data, true);
 		// 中間部分塞入外框
-		$html_date = array( 'content_div' => $content_div ) ;
+		$html_date = $data ;
+		$html_date['content_div'] = $content_div ;
 		$this->parser->parse('index_view', $html_date ) ;
 		
 	}
