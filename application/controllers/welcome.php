@@ -19,12 +19,37 @@ class Welcome extends CI_Controller {
 		// load parser
 		$this->load->library('parser');
 
+		// 時間顯示測試
+		$date_test = $this->_date_test() ;
+
+		/*
+		// 增加自訂Session資料
+		$newdata = array(
+			'username'  => 'johndoe',
+			'email'     => 'johndoe@some-site.com',
+			'logged_in' => TRUE
+		);
+		$this->session->set_userdata($newdata);
+		*/
+
 		// 取得預設SESSION資料
 		$session_id = $this->session->userdata('session_id') ; // CI session ID
 		$ip_address = $this->session->userdata('ip_address') ; // 使用者IP位置
 		$user_agent = $this->session->userdata('user_agent') ; // 使用者瀏覽器類型
 		$last_activity = $this->session->userdata('last_activity') ; // 最後變動時間
-		$user_data = $this->session->userdata('user_data') ; // 自訂資料
+		$user_data = $this->session->userdata('user_data') ;// 自訂資料
+		//$user_data = $this->_str_replace(print_r($user_data,true)) ;
+		//$user_data = $this->session->all_userdata() ;
+
+		// ci_sessions
+		$ci_sessions = array(
+			'session_id' => $session_id,
+			'ip_address' => $ip_address,
+			'user_agent' => $user_agent,
+			'last_activity' => $last_activity,
+			'user_data' => $user_data,
+		);
+
 
 		// DB測試
 		
@@ -66,23 +91,22 @@ class Welcome extends CI_Controller {
 		$SESSION_LOGS['SESSION_LOGS'] = print_r($SESSION_LOGS, true); // 最新資料筆數
 
 
-		// ci_sessions
-		$ci_sessions = array(
-			'session_id' => $session_id,
-			'ip_address' => $ip_address,
-			'user_agent' => $user_agent,
-			'last_activity' => $last_activity,
-			'user_data' => $user_data,
-		);
-
-		// 
-		$date_test = $this->_date_test() ;
+		
 
 		// 顯示資料
-		$content = '' ;
-		$content .= 'ci_sessions : '.print_r($ci_sessions,true).'<br /><br />' ;
-		$content .= 'SESSION_LOGS : '.print_r($SESSION_LOGS,true).'<br /><br />' ;
-		$content .= 'Date : '.print_r($date_test,true).'<br /><br />' ;
+		$content = array();
+		$content[] = array(
+			'content_title' => 'ci_sessions',
+			'content_value' => $this->_str_replace(print_r($ci_sessions,true))
+		) ;
+		$content[] = array(
+			'content_title' => 'SESSION_LOGS',
+			'content_value' => $this->_str_replace(print_r($SESSION_LOGS,true))
+		) ;
+		$content[] = array(
+			'content_title' => 'Date',
+			'content_value' => $this->_str_replace(print_r($date_test,true))
+		) ;
 
 		// 標題 內容顯示
 		$data = array(
@@ -91,6 +115,8 @@ class Welcome extends CI_Controller {
 			'current_fun' => strtolower(__FUNCTION__), // 當下function
 			'content' => $content 
 		);
+
+		
 
 		// Template parser class
 		$this->parser->parse('welcome_view', $data);
@@ -169,6 +195,7 @@ class Welcome extends CI_Controller {
 		$date_ary = array() ;
 
 		$time = time() ;
+		$date_ary['time'] = $time ;
 
 		// eturns the current time as a Unix timestamp
 		$date_ary['now'] = now() ;
@@ -202,5 +229,11 @@ class Welcome extends CI_Controller {
 		$date_ary['timezones'] = timezones('UM8') ;
 
 		return $date_ary ;
+	}
+
+	private function _str_replace($str){
+		$order = array("\r\n", "\n", "\r", "￼", "<br/>", "<br>");
+		$str = str_replace($order,"<br />",$str);
+		return $str;
 	}
 }

@@ -76,7 +76,14 @@
 	<div id="body">
 		<div>{title}</div>
 		<p>{current_page}/{current_fun}</p>
-		<p>{content}</p>
+
+		<!-- Variable Pairs -->
+		{content}
+		<div>
+			<b>{content_title} : </b>
+			<div>{content_value}</div>
+		</div>
+		{/content}
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>

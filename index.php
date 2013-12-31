@@ -192,6 +192,14 @@ if (defined('ENVIRONMENT'))
 	}
 
 /*
+ *時區設定
+ */
+if( ! ini_get('date.timezone') )
+{
+   date_default_timezone_set("Asia/Taipei");
+}
+
+/*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
