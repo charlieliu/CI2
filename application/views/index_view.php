@@ -32,7 +32,7 @@
 		'type'	=> "image/x-icon",
 		'rel'	=> "shortcut icon",
 		'href'	=> "images/joba.jpg",
-		'ver'	=> ''
+		'ver'	=> date('YmdHis')
 	);
 	echo load_html_file($link);
 	// CSS位置
@@ -40,7 +40,7 @@
 		'type'	=> "text/css",
 		'rel'	=> "stylesheet",
 		'href'	=> "css/welcome.css",
-		'ver'	=> date('YmdHis')
+		'ver'	=> ''
 	);
 	echo load_html_file($link); 
 	?>

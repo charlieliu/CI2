@@ -20,12 +20,7 @@ if(!function_exists('load_html_file'))
 					$html .= '"></script>';
 					break;
 				case'css':
-					$html = '<link href="'.$link['href'];
-					if( isset($link['ver']) && !empty($link['ver']) )
-					{
-						$html .= '?'.$link['ver'];
-					}
-					$html .= '"';
+					$html = '<link';
 					if( isset($link['rel']) && !empty($link['rel']) )
 					{
 						$html .= ' rel="'.$link['rel'].'"';
@@ -42,18 +37,18 @@ if(!function_exists('load_html_file'))
 					{
 						$html .= ' type="text/css" ';
 					}
-					$html .= ' />';
+					$html .= ' href="'.$link['href'];
+					if( isset($link['ver']) && !empty($link['ver']) )
+					{
+						$html .= '?'.$link['ver'];
+					}
+					$html .= '" />';
 					break;
 				default:
 					if( isset($link['type']) && $link['type']=='image/x-icon' )
 					{
-						$html = '<link href="'.$link['href'].'" rel="shortcut icon" type="image/x-icon" />';
+						$html = '<link rel="shortcut icon" type="image/x-icon" href="'.$link['href'].'" />';
 					}
-					else
-					{
-						$html = print_r($link,true);
-					}
-					
 					break;
 			}
 		}
