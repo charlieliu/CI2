@@ -9,8 +9,9 @@
 	<title>{title}</title>
 	<?php 
 	/*
-	// 小圖
+	// 載入CI原生helper
 	$this->load->helper('html');
+	// 小圖
 	$link = array(
 		'href'	=> "images/joba.jpg",
 		'type'	=> "image/x-icon",
@@ -25,9 +26,9 @@
 	);
 	echo link_tag($link); 
 	*/
-	// 小圖
+	// 載入helper/test_helper.php
 	$this->load->helper('test');
-
+	// 小圖
 	$link = array(
 		'type'	=> "image/x-icon",
 		'rel'	=> "shortcut icon",
