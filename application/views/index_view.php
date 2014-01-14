@@ -8,6 +8,7 @@
 
 	<title>{title}</title>
 	<?php 
+	/*
 	// 小圖
 	$this->load->helper('html');
 	$link = array(
@@ -23,6 +24,25 @@
 		'rel'	=> "stylesheet"
 	);
 	echo link_tag($link); 
+	*/
+	// 小圖
+	$this->load->helper('test');
+
+	$link = array(
+		'type'	=> "image/x-icon",
+		'rel'	=> "shortcut icon",
+		'href'	=> "images/joba.jpg",
+		'ver'	=> ''
+	);
+	echo load_html_file($link);
+	// CSS位置
+	$link = array(
+		'type'	=> "text/css",
+		'rel'	=> "stylesheet",
+		'href'	=> "css/welcome.css",
+		'ver'	=> date('YmdHis')
+	);
+	echo load_html_file($link); 
 	?>
 	<!--
 	<link rel="shortcut icon" href="images/joba.jpg" type="image/x-icon" />
