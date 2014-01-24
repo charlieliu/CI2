@@ -24,6 +24,7 @@
 	</div>
 
 	<style type="text/css">
+		/* 小圈圈 */
 		.loading {
 		    border: 3px solid #3a3;
 		    border-right: 3px solid #fff;
@@ -35,6 +36,38 @@
 		    -moz-animation: loading 1s infinite linear;
 		    -o-animation: loading 1s infinite linear;
 		    animation: loading 1s infinite linear;
+		}
+		/* 大圈圈 加 字 */
+		.abgne-loading-20140104-2 {
+		    position: relative;
+		    height: 100px;
+		    width: 100px;
+		}
+		.abgne-loading-20140104-2 .loading {
+		    border: 6px solid #168;
+		    border-right: 6px solid #fff;
+		    border-bottom: 6px solid #fff;
+		    height: 100%;
+		    width: 100%;
+		    border-radius: 50%;
+		    -webkit-animation: loading 1s infinite linear;
+		    -moz-animation: loading 1s infinite linear;
+		    -ms-animation: loading 1s infinite linear;
+		    -o-animation: loading 1s infinite linear;
+		    animation: loading 1s infinite linear;
+		}
+		.abgne-loading-20140104-2 .word {
+		    color: #168;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    display: inline-block;
+		    text-align: center;
+		    font-size: 72px;
+		    line-height: 72px;
+		    font-family: 微軟正黑體, arial;
+		    margin: 18px 0 0 20px;
+		    padding: 0;
 		}
 		/*
 		浏览器支持
@@ -90,37 +123,6 @@
 		    {
 		        transform: rotate(360deg);
 		    }
-		}
-		.abgne-loading-20140104-2 {
-		    position: relative;
-		    height: 100px;
-		    width: 100px;
-		}
-		.abgne-loading-20140104-2 .loading {
-		    border: 6px solid #168;
-		    border-right: 6px solid #fff;
-		    border-bottom: 6px solid #fff;
-		    height: 100%;
-		    width: 100%;
-		    border-radius: 50%;
-		    -webkit-animation: loading 1s infinite linear;
-		    -moz-animation: loading 1s infinite linear;
-		    -ms-animation: loading 1s infinite linear;
-		    -o-animation: loading 1s infinite linear;
-		    animation: loading 1s infinite linear;
-		}
-		.abgne-loading-20140104-2 .word {
-		    color: #168;
-		    position: absolute;
-		    top: 0;
-		    left: 0;
-		    display: inline-block;
-		    text-align: center;
-		    font-size: 72px;
-		    line-height: 72px;
-		    font-family: 微軟正黑體, arial;
-		    margin: 18px 0 0 20px;
-		    padding: 0;
 		}
 	</style>
 </div>
