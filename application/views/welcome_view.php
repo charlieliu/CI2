@@ -32,6 +32,12 @@
 		    height: 50px;
 		    width: 50px;
 		    border-radius: 50%;
+		    /*
+			animation-name: 動畫腳本名稱;
+			animation-duration: 動畫播放時間(速度);
+			animation-iteration-count: 動畫播放次數;
+			animation-timing-function: 播放速度的效果
+		    */
 		    -webkit-animation: loading 1s infinite linear;
 		    -moz-animation: loading 1s infinite linear;
 		    -o-animation: loading 1s infinite linear;
