@@ -31,7 +31,7 @@ class Date_test extends CI_Controller {
 
 		// 標題 內容顯示
 		$data = array(
-			'title' => '時間顯示 測試',
+			'title' => '時間格式顯示',
 			'current_page' => strtolower(__CLASS__), // 當下類別
 			'current_fun' => strtolower(__FUNCTION__), // 當下function
 			'content' => $content 

@@ -52,16 +52,21 @@
 	-->
 </head>
 <body>
-<div id="container">
-	<a href="index.php">
-		<div class="abgne-loading-20140206-2">
-			<div class="loading"></div>
-			<div class="word">首頁</div>
-		</div>
-	</a>
-	{content_div}
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
-</div>
-
+	<div id="container">
+		<?PHP if( $current_page=='welcome' || $current_page=='index'): ?>
+		<div class="abgne-loading-20140206-2"></div>
+		<?PHP else: ?>
+		<a href="welcome">
+			<div class="abgne-loading-20140206-2">
+				<div class="loading"></div>
+				<div class="word">首頁</div>
+			</div>
+		</a>
+		<?PHP endif; ?>
+		<h1>{title}</h1>
+		{content_div}
+		<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
+	</div>
+	
 </body>
 </html>

@@ -35,7 +35,7 @@ class Welcome extends CI_Controller {
 		) ;
 		$content[] = array(
 			'content_value' => 'date_test',
-			'content_title' => '時間顯示測試',
+			'content_title' => '時間格式顯示',
 			'content_url' => 'date_test'
 		) ;
 		$content[] = array(
