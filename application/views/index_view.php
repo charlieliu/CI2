@@ -7,7 +7,8 @@
 	<meta name="description" content="{title}" />
 
 	<title>{title}</title>
-	<?php 
+	<?php
+
 	/*
 	// 載入CI原生helper
 	$this->load->helper('html');
@@ -51,8 +52,13 @@
 	-->
 </head>
 <body>
-
 <div id="container">
+	<a href="index.php">
+		<div class="abgne-loading-20140206-2">
+			<div class="loading"></div>
+			<div class="word">首頁</div>
+		</div>
+	</a>
 	{content_div}
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>

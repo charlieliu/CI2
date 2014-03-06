@@ -5,9 +5,11 @@
 	<p>{current_page}/{current_fun}</p>
 
 	<!-- Variable Pairs -->
+	<div><b>Part 1</b></div>
 	{content}
 	<div class="content_block">
-		<a href="{content_url}"><b>{content_title}</b></a>
+		<b>{content_title}</b>
+		<div>{content_value}</div>
 	</div>
 	{/content}
 	<!-- Variable Pairs -->

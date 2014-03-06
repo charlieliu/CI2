@@ -7,7 +7,8 @@
 	<!-- Variable Pairs -->
 	{content}
 	<div class="content_block">
-		<a href="{content_url}"><b>{content_title}</b></a>
+		<b>{content_title} : </b>
+		<div>{content_value}</div>
 	</div>
 	{/content}
 	<!-- Variable Pairs -->
