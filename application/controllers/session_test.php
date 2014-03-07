@@ -38,8 +38,8 @@ class Session_test extends CI_Controller {
 		$user_data = $this->session->userdata('user_data') ;// 自訂資料
 		//$user_data = $this->_str_replace(print_r($user_data,true)) ;
 		//$user_data = $this->session->all_userdata() ;
-		$UserAgent = $this->get_UserAgent() ;
-		$UserAgent_str = $UserAgent!=false ? $UserAgent['A'].' '.$UserAgent['N'] : 'false' ;
+		$UserAgent = $this->_get_UserAgent() ;
+		$UserAgent_str = $UserAgent['A'].' : '.$UserAgent['AN'] ;
 
 		// ci_sessions
 		$ci_sessions = array(
@@ -110,110 +110,140 @@ class Session_test extends CI_Controller {
 		
 	}
 
-	private function get_UserAgent(){
+	private function _get_UserAgent(){
+		// IE請參考
+		// http://msdn.microsoft.com/en-us/library/ie/hh869301(v=vs.85).aspx
+
+		$str = $_SERVER["HTTP_USER_AGENT"] ;
 		$output = array(
-			"O" => $_SERVER["HTTP_USER_AGENT"],
-			"A" => $_SERVER["HTTP_USER_AGENT"],	// 瀏覽器 種類
-			"N" => '',							// 瀏覽器 版本
-			"M"	=> '',							// 作業系統
-			"MO"	=> '',						// 作業系統
-			"S"	=> ' ',							// 作業系統
+			"O" => $str,// 原始 HTTP_USER_AGENT
+			"A" => '',	// 瀏覽器 種類 IE/Firefox/Chrome/Safari/Opera
+			"AN" => '',	// 瀏覽器 版本
+			"M"	=> '',	// 作業系統 Mobile/Desktop
+			"S"	=> '',	// 作業系統
 		);
 		// 作業系統
-		if( strpos($_SERVER["HTTP_USER_AGENT"],'Android') ){
+		if( strpos($str,'Android') ){
 			$output['M'] = 'Mobile';
-			$output['MO'] = 'Mobile';
 			$output['S'] = 'Android';
-		}else if( strpos($_SERVER["HTTP_USER_AGENT"],'BlackBerry') ){
-			$output['M'] = 'Mobile';
-			$output['MO'] = 'Mobile';
-			$output['S'] = 'BlackBerry';
-		}else if( strpos($_SERVER["HTTP_USER_AGENT"],'iPhone') || strpos($_SERVER["HTTP_USER_AGENT"],'ipod') || strpos($_SERVER["HTTP_USER_AGENT"],'ipad') ){
-			$output['M'] = 'Mobile';
-			$output['MO'] = 'Mobile';
-			$output['S'] = 'iPhone';
-		}else if( strpos($_SERVER["HTTP_USER_AGENT"],'Palm') ){
-			$output['M'] = 'Mobile';
-			$output['MO'] = 'Mobile';
-			$output['S'] = 'Palm';
-		}else if( strpos($_SERVER["HTTP_USER_AGENT"],'Linux') ){
-			$output['M'] = 'Desktop';
-			$output['MO'] = 'Desktop';
-			$output['S'] = 'Linux';
-		}else if( strpos($_SERVER["HTTP_USER_AGENT"],'Macintosh') ){
-			$output['M'] = 'Desktop';
-			$output['MO'] = 'Desktop';
-			$output['S'] = 'Macintosh';
-		}else if( strpos($_SERVER["HTTP_USER_AGENT"],'Windows') ){
-			$output['M'] = 'Desktop';
-			$output['MO'] = 'Desktop';
-			$output['S'] = 'Windows';
 		}
+		else if( strpos($str,'BlackBerry')!==false )
+		{
+			$output['M'] = 'Mobile';
+			$output['S'] = 'BlackBerry';
+		}
+		else if( strpos($str,'iPhone')!==false )
+		{
+			$output['M'] = 'Mobile';
+			$output['S'] = 'iPhone';
+		}
+		else if( strpos($str,'ipod')!==false )
+		{
+			$output['M'] = 'Mobile';
+			$output['S'] = 'ipod';
+		}
+		else if( strpos($str,'ipad')!==false )
+		{
+			$output['M'] = 'Mobile';
+			$output['S'] = 'ipad';
+		}
+		else if( strpos($str,'Palm')!==false )
+		{
+			$output['M'] = 'Mobile';
+			$output['S'] = 'Palm';
+		}
+		else if( strpos($str,'Linux')!==false )
+		{
+			$output['M'] = 'Desktop';
+			$output['S'] = 'Linux';
+		}
+		else if( strpos($str,'Macintosh')!==false )
+		{
+			$output['M'] = 'Desktop';
+			$output['S'] = 'Macintosh';
+		}
+		else if( strpos($str,'Windows')!==false )
+		{
+			$output['M'] = 'Desktop';
+			$output['S'] = 'Windows';
+
+		}
+
 		// 瀏覽器
-		if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 9.0") !== false){
+		if( strpos($str,"MSIE")!== false )
+		{
 			$output['A'] = "Internet Explorer";
-			$output['N'] = "9";
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") !== false){
-			$output['A'] = "Internet Explorer";
-			$output['N'] = "8";
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 7.0") !== false){
-			$output['A'] = "Internet Explorer";
-			$output['N'] = "7";
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 6.0") !== false){
-			$output['A'] = "Internet Explorer";
-			$output['N'] = "6";
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE") !== false){
-			$output['A'] = "Internet Explorer";
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"Firefox") !== false){
+		}
+		else if( strpos($str,"Firefox")!== false )
+		{
 			$output['A'] = "Firefox";
-			$str = $_SERVER["HTTP_USER_AGENT"] ;
-			$sit_0 = stripos($str,'Firefox/') + 8;
-			$str = substr($str,$sit_0) ;
-			$sit_1 = stripos($str,' ');
-			if($sit_1!==false)
-			{
-				$output['N'] = substr($str,0,$sit_1) ;
-			}
-			else
-			{
-				$output['N'] = $str ;
-			}
-			//$output['N'] = $sit_0.'/'.$sit_1.'/'.$sit_2 ;;
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"Chrome") !== false){
-			$output['A'] = "Chrome";
-			$str = $_SERVER["HTTP_USER_AGENT"] ;
-			$sit_0 = stripos($str,'Chrome/') + 7;
-			$str = substr($str,$sit_0) ;
-			$sit_1 = stripos($str,' ');
-			if($sit_1!==false)
-			{
-				$output['N'] = substr($str,0,$sit_1) ;
-			}
-			else
-			{
-				$output['N'] = $str ;
-			}
-			//$output['N'] = $sit_0.'/'.$sit_1.'/'.$sit_2 ;
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"Safari") !== false){
-			$output['A'] = "Safari";
-			$str = $_SERVER["HTTP_USER_AGENT"] ;
-			$sit_0 = stripos($str,'Version/') + 8;
-			$str = substr($str,$sit_0) ;
-			$sit_1 = stripos($str,' ');
-			if($sit_1!==false)
-			{
-				$output['N'] = substr($str,0,$sit_1) ;
-			}
-			else
-			{
-				$output['N'] = $str ;
-			}
-			//$output['N'] = $sit_0.'/'.$sit_1.'/'.$sit_2 ;
-		}else if(strpos($_SERVER["HTTP_USER_AGENT"],"Opera") !== false){
+		}
+		else if
+		( 
+			strpos($str,"Opera")!== false ||
+			strpos($str,"OPR")!== false
+		)
+		{
 			$output['A'] = "Opera";
-		}else if (strpos($_SERVER['HTTP_USER_AGENT'],"rv:11.0") !== false) {
+		}
+		else if( strpos($str,"Chrome")!== false )
+		{
+			$output['A'] = "Chrome";
+		}
+		else if( strpos($str,"Safari")!== false )
+		{
+			$output['A'] = "Safari";
+		}
+		else if
+		(
+			strpos($str,"rv:")!== false &&
+			strpos($str,"Trident/")!== false
+		)
+		{
 			$output['A'] = "Internet Explorer";
-			$output['N'] = "11";
+			$sit_0 = stripos($str,'rv:') + 3;
+			$str = substr($str,$sit_0) ;
+			$sit_1 = stripos($str,')') ;
+			$output['AN'] = substr($str,0,$sit_1) ;
+		}
+
+		// 版本判斷
+		if( $output['AN']=='' )
+		{
+			switch($output['A']){
+				case 'Firefox':
+					$sit_0 = stripos($str,'Firefox/') + 8;
+					break;
+				case 'Chrome':
+					$sit_0 = stripos($str,'Chrome/') + 7; ;
+					break;
+				case 'Safari':
+					$sit_0 = stripos($str,'Version/') + 8;
+					break;
+				case 'Opera':
+					$sit_0 = stripos($str,'OPR/') + 4;
+					break;
+				case 'Internet Explorer':
+					$sit_0 = stripos($str,'MSIE ') + 5;
+					break;
+			}
+			$str = substr($str,$sit_0) ;
+			if($output['A']=='Internet Explorer')
+			{
+				$sit_1 = stripos($str,';') ;
+			}
+			else
+			{
+				$sit_1 = stripos($str,' ') ;
+			}
+			if($sit_1!==false)
+			{
+				$output['AN'] = substr($str,0,$sit_1) ;
+			}
+			else
+			{
+				$output['AN'] = $str ;
+			}
 		}
 		return $output;
 	}
