@@ -33,33 +33,11 @@ class Date_test extends CI_Controller {
         $val_str = '';
         foreach($date_test as $key=>$val )
         {
-            if(is_array($val))
-            {
-                $val_str2 = '' ;
-                foreach($val as $key2=>$val2)
-                {
-                    if( !isset($val2) )
-                    {
-                        $val_str .= $key2.' : !isset() <br />' ;
-                    }
-                    else if( empty($val2) )
-                    {
-                        $val_str .= $key2.' : empty() <br />' ;
-                    }
-                    else
-                    {
-                        $val_str .= $key2.' : '.$val2.'<br />' ;
-                    }
-                }
-            }
-            else
-            {
-                $val_str .= $key.' : '.$val.'<br />' ;
-            }
+            $val_str .= $key.' : '.$val.'<br />' ;
         }
 
         $content[] = array(
-            'content_title' => 'Date',
+            'content_title' => '時間格式',
             'content_value' => $val_str,
         ) ;
 
@@ -98,7 +76,7 @@ class Date_test extends CI_Controller {
         $date_ary['PHP_mdate'] = mdate($datestring, $time);
 
         // Lets you generate a date string in one of several standardized formats
-        $date_ary['standard_date'] = array() ;
+        //$date_ary['standard_date'] = array() ;
         $format = array() ;
         $format[] = 'DATE_ATOM';
         $format[] = 'DATE_COOKIE';
@@ -111,7 +89,8 @@ class Date_test extends CI_Controller {
         $format[] = 'DATE_RSS';
         $format[] = 'DATE_W3C';
         foreach ($format as $value) {
-            $date_ary['standard_date']['CI_'.$value] = standard_date($value, $time) ;
+            //$date_ary['standard_date']['CI_'.$value] = standard_date($value, $time) ;
+            $date_ary['CI_'.$value] = standard_date($value, $time) ;
         }
 
         // Takes a Unix timestamp as input and returns it as GMT
