@@ -48,6 +48,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'CSS效果測試',
             'content_url' => 'css_test'
         ) ;
+        $content[] = array(
+            'content_value' => 'count_sizeof',
+            'content_title' => 'count() sizeof() 測試',
+            'content_url' => 'count_sizeof'
+        ) ;
 
         // 標題 內容顯示
         $data = array(
