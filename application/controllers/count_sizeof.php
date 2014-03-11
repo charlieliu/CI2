@@ -40,7 +40,7 @@ class Count_sizeof extends CI_Controller {
         $this->benchmark->mark('code_end');
         $time_mark = $this->benchmark->elapsed_time('code_start','code_end');
         $content[] = array(
-            'content_title' => 'Array',
+            'content_title' => 'Array()',
             'content_value' => $time_mark,
         ) ;
 
@@ -55,7 +55,7 @@ class Count_sizeof extends CI_Controller {
         $this->benchmark->mark('code2_end');
         $time_mark = $this->benchmark->elapsed_time('code2_start','code2_end');
         $content[] = array(
-            'content_title' => 'count('.$count_num.')',
+            'content_title' => 'count()='.$count_num.' 100000 times',
             'content_value' => $time_mark,
         ) ;
 
@@ -67,16 +67,18 @@ class Count_sizeof extends CI_Controller {
             $sizeof_num = sizeof($test_array) ;
         }
 
+        $this->output->enable_profiler(FALSE);//關閉效能分析器
+
         $this->benchmark->mark('code3_end');
         $time_mark = $this->benchmark->elapsed_time('code3_start','code3_end');
         $content[] = array(
-            'content_title' => 'sizeof('.$sizeof_num.')',
+            'content_title' => 'sizeof()='.$sizeof_num.' 100000 times',
             'content_value' => $time_mark,
         ) ;
 
         // 標題 內容顯示
         $data = array(
-            'title'         => 'Floating-point',
+            'title'         => 'count() and sizeof()',
             'current_page'  => strtolower(__CLASS__), // 當下類別
             'current_fun'   => strtolower(__FUNCTION__), // 當下function
             'content'       => $content,

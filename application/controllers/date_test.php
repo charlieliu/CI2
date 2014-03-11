@@ -24,9 +24,43 @@ class Date_test extends CI_Controller {
 
         // 顯示資料
         $content = array();
+        /*
         $content[] = array(
             'content_title' => 'Date',
             'content_value' => $this->_str_replace(print_r($date_test,true))
+        ) ;
+        */
+        $val_str = '';
+        foreach($date_test as $key=>$val )
+        {
+            if(is_array($val))
+            {
+                $val_str2 = '' ;
+                foreach($val as $key2=>$val2)
+                {
+                    if( !isset($val2) )
+                    {
+                        $val_str .= $key2.' : !isset() <br />' ;
+                    }
+                    else if( empty($val2) )
+                    {
+                        $val_str .= $key2.' : empty() <br />' ;
+                    }
+                    else
+                    {
+                        $val_str .= $key2.' : '.$val2.'<br />' ;
+                    }
+                }
+            }
+            else
+            {
+                $val_str .= $key.' : '.$val.'<br />' ;
+            }
+        }
+
+        $content[] = array(
+            'content_title' => 'Date',
+            'content_value' => $val_str,
         ) ;
 
         // 標題 內容顯示
@@ -51,17 +85,17 @@ class Date_test extends CI_Controller {
         $this->load->helper('date') ;
         $date_ary = array() ;
 
-        $date_ary['date'] = date('Y-m-d H i s') ;
+        $date_ary['PHP_date'] = date('Y-m-d H i s') ;
 
         $time = time() ;
-        $date_ary['time'] = $time ;
+        $date_ary['PHP_time'] = $time ;
 
         // eturns the current time as a Unix timestamp
-        $date_ary['now'] = now() ;
+        $date_ary['PHP_now'] = now() ;
 
         // If a timestamp is not included in the second parameter the current time will be used.
         $datestring = "Year: %Y Month: %m Day: %d - %h:%i %a" ;
-        $date_ary['mdate'] = mdate($datestring, $time);
+        $date_ary['PHP_mdate'] = mdate($datestring, $time);
 
         // Lets you generate a date string in one of several standardized formats
         $date_ary['standard_date'] = array() ;
@@ -77,14 +111,14 @@ class Date_test extends CI_Controller {
         $format[] = 'DATE_RSS';
         $format[] = 'DATE_W3C';
         foreach ($format as $value) {
-            $date_ary['standard_date'][$value] = standard_date($value, $time) ;
+            $date_ary['standard_date']['CI_'.$value] = standard_date($value, $time) ;
         }
 
         // Takes a Unix timestamp as input and returns it as GMT
-        $date_ary['local_to_gmt'] = local_to_gmt($time) ;
+        $date_ary['PHP_local_to_gmt'] = local_to_gmt($time) ;
 
         // Takes a timezone reference (for a list of valid timezones，see the "Timezone Reference" below) and returns the number of hours offset from UTC.
-        $date_ary['timezones'] = timezones('UM8') ;
+        $date_ary['PHP_timezones'] = timezones('UM8') ;
 
         return $date_ary ;
     }
