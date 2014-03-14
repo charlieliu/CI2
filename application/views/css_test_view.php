@@ -1,21 +1,25 @@
 <div id="body">
     <p>{current_page}/{current_fun}</p>
 
-    <!-- Variable Pairs -->
-    {content}
     <div class="content_block">
-        <b>{content_title} : </b>
-        <div>{content_value}</div>
-    </div>
-    {/content}
-    <!-- Variable Pairs -->
-
-    <div class="loading"></div>
-
-    <div class="abgne-loading-20140104-2">
         <div class="loading"></div>
-        <div class="word">男</div>
+
+        <div class="abgne-loading-20140104-2">
+            <div class="loading"></div>
+            <div class="word">男</div>
+        </div>
     </div>
+
+    <!-- Variable Pairs -->
+    <div class="content_block">
+        <div>transform:rotate(180deg)</div>
+        <ol class="ul_rotate">
+            {content}
+            <li class="li_rotate">{ol_li}</li>
+            {/content}
+        </ol>
+    </div>
+    <!-- Variable Pairs -->
 
     <style type="text/css">
         /* 小圈圈 */
@@ -68,6 +72,22 @@
             font-family: 微軟正黑體, arial;
             margin: 18px 0 0 20px;
             padding: 0;
+        }
+        .ul_rotate
+        {
+            -moz-transform:rotate(180deg);
+            -webkit-transform:rotate(180deg);
+            -o-transform:rotate(180deg);
+            -ms-transform:rotate(180deg);
+            transform:rotate(180deg);
+            margin-left: 3em;
+        }
+        .li_rotate {
+            -moz-transform:rotate(180deg);
+            -webkit-transform:rotate(180deg);
+            -o-transform:rotate(180deg);
+            -ms-transform:rotate(180deg);
+            transform:rotate(180deg);
         }
     </style>
 </div>

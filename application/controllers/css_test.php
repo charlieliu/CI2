@@ -21,6 +21,11 @@ class Css_test extends CI_Controller {
 
         $content = array() ;
 
+        for($i=0;$i<100;$i++)
+        {
+            $content[]['ol_li'] = $i+1 ;
+        }
+
         // 標題 內容顯示
         $data = array(
             'title' => 'CSS效果測試',
