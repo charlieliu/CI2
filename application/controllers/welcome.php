@@ -53,6 +53,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'count() sizeof() 測試',
             'content_url' => 'count_sizeof'
         ) ;
+        $content[] = array(
+            'content_value' => 'hash_test',
+            'content_title' => 'Hash 測試',
+            'content_url' => 'hash_test'
+        ) ;
 
         // 標題 內容顯示
         $data = array(

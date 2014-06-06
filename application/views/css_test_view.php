@@ -73,6 +73,7 @@
             margin: 18px 0 0 20px;
             padding: 0;
         }
+        /* 反轉 ul */
         .ul_rotate
         {
             -moz-transform:rotate(180deg);
@@ -82,6 +83,7 @@
             transform:rotate(180deg);
             margin-left: 3em;
         }
+        /* 反轉 li */
         .li_rotate {
             -moz-transform:rotate(180deg);
             -webkit-transform:rotate(180deg);
