@@ -56,12 +56,14 @@
         <?PHP if( $current_page=='welcome' || $current_page=='index'): ?>
         <div class="abgne-loading-20140206-2"></div>
         <?PHP else: ?>
-        <a href="welcome">
-            <div class="abgne-loading-20140206-2">
+
+        <div class="abgne-loading-20140206-2">
+            <a href="welcome">
                 <div class="loading"></div>
                 <div class="word">首頁</div>
-            </div>
-        </a>
+            </a>
+        </div>
+
         <?PHP endif; ?>
         <h1>{title}</h1>
         {content_div}
