@@ -64,15 +64,32 @@ class Hash_test extends CI_Controller {
             '41' => 'haval256,5',
         );
 
+        $test_str = 'hello' ;
+
         // 顯示資料
         $content = array();
         foreach( $hash_array as $v )
         {
             $content[] = array(
                 'content_title' => $v,
-                'content_value' => htmlspecialchars(hash($v,'My name is Charlie', TRUE)),
+                'content_value' => hash($v,$test_str),
             ) ;
+            if($v=='md5')
+            {
+                $content[] = array(
+                    'content_title' => 'md5()',
+                    'content_value' => md5($test_str),
+                ) ;
+            }
+            else if($v=='sha1')
+            {
+                $content[] = array(
+                    'content_title' => 'sha1()',
+                    'content_value' => sha1($test_str),
+                ) ;
+            }
         }
+
 
         // 標題 內容顯示
         $data = array(
