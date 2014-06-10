@@ -50,13 +50,18 @@ class Welcome extends CI_Controller {
         ) ;
         $content[] = array(
             'content_value' => 'count_sizeof',
-            'content_title' => 'count() sizeof() 測試',
+            'content_title' => 'count() sizeof() 效能比較',
             'content_url' => 'count_sizeof'
         ) ;
         $content[] = array(
             'content_value' => 'hash_test',
             'content_title' => 'Hash 測試',
             'content_url' => 'hash_test'
+        ) ;
+        $content[] = array(
+            'content_value' => 'switch_test',
+            'content_title' => 'if else & switch 效能比較',
+            'content_url' => 'switch_test'
         ) ;
 
         // 標題 內容顯示

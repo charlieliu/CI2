@@ -64,7 +64,7 @@ class Hash_test extends CI_Controller {
             '41' => 'haval256,5',
         );
 
-        $test_str = 'hello' ;
+        $test_str = '又文不喜歡甜不辣' ;
 
         // 顯示資料
         $content = array();
