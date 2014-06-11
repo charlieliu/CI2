@@ -38,25 +38,18 @@ class Switch_test extends CI_Controller {
         }
         $time_if = 0 ;
         $time_sw = 0 ;
-        for($test_j=1;$test_j<11;$test_j++)
+        $time_mark_if = 0 ;
+        $time_mark_sw = 0 ;
+        for($test_j=0;$test_j<200;$test_j++)
         {
-            $time_mark_if = $this->_if_loop_test($test_array) ;
-            $time_mark_sw = $this->_switch_loop_test($test_array) ;
-            if($time_mark_if>$time_mark_sw)
-            {
-                $time_mark = $time_mark_if.'>'.$time_mark_sw ;
-                $time_if++ ;
-            }
-            else
-            {
-                $time_mark = $time_mark_if.'>'.$time_mark_sw ;
-                $time_sw++ ;
-            }
-            $content[] = array(
-                'content_title' => $test_j.' if('.$time_if.') & switch('.$time_sw.')',
-                'content_value' => $time_mark,
-            ) ;
+            $time_mark_if += $this->_if_loop_test($test_array) ;
+            $time_mark_sw += $this->_switch_loop_test($test_array) ;
         }
+        $str = $test_j.' / '.$time_mark_if.' - '.$time_mark_sw.' = '.($time_mark_if-$time_mark_sw) ;
+        $content[] = array(
+            'content_title' => '第N個迴圈(判斷75000個值) / if(時間) - switch(時間) = 時間差',
+            'content_value' => $str,
+        ) ;
 
         $this->output->enable_profiler(FALSE);//關閉效能分析器
 
@@ -86,40 +79,40 @@ class Switch_test extends CI_Controller {
             switch($v)
             {
                 case 0:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 1:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 2:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 3:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 4:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 5:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 6:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 7:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 8:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
                 case 9:
-                    $this->_get_test_str($v) ;
+                    $this->_get_test_str() ;
                     break;
             }
         }
         $this->benchmark->mark('code3_end');
         $time_mark = $this->benchmark->elapsed_time('code3_start','code3_end');
-        return $time_mark*1000 ;
+        return $time_mark ;
     }
 
     private function _if_loop_test($test_array)
@@ -130,57 +123,53 @@ class Switch_test extends CI_Controller {
         {
             if($v==1)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==2)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==3)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==4)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==5)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==6)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==7)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==8)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==9)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
             else if($v==0)
             {
-                $this->_get_test_str($v) ;
+                $this->_get_test_str() ;
             }
         }
         $this->benchmark->mark('code2_end');
         $time_mark = $this->benchmark->elapsed_time('code2_start','code2_end');
-        return $time_mark*1000 ;
+        return $time_mark ;
     }
 
-    private function _get_test_str($v)
+    private function _get_test_str()
     {
-        $test_str = 0 ;
-        for($test_i=0;$test_i<100;$test_i++)
-        {
-            $test_str += $test_i ;
-        }
+        return FALSE ;
     }
 }
 ?>
