@@ -37,11 +37,11 @@
     left: 550px;
 }
 #abgne-block-20140105 li:hover {
-    -webkit-transform: scale(2);
-    -moz-transform: scale(2);
-    -o-transform: scale(2);
-    -ms-transform: scale(2);
-    transform: scale(2);
+    -webkit-transform: scale(2) skew(30deg,20deg);
+    -moz-transform: scale(2) skew(30deg,20deg);
+    -o-transform: scale(2) skew(30deg,20deg);
+    -ms-transform: scale(2) skew(30deg,20deg);
+    transform: scale(2) skew(30deg,20deg);
     z-index: 1;
 }
 #abgne-block-20140105 li a img {
