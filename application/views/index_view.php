@@ -43,7 +43,7 @@
         <?PHP else: ?>
 
         <div class="abgne-loading-20140206-2">
-            <a href="welcome">
+            <a href="welcome" title="點我">
                 <div class="loading"></div>
                 <div class="word">首頁</div>
             </a>

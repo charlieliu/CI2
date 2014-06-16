@@ -78,7 +78,7 @@ class Abgne_tab extends CI_Controller {
             月色被打撈起 暈開了結局<br>
             如傳世的青花瓷自顧自美麗 妳眼帶笑意<br>
             <br>
-            更多更詳盡歌詞 在 ※ Mojim.com　魔鏡歌詞網<br>
+            更多更詳盡歌詞 在 <b>※ Mojim.com　魔鏡歌詞網</b><br>
             ',
         ) ;
 
@@ -125,7 +125,7 @@ class Abgne_tab extends CI_Controller {
             銅鏡映無邪 紮馬尾<br>
             妳若撒野 今生我把酒奉陪<br>
             <br>
-            更多更詳盡歌詞 在 ※ Mojim.com　魔鏡歌詞網<br>
+            更多更詳盡歌詞 在 <b>※ Mojim.com　魔鏡歌詞網</b><br>
             ',
         ) ;
 
@@ -161,7 +161,7 @@ class Abgne_tab extends CI_Controller {
             菊花殘滿地傷　你的笑容已泛黃　花落人斷腸　我心事靜靜躺<br>
             北風亂夜未央　你的影子剪不斷　徒留我孤單　在湖面成雙<br>
             <br>
-            更多更詳盡歌詞 在 ※ Mojim.com　魔鏡歌詞網<br>
+            更多更詳盡歌詞 在 <b>※ Mojim.com　魔鏡歌詞網</b><br>
             ',
         ) ;
 

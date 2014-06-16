@@ -1,7 +1,7 @@
 <div class="abgne_tab">
     <ul class="tabs">
         {nav}
-        <li><a href="#{content_id}">{content_title}</a></li>
+        <li><a href="#{content_id}" title="滑動">{content_title}</a></li>
         {/nav}
     </ul>
 
@@ -102,6 +102,7 @@
             });
         });
     });
+    // div 等高調整
     var max_height = 0;
     $("div.col").each(function(){
         if ($(this).height() > max_height) { max_height = $(this).height(); }
