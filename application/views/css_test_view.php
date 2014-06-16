@@ -1,95 +1,73 @@
 <div id="body">
     <p>{current_page}/{current_fun}</p>
 
+    <!-- 轉圈圈 -->
     <div class="content_block">
+        <h3>小圈圈</h3>
         <div class="loading"></div>
 
+        <h3>大圈圈+字</h3>
         <div class="abgne-loading-20140104-2">
             <div class="loading"></div>
             <div class="word">男</div>
         </div>
+        <link rel="stylesheet" type="text/css" href="css/css_test_1.css" />
     </div>
+    <!-- 轉圈圈 -->
 
-    <!-- Variable Pairs -->
+    <!-- 反轉 -->
     <div class="content_block">
+        <h3>用CSS反轉</h3>
         <div>transform:rotate(180deg)</div>
         <ol class="ul_rotate">
             {content}
             <li class="li_rotate">{ol_li}</li>
             {/content}
         </ol>
+        <link rel="stylesheet" type="text/css" href="css/css_test_2.css" />
     </div>
-    <!-- Variable Pairs -->
+    <!-- 反轉 -->
 
-    <style type="text/css">
-        /* 小圈圈 */
-        .loading {
-            border: 3px solid #3a3;
-            border-right: 3px solid #fff;
-            border-bottom: 3px solid #fff;
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            /*
-            animation-name: 動畫腳本名稱;
-            animation-duration: 動畫播放時間(速度);
-            animation-iteration-count: 動畫播放次數;
-            animation-timing-function: 播放速度的效果
-            */
-            -webkit-animation: loading 1s infinite linear;
-            -moz-animation: loading 1s infinite linear;
-            -o-animation: loading 1s infinite linear;
-            animation: loading 1s infinite linear;
-        }
-        /* 大圈圈 加 字 */
-        .abgne-loading-20140104-2 {
-            position: relative;
-            height: 100px;
-            width: 100px;
-        }
-        .abgne-loading-20140104-2 .loading {
-            border: 6px solid #168;
-            border-right: 6px solid #fff;
-            border-bottom: 6px solid #fff;
-            height: 100%;
-            width: 100%;
-            border-radius: 50%;
-            -webkit-animation: loading 1s infinite linear;
-            -moz-animation: loading 1s infinite linear;
-            -ms-animation: loading 1s infinite linear;
-            -o-animation: loading 1s infinite linear;
-            animation: loading 1s infinite linear;
-        }
-        .abgne-loading-20140104-2 .word {
-            color: #168;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: inline-block;
-            text-align: center;
-            font-size: 72px;
-            line-height: 72px;
-            font-family: 微軟正黑體, arial;
-            margin: 18px 0 0 20px;
-            padding: 0;
-        }
-        /* 反轉 ul */
-        .ul_rotate
-        {
-            -moz-transform:rotate(180deg);
-            -webkit-transform:rotate(180deg);
-            -o-transform:rotate(180deg);
-            -ms-transform:rotate(180deg);
-            transform:rotate(180deg);
-            margin-left: 3em;
-        }
-        /* 反轉 li */
-        .li_rotate {
-            -moz-transform:rotate(180deg);
-            -webkit-transform:rotate(180deg);
-            -o-transform:rotate(180deg);
-            -ms-transform:rotate(180deg);
-            transform:rotate(180deg);
-        }
-    </style>
+    <!-- 用 CSS3 做表單 - 自訂單/多選框樣式 -->
+    <div class="content_block">
+        <h3>性別(單選)</h3>
+        <ul class="abgne-menu-20140109-1">
+            <li>
+                <input type="radio" id="male" name="sex">
+                <label for="male">我是男生</label>
+            </li>
+            <li>
+                <input type="radio" id="female" name="sex">
+                <label for="female">我是女生</label>
+            </li>
+            <li>
+                <input type="radio" id="other" name="sex">
+                <label for="other">我不想說</label>
+            </li>
+        </ul>
+
+        <h3>專長(多選)</h3>
+        <ul class="abgne-menu-20140109-2">
+            <li>
+                <input type="checkbox" id="jquery" name="skill" checked>
+                <label for="jquery">jQuery</label>
+            </li>
+            <li>
+                <input type="checkbox" id="css3" name="skill">
+                <label for="css3">CSS3</label>
+            </li>
+            <li>
+                <input type="checkbox" id="html5" name="skill">
+                <label for="html5">HTML5</label>
+                </li>
+            <li>
+                <input type="checkbox" id="angularjs" name="skill">
+                <label for="angularjs">AngularJS</label>
+            </li>
+        </ul>
+
+        <link rel="stylesheet" type="text/css" href="css/css_test_3.css" />
+    </div>
+    <!-- 用 CSS3 做表單 - 自訂單/多選框樣式 -->
+
 </div>
