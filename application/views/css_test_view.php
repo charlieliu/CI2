@@ -70,4 +70,17 @@
     </div>
     <!-- 用 CSS3 做表單 - 自訂單/多選框樣式 -->
 
+    <!-- 用 CSS3 做畫廊 - 滑入滑出時偽原地縮放圖片 -->
+    <div class="content_block">
+        <ul id="abgne-block-20140105">
+            <li><a href="#"><img src="images/j.jpg"/></a></li>
+            <li><a href="#"><img src="images/q.jpg"/></a></li>
+            <li><a href="#"><img src="images/u.jpg"/></a></li>
+            <li><a href="#"><img src="images/e.jpg"/></a></li>
+            <li><a href="#"><img src="images/r.jpg"/></a></li>
+            <li><a href="#"><img src="images/y.jpg"/></a></li>
+        </ul>
+        <link rel="stylesheet" type="text/css" href="css/css_test_4.css" />
+    </div>
+    <!-- 用 CSS3 做畫廊 - 滑入滑出時偽原地縮放圖片 -->
 </div>
