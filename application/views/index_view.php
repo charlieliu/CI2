@@ -8,25 +8,6 @@
 
     <title>{title}</title>
     <?php
-
-    /*
-    // 載入CI原生helper
-    $this->load->helper('html');
-    // 小圖
-    $link = array(
-        'href'  => "images/joba.jpg",
-        'type'  => "image/x-icon",
-        'rel'   => "shortcut icon"
-    );
-    echo link_tag($link);
-    // CSS位置
-    $link = array(
-        'href'  => "css/welcome.css?".date('YmdHis'),
-        'type'  => "text/css",
-        'rel'   => "stylesheet"
-    );
-    echo link_tag($link);
-    */
     // 載入helper/test_helper.php
     $this->load->helper('test');
     // 小圖
@@ -45,11 +26,15 @@
         'ver'   => ''
     );
     echo load_html_file($link);
+    // Jquery 1.11
+    $link = array(
+        'type'  => "text/javascript",
+        'rel'   => "stylesheet",
+        'href'  => "js/jquery-1.11.js",
+        'ver'   => ''
+    );
+    echo load_html_file($link);
     ?>
-    <!--
-    <link rel="shortcut icon" href="images/joba.jpg" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="css/welcome.css">
-    -->
 </head>
 <body>
     <div id="container">

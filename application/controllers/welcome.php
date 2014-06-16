@@ -63,6 +63,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'if else & switch 效能比較',
             'content_url' => 'switch_test'
         ) ;
+        $content[] = array(
+            'content_value' => 'abgne_tab',
+            'content_title' => '利用 jQuery 來製作網頁頁籤(Tab)',
+            'content_url' => 'abgne_tab'
+        ) ;
 
         // 標題 內容顯示
         $data = array(
