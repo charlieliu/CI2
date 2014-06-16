@@ -7,7 +7,7 @@
 
     <div class="tab_container">
         {content}
-        <div id="{content_id}" class="tab_content">
+        <div id="{content_id}" class="tab_content col">
             <h2>{content_title}</h2>
             <p>{content_value}</p>
         </div>
@@ -102,4 +102,9 @@
             });
         });
     });
+    var max_height = 0;
+    $("div.col").each(function(){
+        if ($(this).height() > max_height) { max_height = $(this).height(); }
+    });
+    $("div.col").height(max_height);
 </script>
