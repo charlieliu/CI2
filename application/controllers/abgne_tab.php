@@ -21,16 +21,16 @@ class Abgne_tab extends CI_Controller {
 
         // 顯示資料
         $content = array();
-        for($i=0;$i<2;$i++)
+        for($i=0;$i<4;$i++)
         {
             $nav[] = array(
                 'content_id' => 'tab_'.($i+1),
-                'content_title' => '第'.$i.'頁',
+                'content_title' => '第'.($i+1).'頁',
             ) ;
             $content[] = array(
                 'content_id' => 'tab_'.($i+1),
-                'content_title' => '第'.$i.'頁',
-                'content_value' => '第'.$i.'頁',
+                'content_title' => '第'.($i+1).'頁',
+                'content_value' => '第'.($i+1).'頁',
             ) ;
         }
 
@@ -50,108 +50,6 @@ class Abgne_tab extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
         $this->parser->parse('index_view', $html_date ) ;
-    }
-
-    private function _switch_loop_test($test_array)
-    {
-        // switch
-        $this->benchmark->mark('code3_start');
-        foreach($test_array as $v)
-        {
-            switch($v)
-            {
-                case 0:
-                    $this->_get_test_str() ;
-                    break;
-                case 1:
-                    $this->_get_test_str() ;
-                    break;
-                case 2:
-                    $this->_get_test_str() ;
-                    break;
-                case 3:
-                    $this->_get_test_str() ;
-                    break;
-                case 4:
-                    $this->_get_test_str() ;
-                    break;
-                case 5:
-                    $this->_get_test_str() ;
-                    break;
-                case 6:
-                    $this->_get_test_str() ;
-                    break;
-                case 7:
-                    $this->_get_test_str() ;
-                    break;
-                case 8:
-                    $this->_get_test_str() ;
-                    break;
-                case 9:
-                    $this->_get_test_str() ;
-                    break;
-            }
-        }
-        $this->benchmark->mark('code3_end');
-        $time_mark = $this->benchmark->elapsed_time('code3_start','code3_end');
-        return $time_mark ;
-    }
-
-    private function _if_loop_test($test_array)
-    {
-        // if else
-        $this->benchmark->mark('code2_start');
-        foreach($test_array as $v)
-        {
-            if($v==1)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==2)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==3)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==4)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==5)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==6)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==7)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==8)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==9)
-            {
-                $this->_get_test_str() ;
-            }
-            else if($v==0)
-            {
-                $this->_get_test_str() ;
-            }
-        }
-        $this->benchmark->mark('code2_end');
-        $time_mark = $this->benchmark->elapsed_time('code2_start','code2_end');
-        return $time_mark ;
-    }
-
-    private function _get_test_str()
-    {
-        return FALSE ;
     }
 }
 ?>

@@ -1,3 +1,19 @@
+<div class="abgne_tab">
+    <ul class="tabs">
+        {nav}
+        <li><a href="#{content_id}">{content_title}</a></li>
+        {/nav}
+    </ul>
+
+    <div class="tab_container">
+        {content}
+        <div id="{content_id}" class="tab_content">
+            <h2>{content_title}</h2>
+            <p>{content_value}</p>
+        </div>
+        {/content}
+    </div>
+</div>
 <style type="text/css">
     ul, li {
         margin: 0;
@@ -6,8 +22,8 @@
     }
     .abgne_tab {
         clear: left;
-        width: 400px;
-        margin: 10px 0;
+        width: 98%;
+        margin: 10px 1%;
     }
     ul.tabs {
         width: 100%;
@@ -57,22 +73,6 @@
         margin: 0 0 20px;
     }
 </style>
-<div class="abgne_tab">
-    <ul class="tabs">
-        {nav}
-        <li><a href="#{content_id}">{content_title}</a></li>
-        {/nav}
-    </ul>
-
-    <div class="tab_container">
-        {content}
-        <div id="{content_id}" class="tab_content">
-            <h2>{content_title}</h2>
-            <p>{content_value}</p>
-        </div>
-        {/content}
-    </div>
-</div>
 <script type="text/javascript">
     $(function(){
         // 預設顯示第一個 Tab
@@ -86,7 +86,7 @@
 
             // 當 li 頁籤被點擊時...
             // 若要改成滑鼠移到 li 頁籤就切換時, 把 click 改成 mouseover
-            $('ul.tabs li', $tab).click(function() {
+            $('ul.tabs li', $tab).mouseover(function() {
                 // 找出 li 中的超連結 href(#id)
                 var $this = $(this),
                     _clickTab = $this.find('a').attr('href');
