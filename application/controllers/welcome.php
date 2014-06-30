@@ -68,6 +68,11 @@ class Welcome extends CI_Controller {
             'content_title' => '利用 jQuery 來製作網頁頁籤(Tab)',
             'content_url' => 'abgne_tab'
         ) ;
+        $content[] = array(
+            'content_value' => 'svg_test',
+            'content_title' => 'SVG效果測試',
+            'content_url' => 'svg_test'
+        ) ;
 
         // 標題 內容顯示
         $data = array(
