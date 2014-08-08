@@ -73,6 +73,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'SVG效果測試',
             'content_url' => 'svg_test'
         ) ;
+        $content[] = array(
+            'content_value' => 'JS_object_test',
+            'content_title' => 'JS object 測試',
+            'content_url' => 'js_object_test'
+        ) ;
 
         // 標題 內容顯示
         $data = array(

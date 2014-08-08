@@ -54,5 +54,6 @@
         {content_div}
         <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
     </div>
+    <div>COOKIE :<?PHP print_r($_COOKIE); ?></div>
 </body>
 </html>
