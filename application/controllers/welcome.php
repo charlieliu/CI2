@@ -78,6 +78,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'JS object 測試',
             'content_url' => 'js_object_test'
         ) ;
+        $content[] = array(
+            'content_value' => 'JS_object_test2',
+            'content_title' => 'JS object 測試2',
+            'content_url' => 'js_object_test2'
+        ) ;
 
         // 標題 內容顯示
         $data = array(
