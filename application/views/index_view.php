@@ -22,8 +22,8 @@
     // CSS
     $css_link = array();
     $css_link[] = 'css/welcome.css';
-    $css_link[] = 'bootstrap-3.2.0-dist/css/bootstrap.min.css';
-    $css_link[] = 'bootstrap-3.2.0-dist/css/bootstrap-theme.min.css';
+    $css_link[] = 'css/bootstrap-3.2.0-dist/css/bootstrap.min.css';
+    $css_link[] = 'css/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css';
     $css_link = (!empty($css)&&is_array($css)&&count($css)) ? array_merge($css_link, $css) : $css_link ;
 
     foreach( $css_link as $val )
@@ -80,6 +80,7 @@
 <?PHP
     $js_link = array();
     $js_link[] = 'js/jquery-1.11.js';
+    $js_link[] = 'css/bootstrap-3.2.0-dist/js/bootstrap.min.js';
     $js_link = (!empty($js)&&is_array($js)&&count($js)) ? array_merge($js_link,$js) : $js_link ;
 
     foreach( $js_link as $val )
