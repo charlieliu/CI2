@@ -28,7 +28,7 @@ $(function () {
     );
     // Demo settings:
     $('#fileupload').fileupload('option', {
-        maxFileSize: 10000
+        maxFileSize: 10240
     });
 
     // Load existing files:
