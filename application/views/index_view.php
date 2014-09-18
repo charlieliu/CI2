@@ -60,21 +60,21 @@
 <body>
     <div id="container">
         <?PHP if( $current_page=='welcome' || $current_page=='index'): ?>
-        <div class="abgne-loading-20140206-2"></div>
+            <div class="abgne-loading-20140206-2"></div>
         <?PHP else: ?>
-
-        <div class="abgne-loading-20140206-2">
-            <a href="welcome" title="點我">
-                <div class="loading"></div>
-                <div class="word">首頁</div>
-            </a>
-        </div>
-
+            <div class="abgne-loading-20140206-2">
+                <a href="welcome" title="點我">
+                    <div class="loading"></div>
+                    <div class="word">首頁</div>
+                </a>
+            </div>
         <?PHP endif; ?>
+
         <h1>{title}</h1>
         {content_div}
         <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
-        <div>COOKIE :<?PHP print_r($_COOKIE); ?></div>
+
+        <?PHP if( $current_page=='session_test'): ?><div>COOKIE :<?PHP print_r($_COOKIE); ?></div><?PHP endif; ?>
     </div>
 </body>
 <?PHP
