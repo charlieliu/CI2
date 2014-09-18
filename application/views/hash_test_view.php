@@ -7,11 +7,25 @@
     </form>
 
     <!-- Variable Pairs -->
-    {content}
-    <div class="content_block">
-        <b>{content_title} : </b>
-        <div>{content_value}</div>
-    </div>
-    {/content}
+    <table id="table-transform" data-toolbar="#transform-buttons">
+        <thead>
+            <tr>
+                <th>加密方式</th>
+                <th>編碼</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>原文</td>
+                <td>{hash_str}</td>
+            </tr>
+            {content}
+            <tr>
+                <td>{content_title}</td>
+                <td>{content_value}</td>
+            </tr>
+            {/content}
+        </tbody>
+    </table>
     <!-- Variable Pairs -->
 </div>

@@ -70,6 +70,22 @@ class Hash_test extends CI_Controller {
 
         // 顯示資料
         $content = array();
+
+        $content[] = array(
+            'content_title' => 'base64_encode()',
+            'content_value' => base64_encode($test_str),
+        ) ;
+
+        $content[] = array(
+            'content_title' => 'urlencode()',
+            'content_value' => urlencode($test_str),
+        ) ;
+
+        $content[] = array(
+            'content_title' => 'serialize()',
+            'content_value' => serialize($test_str),
+        ) ;
+
         foreach( $hash_array as $v )
         {
             $content[] = array(
@@ -91,21 +107,6 @@ class Hash_test extends CI_Controller {
                 ) ;
             }
         }
-
-        $content[] = array(
-            'content_title' => 'base64_encode()',
-            'content_value' => base64_encode($test_str),
-        ) ;
-
-        $content[] = array(
-            'content_title' => 'urlencode()',
-            'content_value' => urlencode($test_str),
-        ) ;
-
-        $content[] = array(
-            'content_title' => 'serialize()',
-            'content_value' => serialize($test_str),
-        ) ;
 
         // 標題 內容顯示
         $data = array(
