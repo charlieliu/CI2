@@ -19,6 +19,8 @@ class Hash_test extends CI_Controller {
         // load parser
         $this->load->library('parser');
 
+        $post = $this->input->post();
+
         $hash_array = array(
             '0' => 'md2',
             '1' => 'md4',
@@ -64,7 +66,7 @@ class Hash_test extends CI_Controller {
             '41' => 'haval256,5',
         );
 
-        $test_str = '又文不喜歡甜不辣' ;
+        $test_str = !empty($post['hash_str']) ? $post['hash_str'] : '' ;
 
         // 顯示資料
         $content = array();
@@ -111,11 +113,12 @@ class Hash_test extends CI_Controller {
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
+            'hash_str'=> $test_str,
         );
 
         // Template parser class
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('test_view', $data, true);
+        $content_div = $this->parser->parse('hash_test_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
