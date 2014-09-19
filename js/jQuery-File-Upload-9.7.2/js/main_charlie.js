@@ -18,10 +18,6 @@ $(function () {
     // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload({});
     // Enable iframe cross-domain access via redirect option:
-    $('#fileupload').fileupload(
-        'option'
-    );
-    // Demo settings:
     $('#fileupload').fileupload('option', {
         maxFileSize: (2*1024*1024)
     });
