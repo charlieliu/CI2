@@ -99,7 +99,7 @@
             {% } %}
         </td>
         <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            <span class="size">{%=o.formatFileSize(file.osize)%}</span>
         </td>
         <td>
             {% if (file.deleteUrl) { %}

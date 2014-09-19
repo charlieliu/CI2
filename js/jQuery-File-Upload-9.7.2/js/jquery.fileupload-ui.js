@@ -62,10 +62,10 @@
             // The expected data type of the upload response, sets the dataType
             // option of the $.ajax upload requests:
             dataType: 'json',
-            
+
             // Error and info messages:
             messages: {
-                unknownError: 'Unknown error'  
+                unknownError: 'Unknown error'
             },
 
             // Function returning the current number of files,
@@ -417,30 +417,32 @@
         },
 
         _formatFileSize: function (bytes) {
-            if (typeof bytes !== 'number') {
+            console.log('jquery.fileupload-validate-ui.js Line 420 _formatFileSize bytes:'+bytes);
+			if (typeof bytes !== 'number') {
                 return '';
             }
-            if (bytes >= 1000000000) {
-                return (bytes / 1000000000).toFixed(2) + ' GB';
+            else if (bytes >= (1024*1024*1024)) {
+                return (bytes / (1024*1024*1024)).toFixed(2) + ' GB';
             }
-            if (bytes >= 1000000) {
-                return (bytes / 1000000).toFixed(2) + ' MB';
+            else if (bytes >= (1024*1024)) {
+                return (bytes / (1024*1024)).toFixed(2) + ' MB';
             }
-            return (bytes / 1000).toFixed(2) + ' KB';
+            return (bytes / 1024).toFixed(2) + ' KB';
         },
 
         _formatBitrate: function (bits) {
-            if (typeof bits !== 'number') {
+            console.log('jquery.fileupload-validate-ui.js Line 434 _formatBitrate bits:'+bits);
+			if (typeof bits !== 'number') {
                 return '';
             }
-            if (bits >= 1000000000) {
-                return (bits / 1000000000).toFixed(2) + ' Gbit/s';
+            if (bits >= (1024*1024*1024)) {
+                return (bits / (1024*1024*1024)).toFixed(2) + ' Gbit/s';
             }
-            if (bits >= 1000000) {
-                return (bits / 1000000).toFixed(2) + ' Mbit/s';
+            if (bits >= (1024*1024)) {
+                return (bits / (1024*1024)).toFixed(2) + ' Mbit/s';
             }
-            if (bits >= 1000) {
-                return (bits / 1000).toFixed(2) + ' kbit/s';
+            if (bits >= 1024) {
+                return (bits / 1024).toFixed(2) + ' kbit/s';
             }
             return bits.toFixed(2) + ' bit/s';
         },

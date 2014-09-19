@@ -81,6 +81,11 @@ class File_upload extends CI_Controller {
 
     public function do_upload()
     {
+        /*
+        $this->load->library('session');
+        $this->session->set_userdata('do_upload', json_encode($_FILES));
+        */
+
         $upload_path_url = base_url() . 'uploads/';
 
         $config['upload_path'] = './uploads/';
@@ -91,7 +96,9 @@ class File_upload extends CI_Controller {
         $this->load->library('upload', $config);
 
         $files = array();
+        /*
         foreach ( $_FILES as $k=>$v ) {
+
             unset($this->upload->error_msg);
 
             if ( ! $this->upload->do_upload($k))
@@ -127,6 +134,7 @@ class File_upload extends CI_Controller {
                 //set the data for the json array
                 $info->name = $data['file_name'];
                 $info->size = $data['file_size'];
+                $info->osize = $v['size'];
                 $info->type = $data['file_type'];
                 $info->url = $upload_path_url . $data['file_name'];
                 // I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
@@ -137,20 +145,57 @@ class File_upload extends CI_Controller {
                 $files[] = $info;
             }
         }
-        if(!empty($files))
+        */
+        unset($this->upload->error_msg);
+
+        if ( ! $this->upload->do_upload('files'))
         {
-            echo json_encode(array("files" => $files));
-        }
-        /*
-        if(IS_AJAX)
-        {
-            echo json_encode(array("files" => $files));
+            $error = $this->upload->display_errors();
+            $error = str_replace("<p>","", $error);
+            $error = str_replace("</p>","", $error);
+            $info->error = $error;
+            $files[] = $info;
         }
         else
         {
-            $this->load->view('file_upload_success_view', array('upload_data'=>$files));
+            $data = $this->upload->data();
+
+            $thumbnailUrl = '' ;
+            if( !empty($data['is_image']) )
+            {
+                // to re-size for thumbnail images un-comment and set path here and in json array
+                $config = array();
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $data['full_path'];
+                $config['create_thumb'] = TRUE;
+                $config['new_image'] = $data['file_path'] . 'thumbs/';
+                $config['maintain_ratio'] = TRUE;
+                $config['thumb_marker'] = '';
+                $config['width'] = 75;
+                $config['height'] = 50;
+                $this->load->library('image_lib', $config);
+                $this->image_lib->resize();
+                $thumbnailUrl = $upload_path_url . 'thumbs/' . $data['file_name'] ;
+            }
+
+            //set the data for the json array
+            $info->name = $data['file_name'];
+            $info->size = $data['file_size'];
+            $info->osize = $_FILES['files']['size'];
+            $info->type = $data['file_type'];
+            $info->url = $upload_path_url . $data['file_name'];
+            // I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
+            $info->thumbnailUrl = $thumbnailUrl;
+            $info->deleteUrl = base_url() . 'file_upload/deleteImage/' . $data['file_name'];
+            $info->deleteType = 'DELETE';
+            $info->error = null;
+            $files[] = $info;
         }
-        */
+
+        if(!empty($files))
+        {
+            echo json_encode(array("files" => $files,'_FILES'=>$_FILES));
+        }
     }
 
     public function deleteImage($file) {//gets the job done but you might want to add error checking and security
@@ -165,16 +210,6 @@ class File_upload extends CI_Controller {
         $info->file = is_file(FCPATH . 'uploads/' . $file);
 
         echo json_encode(array($info));
-        /*
-        if (IS_AJAX) {
-            //I don't think it matters if this is set but good for error checking in the console/firebug
-            echo json_encode(array($info));
-        } else {
-            //here you will need to decide what you want to show for a successful delete
-            $file_data['delete_data'] = $file;
-            $this->load->view('uploader/delete_success.phtml', $file_data);
-        }
-        */
     }
 }
 ?>

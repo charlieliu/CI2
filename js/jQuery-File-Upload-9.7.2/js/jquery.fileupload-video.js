@@ -73,6 +73,7 @@
                 var file = data.files[data.index],
                     url,
                     video;
+				console.log('jquery.fileupload-validate.js Line 76 file.size:'+file.size);
                 if (this._videoElement.canPlayType &&
                         this._videoElement.canPlayType(file.type) &&
                         ($.type(options.maxFileSize) !== 'number' ||

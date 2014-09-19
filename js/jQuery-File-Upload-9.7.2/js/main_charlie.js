@@ -19,16 +19,11 @@ $(function () {
     $('#fileupload').fileupload({});
     // Enable iframe cross-domain access via redirect option:
     $('#fileupload').fileupload(
-        'option',
-        'redirect',
-        window.location.href.replace(
-            /\/[^\/]*$/,
-            '/cors/result.html?%s'
-        )
+        'option'
     );
     // Demo settings:
     $('#fileupload').fileupload('option', {
-        maxFileSize: 20000000
+        maxFileSize: (2*1024*1024)
     });
 
     // Load existing files:
