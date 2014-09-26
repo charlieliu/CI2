@@ -13,8 +13,10 @@
         <span class="more">more</span>
     </div>
     <script type="text/javascript">
-    $('.more').click(function(){
-        $(this).parents('div').find('ul').addClass('my-class');
-    });
+        <!--
+        $('.more').click(function(){
+            $(this).parents('div').find('ul').addClass('my-class');
+        });
+        -->
     </script>
 </div>

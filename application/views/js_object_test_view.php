@@ -64,7 +64,8 @@
     <div>father : <span id="father"></span></div>
     <div>son : <span id="son"></span></div>
     <div>daughter : <span id="daughter"></span></div>
-    <script type="text/javascript">
+    <script type="text/javascript">.
+        <!--
         //最上層類別
         function Grandfather() {
             this.birthday = {
@@ -126,5 +127,6 @@
         $('#father').html(typeof(father)+'/'+father.birthday.year);
         $('#son').html(typeof(son)+'/'+son.birthday.year);
         $('#daughter').html(typeof(daughter)+'/'+daughter.birthday.year);
+        -->
     </script>
 </div>
