@@ -51,7 +51,7 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title' => 'Welcome to CodeIgniter',
+            'title' => 'PHP 測試',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
