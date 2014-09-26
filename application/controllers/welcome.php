@@ -29,44 +29,9 @@ class Welcome extends CI_Controller {
         ) ;
         */
         $content[] = array(
-            'content_value' => 'float_test',
-            'content_title' => 'PHP浮點 測試',
-            'content_url' => 'float_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'date_test',
-            'content_title' => '時間格式顯示',
-            'content_url' => 'date_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'session_test',
-            'content_title' => 'CI session 測試',
-            'content_url' => 'session_test'
-        ) ;
-        $content[] = array(
             'content_value' => 'css_test',
             'content_title' => 'CSS效果測試',
             'content_url' => 'css_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'count_sizeof',
-            'content_title' => 'count() sizeof() 效能比較',
-            'content_url' => 'count_sizeof'
-        ) ;
-        $content[] = array(
-            'content_value' => 'hash_test',
-            'content_title' => 'Hash 測試',
-            'content_url' => 'hash_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'switch_test',
-            'content_title' => 'if else & switch 效能比較',
-            'content_url' => 'switch_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'abgne_tab',
-            'content_title' => '利用 jQuery 來製作網頁頁籤(Tab)',
-            'content_url' => 'abgne_tab'
         ) ;
         $content[] = array(
             'content_value' => 'svg_test',
@@ -74,24 +39,14 @@ class Welcome extends CI_Controller {
             'content_url' => 'svg_test'
         ) ;
         $content[] = array(
-            'content_value' => 'JS_object_test',
-            'content_title' => 'JS object 測試',
-            'content_url' => 'js_object_test'
+            'content_value' => 'PHP_test',
+            'content_title' => 'PHP 測試',
+            'content_url' => 'php_test'
         ) ;
         $content[] = array(
-            'content_value' => 'JS_object_test2',
-            'content_title' => 'JS object 測試2',
-            'content_url' => 'js_object_test2'
-        ) ;
-        $content[] = array(
-            'content_value' => 'JS_file_upload',
-            'content_title' => 'JS file_upload 測試',
-            'content_url' => 'file_upload'
-        ) ;
-        $content[] = array(
-            'content_value' => 'get_filesize',
-            'content_title' => '檔案大小',
-            'content_url' => 'get_filesize'
+            'content_value' => 'JS_test',
+            'content_title' => 'JS 測試',
+            'content_url' => 'js_test'
         ) ;
 
         // 標題 內容顯示

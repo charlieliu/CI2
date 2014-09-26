@@ -2,7 +2,7 @@
     <p><?=$current_page?>/<?=$current_fun?></p>
 
     <!-- The file upload form used as target for the file upload widget -->
-    <form id="fileupload" action="file_upload/do_upload" method="POST" enctype="multipart/form-data">
+    <form id="fileupload" action="<?=base_url()?>js_test/do_upload" method="POST" enctype="multipart/form-data">
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="row fileupload-buttonbar">
             <div class="col-lg-7">

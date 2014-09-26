@@ -7,7 +7,7 @@
     </form>
 
     <!-- Variable Pairs -->
-    <table id="table-transform" data-toolbar="#transform-buttons">
+    <table id="table-transform" data-toolbar="#transform-buttons" border="1" style="margin:1em;">
         <thead>
             <tr>
                 <th>加密方式</th>

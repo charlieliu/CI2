@@ -28,12 +28,22 @@
 
     foreach( $css_link as $val )
     {
-        if( file_exists($val) || preg_match('/^http/i', $val) )
+        if( preg_match('/^http/i', $val) )
         {
             $link = array(
                 'type'  => "text/css",
                 'rel'   => "stylesheet",
                 'href'  => $val,
+                'ver'   => ''
+            );
+            echo load_html_file($link);
+        }
+        else if( file_exists($val) )
+        {
+            $link = array(
+                'type'  => "text/css",
+                'rel'   => "stylesheet",
+                'href'  => base_url().$val,
                 'ver'   => ''
             );
             echo load_html_file($link);
@@ -63,12 +73,22 @@
 
     foreach( $js_link as $val )
     {
-        if( file_exists($val) || preg_match('/^http/i', $val) )
+        if( preg_match('/^http/i', $val) )
         {
             $link = array(
                 'type'  => "text/javascript",
                 'rel'   => "stylesheet",
                 'href'  => $val,
+                'ver'   => ''
+            );
+            echo load_html_file($link);
+        }
+        else if( file_exists($val) )
+        {
+            $link = array(
+                'type'  => "text/javascript",
+                'rel'   => "stylesheet",
+                'href'  => base_url().$val,
                 'ver'   => ''
             );
             echo load_html_file($link);
@@ -94,14 +114,11 @@
 </head>
 <body>
     <div id="container">
-        <?PHP if( $current_page=='welcome' || $current_page=='index'): ?>
-            <div class="abgne-loading-20140206-2"></div>
-        <?PHP else: ?>
-            <div class="abgne-loading-20140206-2">
-                <a href="welcome" title="點我">
-                    <div class="loading"></div>
-                    <div class="word">首頁</div>
-                </a>
+        <?PHP if( $current_page!='welcome' && $current_page!='index'): ?>
+            <div class="breadcrumb">
+                <a href="<?=base_url()?>" title="首頁"><span>首頁</span></a>
+                <?PHP if( $current_fun!='index'): ?>&nbsp;>>>&nbsp;<a href="<?=base_url()?>{current_page}" title="{current_page}"><span>{current_page}</span></a><?PHP endif; ?>
+                &nbsp;>>>&nbsp;{title}
             </div>
         <?PHP endif; ?>
 
