@@ -1,5 +1,5 @@
 <div id="body">
-    <p><?=$current_page?>/<?=$current_fun?></p>
+    <p>{current_page}/{current_fun}</p>
 
     <!-- The file upload form used as target for the file upload widget -->
     <form id="fileupload" action="<?=base_url()?>js_test/do_upload" method="POST" enctype="multipart/form-data">

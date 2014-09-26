@@ -1,5 +1,5 @@
 <div id="body">
-    <p><?=$current_page?>/<?=$current_fun?></p>
+    <p>{current_page}/{current_fun}</p>
 
     <input id="fileupload" type="file">
     <div>File Size:<span id="filesize">0kb</span></div>
