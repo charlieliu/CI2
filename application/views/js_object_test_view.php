@@ -64,7 +64,7 @@
     <div>father : <span id="father"></span></div>
     <div>son : <span id="son"></span></div>
     <div>daughter : <span id="daughter"></span></div>
-    <script type="text/javascript">.
+    <script type="text/javascript">
         <!--
         //最上層類別
         function Grandfather() {
