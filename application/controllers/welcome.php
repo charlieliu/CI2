@@ -88,6 +88,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'JS file_upload 測試',
             'content_url' => 'file_upload'
         ) ;
+        $content[] = array(
+            'content_value' => 'get_filesize',
+            'content_title' => '檔案大小',
+            'content_url' => 'get_filesize'
+        ) ;
 
         // 標題 內容顯示
         $data = array(

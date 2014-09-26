@@ -29,12 +29,20 @@ class Date_test extends CI_Controller {
             'content_title' => 'Date',
             'content_value' => $this->_str_replace(print_r($date_test,true))
         ) ;
-        */
+
         $val_str = '';
         foreach($date_test as $key=>$val )
         {
-            $val_str .= $key.' : '.$val.'<br />' ;
+            $val_str .= $key.' : '.$val.'<br>' ;
         }
+        */
+
+        $val_str = '<table border="1">';
+        foreach($date_test as $key=>$val )
+        {
+            $val_str .= '<tr><td>'.$key.'</td><td>'.$val.'</td></tr>' ;
+        }
+        $val_str .= '</table>';
 
         $content[] = array(
             'content_title' => '時間格式',
@@ -63,7 +71,7 @@ class Date_test extends CI_Controller {
         $this->load->helper('date') ;
         $date_ary = array() ;
 
-        $date_ary['PHP_date'] = date('Y-m-d H i s') ;
+        $date_ary['PHP_date'] = date('Y-m-d H:i:s') ;
 
         $time = time() ;
         $date_ary['PHP_time'] = $time ;
@@ -99,12 +107,27 @@ class Date_test extends CI_Controller {
         // Takes a timezone reference (for a list of valid timezones，see the "Timezone Reference" below) and returns the number of hours offset from UTC.
         $date_ary['PHP_timezones'] = timezones('UM8') ;
 
+
+        $dt = new DateTime();
+
+        $TPTTZ = new DateTimeZone('Asia/Taipei');
+        $dt->setTimezone($TPTTZ);
+        $date_ary['Asia/Taipei'] = $dt->format(DATE_RFC822);
+
+        $MNTTZ = new DateTimeZone('America/Denver');
+        $dt->setTimezone($MNTTZ);
+        $date_ary['America/Denver'] = $dt->format(DATE_RFC822);
+
+        $ESTTZ = new DateTimeZone('America/New_York');
+        $dt->setTimezone($ESTTZ);
+        $date_ary['America/New_York'] = $dt->format(DATE_RFC822);
+
         return $date_ary ;
     }
 
     private function _str_replace($str){
-        $order = array("\r\n", "\n", "\r", "￼", "<br/>", "<br>");
-        $str = str_replace($order,"<br />",$str);
+        $order = array("\r\n", "\n", "\r", "￼", "<br />", "<br/>");
+        $str = str_replace($order,"<br>",$str);// HTML5 寫法
         return $str;
     }
 }
