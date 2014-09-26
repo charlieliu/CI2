@@ -2,6 +2,8 @@
 
 class Js_test extends CI_Controller {
 
+    public $current_title = 'JS 測試';
+
     public function __construct()
     {
         parent::__construct();
@@ -44,6 +46,7 @@ class Js_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'JS 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
@@ -209,6 +212,7 @@ class Js_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title'         => '利用 jQuery 來製作網頁頁籤(Tab)',
+            'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
             'current_fun'   => strtolower(__FUNCTION__), // 當下function
             'nav'           => $nav,
@@ -230,6 +234,7 @@ class Js_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'JS Object 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => '',
@@ -250,6 +255,7 @@ class Js_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'JS Object 測試2',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => '',
@@ -269,6 +275,7 @@ class Js_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'JS file upload 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => '',
@@ -310,11 +317,6 @@ class Js_test extends CI_Controller {
         $html_date['js_ie'][] = 'js/jQuery-File-Upload-9.7.2/js/cors/jquery.xdr-transport.js';
 
         $this->parser->parse('index_view', $html_date ) ;
-    }
-
-    public function demo()
-    {
-        $this->parser->parse('file_upload_2_view', array() ) ;
     }
 
     public function do_upload()
@@ -455,6 +457,7 @@ class Js_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'JS file upload 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => '',

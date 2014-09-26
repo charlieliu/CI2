@@ -2,6 +2,8 @@
 
 class Php_test extends CI_Controller {
 
+    public $current_title = 'PHP 測試';
+
     public function __construct()
     {
         parent::__construct();
@@ -52,6 +54,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'PHP 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
@@ -153,6 +156,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title'         => 'Floating-point',
+            'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
             'current_fun'   => strtolower(__FUNCTION__), // 當下function
             'content'       => $content,
@@ -202,6 +206,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => '時間格式顯示',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
@@ -355,6 +360,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'CI session 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
@@ -569,6 +575,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title'         => 'count() and sizeof()',
+            'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
             'current_fun'   => strtolower(__FUNCTION__), // 當下function
             'content'       => $content,
@@ -677,6 +684,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'Hash 測試',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
@@ -733,6 +741,7 @@ class Php_test extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title'         => 'if else and switch',
+            'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
             'current_fun'   => strtolower(__FUNCTION__), // 當下function
             'content'       => $content,

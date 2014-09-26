@@ -2,6 +2,8 @@
 
 class Welcome extends CI_Controller {
 
+    public $current_title = '首頁';
+
     public function __construct()
     {
         parent::__construct();
@@ -52,6 +54,7 @@ class Welcome extends CI_Controller {
         // 標題 內容顯示
         $data = array(
             'title' => 'Welcome to CodeIgniter',
+            'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'content' => $content,
