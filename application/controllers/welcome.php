@@ -50,6 +50,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'JS 測試',
             'content_url' => 'js_test'
         ) ;
+        $content[] = array(
+            'content_value' => 'login',
+            'content_title' => 'Login 測試',
+            'content_url' => 'login'
+        ) ;
 
         // 標題 內容顯示
         $data = array(

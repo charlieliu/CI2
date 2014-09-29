@@ -6,7 +6,7 @@
  */
 class Session_test_model extends CI_Model {
 
-     function __construct()
+    function __construct()
     {
         // 呼叫模型(Model)的建構函數
         parent::__construct();
