@@ -148,3 +148,4 @@ Safari 和 Chrome 支持替代的 @-webkit-keyframes 规则。
         transform: rotate(360deg);
     }
 }
+table td, table th {padding:.5em;}

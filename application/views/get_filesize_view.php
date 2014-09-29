@@ -77,15 +77,15 @@
             }
             else if( bytes<(1024*1024) )
             {
-                return (bytes/1024).toFixed(2) + ' kb';
+                return bytes + ' bytes' + '(' + (bytes/1024).toFixed(2) + ' kb)';
             }
             else if( bytes<(1024*1024*1024) )
             {
-                return (bytes/(1024*1024)).toFixed(2) + ' MB';
+                return bytes + ' bytes' + '(' + (bytes/(1024*1024)).toFixed(2) + ' MB)';
             }
             else
             {
-                return (bytes/(1024*1024*1024)).toFixed(2) + ' GB';
+                return bytes + ' bytes' + '(' + (bytes/(1024*1024*1024)).toFixed(2) + ' GB)';
             }
         }
 
@@ -95,7 +95,7 @@
             $('.fileupload').each(function(){
                 totalsize += getFileSize(this);
             });
-            $('#totalsize').html(totalsize+'bytes('+getFormate(totalsize)+')');
+            $('#totalsize').html(getFormate(totalsize));
             totalsize = null;
         }
 
@@ -111,7 +111,7 @@
         }
 
         $('.fileupload').change(function(){
-            $(this).siblings('div').find('span').html(getFileSize(this)+'bytes('+getFormate(getFileSize(this))+')');
+            $(this).siblings('div').find('span').html(getFormate(getFileSize(this)));
             getTotalSize();
             $('#fileinfo1').html(getFileinfo(this));
             $('#fileinfo2').html(getInfo(this));
