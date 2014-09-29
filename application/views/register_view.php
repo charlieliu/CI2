@@ -75,7 +75,7 @@
                     function(response){
                         if(response.status!='100')
                         {
-
+                            alert(response.status);
                         }
                         else
                         {

@@ -14,15 +14,15 @@ class Login_model extends CI_Model {
 
     public function getUsers($input='')
     {
-        if( !empty($input['username']) )
+        if( !empty($input) )
         {
-            $sql = 'SELECT * FROM user  WHERE `username`='.$input['username'];
+            $sql = 'SELECT * FROM user  WHERE `username`='.$input;
             $query = $this->db->query($sql);
-            return $query->result();
+            return array('data'=>$query->result(),'total'=>$query->num_rows());
         }
         else
         {
-            return array();
+            return array('data'=>array(),'total'=>0);
         }
     }
 

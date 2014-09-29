@@ -57,7 +57,7 @@ class Login extends CI_Controller {
         }
         $post['password'] = $post['pwd'];
         $this->load->model('Login_model','',TRUE);
-        $content = $this->Login_model->getUsers($post);
+        $content = $this->Login_model->getUsers($post['username']);
         var_dump($content);
     }
 
@@ -89,38 +89,49 @@ class Login extends CI_Controller {
         $post = $this->trim_val($post);
         if( empty($post['username']) )
         {
-            exit('name is empty');
+            $status = 'name is empty';
         }
-        if( empty($post['pwd']) )
+        else if( empty($post['pwd']) )
         {
-            exit('pwd is empty');
+            $status = 'pwd is empty';
         }
-        if( empty($post['repwd']) )
+        else if( empty($post['repwd']) )
         {
-            exit('repwd is empty');
+            $status = 'repwd is empty';
         }
-        if( empty($post['email']) )
+        else if( empty($post['email']) )
         {
-            exit('email is empty');
+            $status = 'email is empty';
         }
-        if( empty($post['addr']) )
+        else if( empty($post['addr']) )
         {
-            exit('addr is empty');
+            $status = 'addr is empty';
         }
-        if( $post['pwd']!=$post['repwd'] )
+        else if( $post['pwd']!=$post['repwd'] )
         {
-            exit('pwd and repwd is different');
+            $status = 'pwd and repwd is different';
         }
-        $salt = rand(101,999);
-        $data = array(
-            'username'=>$post['username'],
-            'salt'=>$salt,
-            'password'=>md5($salt.$post['pwd']),
-            'email'=>$post['email'],
-            'addr'=>$post['addr'],
-        );
-        $this->load->model('Login_model','',TRUE);
-        $status = $this->Login_model->insUsers($data);
+        else
+        {
+            $this->load->model('Login_model','',TRUE);
+            $content = $this->Login_model->getUsers($post['username']);
+            if( $content['total']>0 )
+            {
+                $status = 'username has be used';
+            }
+            else
+            {
+                $salt = rand(101,999);
+                $data = array(
+                    'username'=>$post['username'],
+                    'salt'=>$salt,
+                    'password'=>md5($salt.$post['pwd']),
+                    'email'=>$post['email'],
+                    'addr'=>$post['addr'],
+                );
+                $status = $this->Login_model->insUsers($data);
+            }
+        }
         echo json_encode(array('status'=>$status,));
     }
 
