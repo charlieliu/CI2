@@ -28,9 +28,9 @@
                 <th>$(this)</th>
             </tr>
             <tr valign="top">
-                <td id="filesinfo"></td>
-                <td id="fileinfo"></td>
+                <td id="fileinfo1"></td>
                 <td id="fileinfo2"></td>
+                <td id="fileinfo3"></td>
             </tr>
         </table>
     </div>
@@ -47,28 +47,26 @@
             else
                 return 0;
         }
+
         function getFileinfo(obj)
         {
-            var filesobj = [], v;
+            var arr = [], v;
             if( obj.files[0]!=null && 'number'==typeof(obj.files[0].size))
             {
                 for(var n in obj.files[0] )
                 {
                     v = obj.files[0].n;
-                    filesobj.push('{ "'+n+'" : "'+v+'" }');
+                    arr.push(n+' : '+v);
                 }
 
-                filesobj.push('"obj.files[0].webkitRelativePath" : "'+obj.files[0].webkitRelativePath+'"');
-                filesobj.push('"obj.files[0].lastModifiedDate" : "'+obj.files[0].lastModifiedDate+'"');
-                filesobj.push('"obj.files[0].name" : "'+obj.files[0].name+'"');
-                filesobj.push('"obj.files[0].type" : "'+obj.files[0].type+'"');
-                filesobj.push('"obj.files[0].size" : "'+obj.files[0].size+'"');
-                filesobj.push('"obj.files[0].lice" : "'+obj.files[0].slice+'"');
+                arr.push('obj.files[0].webkitRelativePath : '+obj.files[0].webkitRelativePath );
+                arr.push('obj.files[0].lastModifiedDate : '+obj.files[0].lastModifiedDate );
+                arr.push('obj.files[0].name : '+obj.files[0].name );
+                arr.push('obj.files[0].type : '+obj.files[0].type );
+                arr.push('obj.files[0].size : '+obj.files[0].size );
+                arr.push('obj.files[0].lice : '+obj.files[0].slice );
             }
-            $('#filesinfo').html(filesobj.join('<br>'));
-            filesobj = null;
-            n = null;
-            v = null;
+            return arr.join('<br>');
         }
 
         function getFormate(bytes)
@@ -97,30 +95,27 @@
             $('.fileupload').each(function(){
                 totalsize += getFileSize(this);
             });
-            $('#totalsize').html(getFormate(totalsize)+'('+totalsize+')');
+            $('#totalsize').html(totalsize+'bytes('+getFormate(totalsize)+')');
             totalsize = null;
         }
 
         function getInfo(obj)
         {
-            var fileobj = [], v;
+            var arr = [], v;
             for(var n in obj )
             {
                 v = obj.n;
-                fileobj.push('{ "'+n+'" : "'+v+'" }');
+                arr.push(n+' : '+v);
             }
-            return fileobj.join('<br>');
-            fileobj = null;
-            n = null;
-            v = null;
+            return arr.sort().join('<br>');
         }
 
         $('.fileupload').change(function(){
-            $(this).siblings('div').find('span').html(getFormate(getFileSize(this))+'('+getFileSize(this)+')');
-            getFileinfo(this);
+            $(this).siblings('div').find('span').html(getFileSize(this)+'bytes('+getFormate(getFileSize(this))+')');
             getTotalSize();
-            $('#fileinfo').html(getInfo(this));
-            $('#fileinfo2').html(getInfo($(this)));
+            $('#fileinfo1').html(getFileinfo(this));
+            $('#fileinfo2').html(getInfo(this));
+            $('#fileinfo3').html(getInfo($(this)));
         });
     }
     else
