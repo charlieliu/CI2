@@ -33,38 +33,60 @@
 </div>
 <script type="text/javascript">
     <!--
-    $('#btn_submit').click(function(event){
-        if( event.preventDefault() ) event.preventDefault(); else event.returnValue = false;
-        if( $.trim($('#username').val())=='' ){
-            alert('name is empty');
-            $('#username').focus();
-        }
-        else if( $.trim($('#pwd').val())=='' ){
-            alert('pwd is empty');
-            $('#pwd').focus();
-        }
-        else if( $.trim($('#repwd').val())=='' ){
-            alert('repwd is empty');
-            $('#repwd').focus();
-        }
-        else if( $.trim($('#email').val())=='' ){
-            alert('email is empty');
-            $('#email').focus();
-        }
-        else if( $.trim($('#addr').val())=='' ){
-            alert('addr is empty');
-            $('#addr').focus();
-        }
-        else if( $('#pwd').val()!=$('#repwd').val() )
-        {
-            alert('pwd and repwd is different');
-            $('#pwd').focus();
-        }
-        else
-        {
-            $('#frm1').submit();
-        }
+    $(function(){
+        $('#btn_submit').click(function(event){
+            if( event.preventDefault() ) event.preventDefault(); else event.returnValue = false;
+            if( $.trim($('#username').val())=='' ){
+                alert('name is empty');
+                $('#username').focus();
+            }
+            else if( $.trim($('#pwd').val())=='' ){
+                alert('pwd is empty');
+                $('#pwd').focus();
+            }
+            else if( $.trim($('#repwd').val())=='' ){
+                alert('repwd is empty');
+                $('#repwd').focus();
+            }
+            else if( $.trim($('#email').val())=='' ){
+                alert('email is empty');
+                $('#email').focus();
+            }
+            else if( $.trim($('#addr').val())=='' ){
+                alert('addr is empty');
+                $('#addr').focus();
+            }
+            else if( $('#pwd').val()!=$('#repwd').val() )
+            {
+                alert('pwd and repwd is different');
+                $('#pwd').focus();
+            }
+            else
+            {
+                $.post(
+                    "<?=base_url()?>login/{btn_url}",
+                    {
+                        "username":$('#username').val(),
+                        "pwd":$('#pwd').val(),
+                        "repwd":$('#repwd').val(),
+                        "email":$('#email').val(),
+                        "addr":$('#addr').val()
+                    },
+                    function(response){
+                        if(response.status!='100')
+                        {
+
+                        }
+                        else
+                        {
+                            alert(response.status);
+                        }
+                    },
+                    "json"
+                );
+            }
+        });
+        $('#addr').css('width',$('#email').css('width'));
     });
-    $('#addr').css('width',$('#email').css('width'));
     -->
 </script>

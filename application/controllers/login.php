@@ -70,7 +70,7 @@ class Login extends CI_Controller {
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'btn_value' => 'create',
-            'btn_url' => 'check_login',
+            'btn_url' => 'do_register',
         );
 
         // Template parser class
@@ -79,7 +79,49 @@ class Login extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
+        $html_date['js'][] = 'js/jquery.form.js';
         $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function do_register()
+    {
+        $post = $this->input->post();
+        $post = $this->trim_val($post);
+        if( empty($post['username']) )
+        {
+            exit('name is empty');
+        }
+        if( empty($post['pwd']) )
+        {
+            exit('pwd is empty');
+        }
+        if( empty($post['repwd']) )
+        {
+            exit('repwd is empty');
+        }
+        if( empty($post['email']) )
+        {
+            exit('email is empty');
+        }
+        if( empty($post['addr']) )
+        {
+            exit('addr is empty');
+        }
+        if( $post['pwd']!=$post['repwd'] )
+        {
+            exit('pwd and repwd is different');
+        }
+        $salt = rand(101,999);
+        $data = array(
+            'username'=>$post['username'],
+            'salt'=>$salt,
+            'password'=>md5($salt.$post['pwd']),
+            'email'=>$post['email'],
+            'addr'=>$post['addr'],
+        );
+        $this->load->model('Login_model','',TRUE);
+        $status = $this->Login_model->insUsers($data);
+        echo json_encode(array('status'=>$status,));
     }
 
     public function trim_val($in_data)

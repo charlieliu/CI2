@@ -12,11 +12,11 @@ class Login_model extends CI_Model {
         parent::__construct();
     }
 
-    public function getUsers($data='')
+    public function getUsers($input='')
     {
-        if( !empty($data['username']) )
+        if( !empty($input['username']) )
         {
-            $sql = 'SELECT * FROM user  WHERE `username`='.$data['username'];
+            $sql = 'SELECT * FROM user  WHERE `username`='.$input['username'];
             $query = $this->db->query($sql);
             return $query->result();
         }
@@ -26,11 +26,42 @@ class Login_model extends CI_Model {
         }
     }
 
-    public function insUsers()
+    public function insUsers($input=array())
     {
-        $sql = "SELECT * FROM user  WHERE 1";
-        $query = $this->db->query($sql);
-        return $query->result();
+        if( $input['username']=='' )
+        {
+            return 201;
+        }
+        else if( $input['password']=='' )
+        {
+            return 202;
+        }
+        else if( empty($input['email']) )
+        {
+            return 203;
+        }
+        else if( empty($input['addr']) )
+        {
+            return 204;
+        }
+        else
+        {
+            $data = array(
+                'username'=>$input['username'],
+                'salt'=>$input['salt'],
+                'password'=>$input['password'],
+                'email'=>$input['email'],
+                'addr'=>$input['addr'],
+            );
+            if( $this->db->insert('user', $data) )
+            {
+                return 100;
+            }
+            else
+            {
+                return 300;
+            }
+        }
     }
 }
 ?>

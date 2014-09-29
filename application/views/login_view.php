@@ -9,7 +9,7 @@
             密碼 : <input type="password" id="pwd" name="pwd" placeholder="pwd">
         </div>
         <input id="btn_submit" class="btn btn-primary" type="submit" value="{btn_value}">
-        <a class="btn btn-warning" href="<?=base_url()?>login/register">註冊</a>
+        <a class="btn btn-warning" href="<?=base_url()?>login/register">Create an new account</a>
     </form>
 </div>
 <script type="text/javascript">
