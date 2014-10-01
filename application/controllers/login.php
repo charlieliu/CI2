@@ -103,9 +103,13 @@ class Login extends CI_Controller {
         {
             $status = 'email is empty';
         }
+        else if( preg_match("/^(\w|\.|\+|\-)+@(\w|\-)+\.(\w|\.|\-)+$/", $post['email']) )
+        {
+            $status = 'email address error';
+        }
         else if( empty($post['addr']) )
         {
-            $status = 'addr is empty';
+            $status = 'address is empty';
         }
         else if( $post['pwd']!=$post['repwd'] )
         {
