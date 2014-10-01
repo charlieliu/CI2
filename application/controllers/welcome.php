@@ -7,6 +7,7 @@ class Welcome extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        header('Content-Type: text/html; charset=utf8');
         $this->load->library('session');
         $this->load->helper('url');
     }

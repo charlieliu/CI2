@@ -7,6 +7,7 @@ class Js_test extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        header('Content-Type: text/html; charset=utf8');
         $this->load->library(array('parser','session'));
         $this->load->helper(array('form', 'url'));
     }

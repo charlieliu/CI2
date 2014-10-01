@@ -10,6 +10,7 @@ class Login_model extends CI_Model {
     {
         // 呼叫模型(Model)的建構函數
         parent::__construct();
+        header('Content-Type: text/html; charset=utf8');
     }
 
     public function getUsers($input='')
