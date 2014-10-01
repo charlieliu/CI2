@@ -9,8 +9,10 @@ class Login extends CI_Controller {
         parent::__construct();
         header('Content-Type: text/html; charset=utf8');
         // load parser
-        $this->load->library(array('parser','session'));
+        $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
+
+        $this->pub->check_session();
     }
 
     /**

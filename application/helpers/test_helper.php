@@ -54,6 +54,5 @@ if(!function_exists('load_html_file'))
         }
         return $html;
     }
-
 }
 ?>

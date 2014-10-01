@@ -8,8 +8,11 @@ class Welcome extends CI_Controller {
     {
         parent::__construct();
         header('Content-Type: text/html; charset=utf8');
-        $this->load->library('session');
-        $this->load->helper('url');
+        // load parser
+        $this->load->library(array('parser','session', 'pub'));
+        $this->load->helper(array('form', 'url'));
+
+        $this->pub->check_session();
     }
 
     /**
@@ -56,6 +59,11 @@ class Welcome extends CI_Controller {
             'content_title' => 'Login 測試',
             'content_url' => 'login'
         ) ;
+        $content[] = array(
+            'content_value' => 'phpinfo',
+            'content_title' => 'phpinfo',
+            'content_url' => 'welcome/phpinfo'
+        ) ;
 
         // 標題 內容顯示
         $data = array(
@@ -73,6 +81,11 @@ class Welcome extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
         $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function phpinfo()
+    {
+        phpinfo();
     }
 }
 ?>

@@ -9,8 +9,10 @@ class Php_test extends CI_Controller {
         parent::__construct();
         header('Content-Type: text/html; charset=utf8');
         // load parser
-        $this->load->library(array('parser','session'));
+        $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
+
+        $this->pub->check_session();
     }
 
     /**
@@ -356,6 +358,10 @@ class Php_test extends CI_Controller {
         $content[] = array(
             'content_title' => 'SESSION_LOGS',
             'content_value' => $this->_str_replace(print_r($SESSION_LOGS,true))
+        ) ;
+        $content[] = array(
+            'content_title' => '_SERVER',
+            'content_value' => $this->_str_replace(print_r($_SERVER,true))
         ) ;
 
         // 標題 內容顯示

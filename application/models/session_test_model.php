@@ -110,5 +110,45 @@ class Session_test_model extends CI_Model {
             //$this->db->delete('SESSION_LOGS');
         }
     }
+
+    public function get_session_info($session_id='')
+    {
+        if( !empty($session_id) )
+        {
+            $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."'";
+            $query = $this->db->query($sql);
+            return array('data'=>$query->result(),'total'=>$query->num_rows());
+        }
+        else
+        {
+            return array('data'=>array(),'total'=>0);
+        }
+    }
+
+    public function add_session_info($session_id='')
+    {
+        if( empty($session_id) )
+        {
+            return 200;
+        }
+        else
+        {
+            $data = array(
+                'SESSION_ID'=>$session_id,
+                'IP_ADDRESS'=>$_SERVER['REMOTE_ADDR'],
+                'USER_AGENT'=>$_SERVER["HTTP_USER_AGENT"],
+                'ADDTIME'   =>'now()',
+                'UPDATETIME'=>'',
+            );
+            if( $this->db->insert('SESSION_LOGS', $data) )
+            {
+                return 100;
+            }
+            else
+            {
+                return 300;
+            }
+        }
+    }
 }
 ?>
