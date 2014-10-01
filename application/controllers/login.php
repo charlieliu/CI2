@@ -91,6 +91,10 @@ class Login extends CI_Controller {
         {
             $status = 'name is empty';
         }
+        else if( !preg_match("/^[\x{4e00}-\x{9fa5}|\w|\.|\-]*$/", $post['username']) )
+        {
+            $status = 'name 限用中英文數字_.-';
+        }
         else if( empty($post['pwd']) )
         {
             $status = 'pwd is empty';
@@ -103,7 +107,7 @@ class Login extends CI_Controller {
         {
             $status = 'email is empty';
         }
-        else if( preg_match("/^(\w|\.|\+|\-)+@(\w|\-)+\.(\w|\.|\-)+$/", $post['email']) )
+        else if( !preg_match("/^(\w|\.|\+|\-)+@(\w|\-)+\.(\w|\.|\-)+$/", $post['email']) )
         {
             $status = 'email address error';
         }
