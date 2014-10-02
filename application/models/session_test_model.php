@@ -10,6 +10,7 @@ class Session_test_model extends CI_Model {
     {
         // 呼叫模型(Model)的建構函數
         parent::__construct();
+        $this->load->database();
     }
 
     public function get_session_num($SESSION_LOGS=null)
@@ -22,6 +23,7 @@ class Session_test_model extends CI_Model {
 
     public function session_test_updata($SESSION_LOGS=null)
     {
+        /*
         $SESSION_LOGS = !is_null($SESSION_LOGS) ? $SESSION_LOGS : '' ;
         if( empty($SESSION_LOGS) )
         {
@@ -47,10 +49,12 @@ class Session_test_model extends CI_Model {
             $count_num = $this->get_session_num($SESSION_LOGS) ;
             return $count_num ;
         }
+        */
     }
 
     public function delete_old_session()
     {
+        /*
         // 找出存活SESSION
         $isalive = array();
 
@@ -109,13 +113,14 @@ class Session_test_model extends CI_Model {
         {
             //$this->db->delete('SESSION_LOGS');
         }
+        */
     }
 
     public function get_session_info($session_id='')
     {
         if( !empty($session_id) )
         {
-            $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."'";
+            $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."';";
             $query = $this->db->query($sql);
             return array('data'=>$query->result(),'total'=>$query->num_rows());
         }
@@ -133,14 +138,18 @@ class Session_test_model extends CI_Model {
         }
         else
         {
+            $dt = new DateTime();
+            $dt = $dt->format('U');
             $data = array(
                 'SESSION_ID'=>$session_id,
                 'IP_ADDRESS'=>$_SERVER['REMOTE_ADDR'],
                 'USER_AGENT'=>$_SERVER["HTTP_USER_AGENT"],
-                'ADDTIME'   =>'now()',
+                'ADDTIME'   =>$dt,
                 'UPDATETIME'=>'',
+                'IS_ALIVE'  =>1,
             );
-            if( $this->db->insert('SESSION_LOGS', $data) )
+            $result = $this->db->insert('SESSION_LOGS', $data);
+            if( $result )
             {
                 return 100;
             }
@@ -148,6 +157,48 @@ class Session_test_model extends CI_Model {
             {
                 return 300;
             }
+        }
+    }
+
+    public function mod_session_info($session_id='')
+    {
+        if( empty($session_id) )
+        {
+            return 200;
+        }
+        else
+        {
+            $dt = new DateTime();
+            $dt = $dt->format('U');
+            $this->db->set('IS_ALIVE', 1, false);// 強制CI不處理
+            $this->db->set('UPDATETIME', $dt, false);// 強制CI不處理
+            // CI 更新用法
+            $this->db->where('SESSION_ID', $session_id);
+            $result = $this->db->update('SESSION_LOGS');
+            if( $result )
+            {
+                return 100;
+            }
+            else
+            {
+                return 300;
+            }
+        }
+    }
+
+    public function del_session_info()
+    {
+        $dt = new DateTime();
+        $dt = $dt->format('U');
+        $sql = 'UPDATE `SESSION_LOGS` SET `IS_ALIVE`=0 WHERE `UPDATETIME`<'.($dt-120).' AND `IS_ALIVE`=1;';
+        $query = $this->db->query($sql);
+        if( $query )
+        {
+            return 100;
+        }
+        else
+        {
+            return 300;
         }
     }
 }

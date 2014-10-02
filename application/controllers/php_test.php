@@ -291,8 +291,6 @@ class Php_test extends CI_Controller {
 
     public function session_test()
     {
-        // 呼叫 session_test_model
-        $this->load->model('session_test_model','',TRUE);
         /*
         // 增加自訂Session資料
         $newdata = array(
@@ -327,9 +325,12 @@ class Php_test extends CI_Controller {
 
         // DB測試
         // 刪除1分鐘內沒反應的 SESSION_LOGS
-        //$this->session_test_model->delete_old_session() ;
+        // $this->session_test_model->delete_old_session() ;
 
         // 目前SESSION資料
+        // 呼叫 session_test_model
+        $SESSION_LOGS = $this->pub->get_session_info($this->session->userdata('session_id'));
+        /*
         $SESSION_LOGS = array(
            'SESSION_ID'     => $session_id ,
            'IP_ADDRESS'     => $ip_address ,
@@ -337,7 +338,7 @@ class Php_test extends CI_Controller {
         );
 
         // 更新DB
-        $count_num = $this->session_test_model->session_test_updata($SESSION_LOGS) ;
+        //$count_num = $this->session_test_model->session_test_updata($SESSION_LOGS) ;
 
         // SESSION_LOGS
         if( $count_num!=false )
@@ -348,6 +349,7 @@ class Php_test extends CI_Controller {
         {
             $SESSION_LOGS['count_num'] = 'false' ;
         }
+        */
 
         // 顯示資料
         $content = array();
