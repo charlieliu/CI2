@@ -64,6 +64,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // VIEW
     public function abgne_tab()
     {
         // 顯示資料
@@ -231,6 +232,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // VIEW js_object_test
     public function js_object_test()
     {
 
@@ -252,6 +254,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // VIEW js_object_test2
     public function js_object_test2()
     {
 
@@ -273,6 +276,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // VIEW file_upload
     public function file_upload()
     {
         // 標題 內容顯示
@@ -322,73 +326,19 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // 上傳檔案
     public function do_upload()
     {
-        /*
-        $this->load->library('session');
-        $this->session->set_userdata('do_upload', json_encode($_FILES));
-        */
-
         $upload_path_url = base_url() . 'uploads/';
 
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = '*';
-        $config['encrypt_name'] = TRUE;
-        $config['max_size'] = 0;
+        $config['upload_path'] = './uploads/';// 儲存路徑
+        $config['allowed_types'] = '*';// 不限制file type
+        $config['encrypt_name'] = TRUE;// 隨機命名
+        $config['max_size'] = 0;// 不限檔案大小
 
         $this->load->library('upload', $config);
 
         $files = array();
-        /*
-        foreach ( $_FILES as $k=>$v ) {
-
-            unset($this->upload->error_msg);
-
-            if ( ! $this->upload->do_upload($k))
-            {
-                $error = $this->upload->display_errors();
-                $error = str_replace("<p>","", $error);
-                $error = str_replace("</p>","", $error);
-                $info->error = $error;
-                $files[] = $info;
-            }
-            else
-            {
-                $data = $this->upload->data();
-
-                $thumbnailUrl = '' ;
-                if( !empty($data['is_image']) )
-                {
-                    // to re-size for thumbnail images un-comment and set path here and in json array
-                    $config = array();
-                    $config['image_library'] = 'gd2';
-                    $config['source_image'] = $data['full_path'];
-                    $config['create_thumb'] = TRUE;
-                    $config['new_image'] = $data['file_path'] . 'thumbs/';
-                    $config['maintain_ratio'] = TRUE;
-                    $config['thumb_marker'] = '';
-                    $config['width'] = 75;
-                    $config['height'] = 50;
-                    $this->load->library('image_lib', $config);
-                    $this->image_lib->resize();
-                    $thumbnailUrl = $upload_path_url . 'thumbs/' . $data['file_name'] ;
-                }
-
-                //set the data for the json array
-                $info->name = $data['file_name'];
-                $info->size = $data['file_size'];
-                $info->osize = $v['size'];
-                $info->type = $data['file_type'];
-                $info->url = $upload_path_url . $data['file_name'];
-                // I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
-                $info->thumbnailUrl = $thumbnailUrl;
-                $info->deleteUrl = base_url() . 'file_upload/deleteImage/' . $data['file_name'];
-                $info->deleteType = 'DELETE';
-                $info->error = null;
-                $files[] = $info;
-            }
-        }
-        */
         unset($this->upload->error_msg);
 
         if ( ! $this->upload->do_upload('files'))
@@ -441,6 +391,7 @@ class Js_test extends CI_Controller {
         }
     }
 
+    // 刪除檔案
     public function deleteImage($file) {//gets the job done but you might want to add error checking and security
         $success = unlink(FCPATH . 'uploads/' . $file);
         if( file_exists(FCPATH . 'uploads/thumbs/' . $file) )
@@ -455,6 +406,7 @@ class Js_test extends CI_Controller {
         echo json_encode(array($info));
     }
 
+    // VIEW 檔案大小
     public function get_filesize()
     {
         // 標題 內容顯示
