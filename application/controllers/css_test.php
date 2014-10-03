@@ -2,6 +2,8 @@
 
 class Css_test extends CI_Controller {
 
+    public $current_title = 'CSS 測試';
+
     public function __construct()
     {
         parent::__construct();
@@ -19,6 +21,68 @@ class Css_test extends CI_Controller {
      */
     public function index()
     {
+        // 顯示資料
+        $content = array();
+        $content[] = array(
+            'content_title' => '轉圈圈',
+            'content_url' => 'css_test/css_test_1'
+        );
+        $content[] = array(
+            'content_title' => '用CSS反轉',
+            'content_url' => 'css_test/css_test_2'
+        );
+        $content[] = array(
+            'content_title' => '用 CSS3 做表單',
+            'content_url' => 'css_test/css_test_3'
+        );
+        $content[] = array(
+            'content_title' => '用 CSS3 做畫廊',
+            'content_url' => 'css_test/css_test_4'
+        );
+        $content[] = array(
+            'content_title' => 'CSS3 2D Transforms',
+            'content_url' => 'css_test/css_test_5'
+        );
+
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'CSS 測試',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => $content,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('welcome_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function css_test_1()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'CSS效果測試',
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'current_title' => $this->current_title,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('css_test/css_test_1_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function css_test_2()
+    {
         // load parser
         $this->load->library('parser');
 
@@ -34,12 +98,70 @@ class Css_test extends CI_Controller {
             'title' => 'CSS效果測試',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'current_title' => $this->current_title,
             'content' => $content,
         );
 
         // Template parser class
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('css_test_view', $data, true);
+        $content_div = $this->parser->parse('css_test/css_test_2_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function css_test_3()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'CSS效果測試',
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'current_title' => $this->current_title,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('css_test/css_test_3_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function css_test_4()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'CSS效果測試',
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'current_title' => $this->current_title,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('css_test/css_test_4_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function css_test_5()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'CSS效果測試',
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'current_title' => $this->current_title,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('css_test/css_test_5_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
