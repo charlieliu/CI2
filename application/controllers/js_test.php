@@ -21,29 +21,28 @@ class Js_test extends CI_Controller {
     {
 
         $content[] = array(
-            'content_value' => 'abgne_tab',
             'content_title' => '利用 jQuery 來製作網頁頁籤(Tab)',
             'content_url' => 'js_test/abgne_tab'
         ) ;
         $content[] = array(
-            'content_value' => 'JS_object_test',
             'content_title' => 'JS object 測試',
             'content_url' => 'js_test/js_object_test'
         ) ;
         $content[] = array(
-            'content_value' => 'JS_object_test2',
             'content_title' => 'JS object 測試2',
             'content_url' => 'js_test/js_object_test2'
         ) ;
         $content[] = array(
-            'content_value' => 'JS_file_upload',
             'content_title' => 'jQuery file_upload 套件 測試',
             'content_url' => 'js_test/file_upload'
         ) ;
         $content[] = array(
-            'content_value' => 'get_filesize',
             'content_title' => '檔案大小',
             'content_url' => 'js_test/get_filesize'
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試',
+            'content_url' => 'js_test/jquery_test'
         ) ;
 
         // 標題 內容顯示
@@ -422,6 +421,28 @@ class Js_test extends CI_Controller {
 
         // 中間挖掉的部分
         $content_div = $this->parser->parse('get_filesize_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function jquery_test()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'jQuery 測試',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => '',
+            '_FILES'=>$_FILES,
+            'base_url'=>base_url(),
+        );
+
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('jquery_test_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
