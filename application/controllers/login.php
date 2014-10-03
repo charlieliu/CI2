@@ -11,8 +11,7 @@ class Login extends CI_Controller {
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
-
-        $this->pub->check_session();
+        $this->pub->check_session($this->session->userdata('session_id'));
     }
 
     /**
@@ -49,6 +48,7 @@ class Login extends CI_Controller {
     public function check_login()
     {
         $post = $this->input->post();
+        $post = $this->pub->trim_val($post);
         if( empty($post['username']) )
         {
             exit('name is empty');
@@ -88,7 +88,7 @@ class Login extends CI_Controller {
     public function do_register()
     {
         $post = $this->input->post();
-        $post = $this->trim_val($post);
+        $post = $this->pub->trim_val($post);
         if( empty($post['username']) )
         {
             $status = 'name is empty';
@@ -143,72 +143,6 @@ class Login extends CI_Controller {
             }
         }
         echo json_encode(array('status'=>$status,));
-    }
-
-    public function trim_val($in_data)
-    {
-        if( !empty($in_data) )
-        {
-            if( is_array($in_data) )
-            {
-                foreach ($in_data as $key=>$value) {
-                    $in_data[$key] = trim($value);
-                }
-                return $in_data;
-            }
-            else
-            {
-                return trim($in_data);
-            }
-        }
-        else
-        {
-            return $in_data;
-        }
-    }
-
-    public function urldecode_val($in_data)
-    {
-        if( !empty($in_data) )
-        {
-            if( is_array($in_data) )
-            {
-                foreach ($in_data as $key=>$value) {
-                    $in_data[$key] = urldecode($value);
-                }
-                return $in_data;
-            }
-            else
-            {
-                return urldecode($in_data);
-            }
-        }
-        else
-        {
-            return $in_data;
-        }
-    }
-
-    public function utf8_decode_val($in_data)
-    {
-        if( !empty($in_data) )
-        {
-            if( is_array($in_data) )
-            {
-                foreach ($in_data as $key=>$value) {
-                    $in_data[$key] = utf8_decode($value);
-                }
-                return $in_data;
-            }
-            else
-            {
-                return utf8_decode($in_data);
-            }
-        }
-        else
-        {
-            return $in_data;
-        }
     }
 }
 ?>

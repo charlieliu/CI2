@@ -1,57 +1,120 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pub extends CI_Controller {
-
-    function check_session()
+class Pub{
+    function CurlPost($postURL, $postdata='')
     {
-        $this->load->library('session');
-        $this->load->database();
-        $this->load->model('session_test_model','',TRUE);
-        $this->session_test_model->del_session_info();
-        $SESSION_LOGS = $this->get_session_info();
-        $data = !empty($SESSION_LOGS['data'][0]) ? $SESSION_LOGS['data'][0] : '' ;
+        $ch = curl_init();// create a new cURL resource
+        curl_setopt($ch, CURLOPT_URL, $postURL);// set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        if( $SESSION_LOGS['total']<1 )
+        $result = curl_exec($ch);// grab URL and pass it to the browser
+        curl_close($ch);// close cURL resource, and free up system resources
+        return $result;
+    }
+
+    public function check_session($session_id='')
+    {
+        if( empty($_SERVER["HTTP_USER_AGENT"]) )
         {
-            $add_session_info = $this->session_test_model->add_session_info($this->session->userdata('session_id'));
-            if( $add_session_info!=100 )
-            {
-                exit('add_session_info :'.$add_session_info);
-            }
-            $SESSION_LOGS = $this->get_session_info();
-            $data = !empty($SESSION_LOGS['data'][0]) ? $SESSION_LOGS['data'][0] : '' ;
+            exit(201);
         }
-        else if( $SESSION_LOGS['total']>1 )
+        else if( empty($_SERVER["REMOTE_ADDR"]) )
         {
-            exit('get_session_info :'.$SESSION_LOGS['total']);
+            exit(202);
         }
-        else if( $data->IP_ADDRESS!=$_SERVER['REMOTE_ADDR'] )
+        else if( empty($session_id) )
         {
-            $this->session->sess_destroy();// 銷毀Session
-            exit('IP_ADDRESS');
-        }
-        else if( $data->USER_AGENT!=$_SERVER["HTTP_USER_AGENT"] )
-        {
-            $this->session->sess_destroy();// 銷毀Session
-            exit('USER_AGENT');
+            exit(203);
         }
         else
         {
-            $mod_session_info = $this->session_test_model->mod_session_info($this->session->userdata('session_id'));
-            if( $mod_session_info!=100 )
+            $url = base_url().'php_test/check_session';
+            $data = array(
+                'session_id'=>$session_id,
+                'ip_address'=>$_SERVER["REMOTE_ADDR"],
+                'user_agent'=>$_SERVER["HTTP_USER_AGENT"],
+            );
+            $data = json_decode($this->CurlPost($url,$data));
+            if( $data->status!=100 )
             {
-                exit('mod_session_info :'.$mod_session_info);
+                var_dump($data);
+                exit();
             }
         }
-        return $data;
     }
 
-    function get_session_info()
+    function trim_val($in_data)
     {
-        $this->load->library('session');
-        $this->load->database();
-        $this->load->model('session_test_model','',TRUE);
-        return $this->session_test_model->get_session_info($this->session->userdata('session_id'));
+        if( !empty($in_data) )
+        {
+            if( is_array($in_data) )
+            {
+                foreach ($in_data as $key=>$value) {
+                    $in_data[$key] = trim($value);
+                }
+                return $in_data;
+            }
+            else
+            {
+                return trim($in_data);
+            }
+        }
+        else
+        {
+            return $in_data;
+        }
+    }
+
+    function urldecode_val($in_data)
+    {
+        if( !empty($in_data) )
+        {
+            if( is_array($in_data) )
+            {
+                foreach ($in_data as $key=>$value) {
+                    $in_data[$key] = urldecode($value);
+                }
+                return $in_data;
+            }
+            else
+            {
+                return urldecode($in_data);
+            }
+        }
+        else
+        {
+            return $in_data;
+        }
+    }
+
+    function utf8_decode_val($in_data)
+    {
+        if( !empty($in_data) )
+        {
+            if( is_array($in_data) )
+            {
+                foreach ($in_data as $key=>$value) {
+                    $in_data[$key] = utf8_decode($value);
+                }
+                return $in_data;
+            }
+            else
+            {
+                return utf8_decode($in_data);
+            }
+        }
+        else
+        {
+            return $in_data;
+        }
+    }
+
+    function o2a($input)
+    {
+        return get_object_vars($input);
     }
 }
 ?>

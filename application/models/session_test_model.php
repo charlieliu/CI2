@@ -21,6 +21,99 @@ class Session_test_model extends CI_Model {
         return $count_num ;
     }
 
+    public function get_session_info($session_id='')
+    {
+        if( !empty($session_id) )
+        {
+            $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."';";
+            $query = $this->db->query($sql);
+            return array('data'=>$query->result(),'total'=>$query->num_rows());
+        }
+        else
+        {
+            return array('data'=>array(),'total'=>0);
+        }
+    }
+
+    public function add_session_info($session_id='',$input=array())
+    {
+        $dt = new DateTime();
+        $dt = $dt->format('U');
+        if( empty($session_id) )
+        {
+            $status = 200;
+        }
+        else
+        {
+            $ip_address = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : $input['ip_address'] ;
+            $user_agent = !empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : $input['user_agent'] ;
+            $data = array(
+                'SESSION_ID'=>$session_id,
+                'IP_ADDRESS'=>$ip_address,
+                'USER_AGENT'=>$user_agent,
+                'ADDTIME'   =>$dt,
+                'UPDATETIME'=>'',
+                'IS_ALIVE'  =>1,
+            );
+            $result = $this->db->insert('SESSION_LOGS', $data);
+            if( $result )
+            {
+                $status = 100;
+            }
+            else
+            {
+                $status = 300;
+            }
+        }
+        return array('status'=>$status,'dt'=>$dt,'data'=>$data);
+    }
+
+    public function mod_session_info($session_id='')
+    {
+        if( empty($session_id) )
+        {
+            $status = 200;
+        }
+        else
+        {
+            $dt = new DateTime();
+            $dt = $dt->format('U');
+            $data = array(
+                'SESSION_ID'=>$session_id,
+                'UPDATETIME'=>$dt,
+                'IS_ALIVE'  =>1,
+            );
+            $this->db->where('SESSION_ID', $session_id);
+            $result = $this->db->update('SESSION_LOGS',$data);// CI 更新用法
+            if( $result )
+            {
+                $status = 100;
+            }
+            else
+            {
+                $status = 300;
+            }
+        }
+        return array('status'=>$status,'dt'=>$dt,'data'=>$data);
+    }
+
+    public function del_session_info()
+    {
+        $dt = new DateTime();
+        $dt = $dt->format('U');
+        $sql = 'UPDATE `SESSION_LOGS` SET `IS_ALIVE`=0 WHERE `UPDATETIME`<'.($dt-120).' AND `IS_ALIVE`=1;';
+        $query = $this->db->query($sql);
+        if( $query )
+        {
+            $status = 100;
+        }
+        else
+        {
+            $status = 300;
+        }
+        return array('status'=>$status,'dt'=>$dt);
+    }
+
     public function session_test_updata($SESSION_LOGS=null)
     {
         /*
@@ -114,92 +207,6 @@ class Session_test_model extends CI_Model {
             //$this->db->delete('SESSION_LOGS');
         }
         */
-    }
-
-    public function get_session_info($session_id='')
-    {
-        if( !empty($session_id) )
-        {
-            $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."';";
-            $query = $this->db->query($sql);
-            return array('data'=>$query->result(),'total'=>$query->num_rows());
-        }
-        else
-        {
-            return array('data'=>array(),'total'=>0);
-        }
-    }
-
-    public function add_session_info($session_id='')
-    {
-        if( empty($session_id) )
-        {
-            return 200;
-        }
-        else
-        {
-            $dt = new DateTime();
-            $dt = $dt->format('U');
-            $data = array(
-                'SESSION_ID'=>$session_id,
-                'IP_ADDRESS'=>$_SERVER['REMOTE_ADDR'],
-                'USER_AGENT'=>$_SERVER["HTTP_USER_AGENT"],
-                'ADDTIME'   =>$dt,
-                'UPDATETIME'=>'',
-                'IS_ALIVE'  =>1,
-            );
-            $result = $this->db->insert('SESSION_LOGS', $data);
-            if( $result )
-            {
-                return 100;
-            }
-            else
-            {
-                return 300;
-            }
-        }
-    }
-
-    public function mod_session_info($session_id='')
-    {
-        if( empty($session_id) )
-        {
-            return 200;
-        }
-        else
-        {
-            $dt = new DateTime();
-            $dt = $dt->format('U');
-            $this->db->set('IS_ALIVE', 1, false);// 強制CI不處理
-            $this->db->set('UPDATETIME', $dt, false);// 強制CI不處理
-            // CI 更新用法
-            $this->db->where('SESSION_ID', $session_id);
-            $result = $this->db->update('SESSION_LOGS');
-            if( $result )
-            {
-                return 100;
-            }
-            else
-            {
-                return 300;
-            }
-        }
-    }
-
-    public function del_session_info()
-    {
-        $dt = new DateTime();
-        $dt = $dt->format('U');
-        $sql = 'UPDATE `SESSION_LOGS` SET `IS_ALIVE`=0 WHERE `UPDATETIME`<'.($dt-120).' AND `IS_ALIVE`=1;';
-        $query = $this->db->query($sql);
-        if( $query )
-        {
-            return 100;
-        }
-        else
-        {
-            return 300;
-        }
     }
 }
 ?>

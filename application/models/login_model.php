@@ -10,7 +10,7 @@ class Login_model extends CI_Model {
     {
         // 呼叫模型(Model)的建構函數
         parent::__construct();
-        header('Content-Type: text/html; charset=utf8');
+        $this->load->database();
     }
 
     public function getUsers($input='')
@@ -47,14 +47,42 @@ class Login_model extends CI_Model {
         }
         else
         {
+            $dt = new DateTime();
+            $dt = $dt->format('U');
             $data = array(
                 'username'=>$input['username'],
                 'salt'=>$input['salt'],
                 'password'=>$input['password'],
                 'email'=>$input['email'],
+                'add_date'=>$dt,
+                'login_date'=>'',
                 'addr'=>$input['addr'],
             );
             if( $this->db->insert('user', $data) )
+            {
+                return 100;
+            }
+            else
+            {
+                return 300;
+            }
+        }
+    }
+
+    public function updateUsers($input='')
+    {
+        if( empty($input) )
+        {
+            return 200;
+        }
+        else
+        {
+            $dt = new DateTime();
+            $dt = $dt->format('U');
+            $this->db->set('login_date', $dt, false);// 強制CI不處理
+            $this->db->where('uid', $input);
+            $result = $this->db->update('user');// CI 更新用法
+            if( $result )
             {
                 return 100;
             }

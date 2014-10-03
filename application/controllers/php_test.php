@@ -11,8 +11,6 @@ class Php_test extends CI_Controller {
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
-
-        $this->pub->check_session();
     }
 
     /**
@@ -20,6 +18,7 @@ class Php_test extends CI_Controller {
      */
     public function index()
     {
+        $this->check_session();
 
         // 顯示資料
         $content = array();
@@ -74,6 +73,8 @@ class Php_test extends CI_Controller {
 
     public function float_test()
     {
+        $this->check_session();
+
         // 顯示資料
         $content = array();
 
@@ -176,6 +177,7 @@ class Php_test extends CI_Controller {
 
     public function date_test()
     {
+        $this->check_session();
         // 時間顯示測試
         $date_test = $this->_date_test() ;
 
@@ -291,6 +293,7 @@ class Php_test extends CI_Controller {
 
     public function session_test()
     {
+        $this->check_session();
         /*
         // 增加自訂Session資料
         $newdata = array(
@@ -329,7 +332,7 @@ class Php_test extends CI_Controller {
 
         // 目前SESSION資料
         // 呼叫 session_test_model
-        $SESSION_LOGS = $this->pub->get_session_info($this->session->userdata('session_id'));
+        $SESSION_LOGS = $this->get_session_info($this->session->userdata('session_id'));
         /*
         $SESSION_LOGS = array(
            'SESSION_ID'     => $session_id ,
@@ -524,6 +527,7 @@ class Php_test extends CI_Controller {
 
     public function count_sizeof()
     {
+        $this->check_session();
         // 顯示資料
         $content = array();
 
@@ -601,6 +605,7 @@ class Php_test extends CI_Controller {
 
     public function hash_test()
     {
+        $this->check_session();
         $post = $this->input->post();
 
         $hash_array = array(
@@ -711,6 +716,7 @@ class Php_test extends CI_Controller {
 
     public function switch_test()
     {
+        $this->check_session();
         // 顯示資料
         $content = array();
 
@@ -865,6 +871,165 @@ class Php_test extends CI_Controller {
     private function _get_test_str()
     {
         return FALSE ;
+    }
+
+    public function check_session()
+    {
+        $post = $this->input->post();
+        $post = $this->pub->trim_val($post);
+        $session_id = !empty($post['session_id']) ? $post['session_id'] : $this->session->userdata('session_id') ;
+        $ip_address = !empty($post['ip_address']) ? $post['ip_address'] : $_SERVER['REMOTE_ADDR'] ;
+        $user_agent = !empty($post['user_agent']) ? $post['user_agent'] : $_SERVER['HTTP_USER_AGENT'] ;
+
+        // check points
+        if( empty($session_id) )
+        {
+            exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/HTTP_USER_AGENT');// session id
+        }
+        else if( empty($user_agent) )
+        {
+            exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/HTTP_USER_AGENT');// browser info
+        }
+        else if( empty($ip_address) )
+        {
+            exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/REMOTE_ADDR');// ip address
+        }
+
+        $this->load->model('session_test_model','',TRUE);
+
+        // 2分鐘內 session 失效
+        $del = $this->session_test_model->del_session_info();
+        if( $del['status']!=100 )
+        {
+            exit('del_session_info :'.$del['status']);
+        }
+
+        // 取得 session 資訊
+        $SESSION_LOGS = $this->get_session_info($session_id);
+        $total = intval($SESSION_LOGS['total']);
+        $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
+
+        if( $total>1 )
+        {
+            exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/get_session_info :'.$SESSION_LOGS['total']);
+        }
+        else if( $total<1 )
+        {
+            // 新增 session
+            $data = $this->_add_session_info($session_id,$post);
+        }
+        else
+        {
+            if( empty($data) )
+            {
+                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
+            }
+            else
+            {
+                if( empty($data['IP_ADDRESS']) )
+                {
+                    $this->session->sess_destroy();// 銷毀Session
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS empty');
+                }
+                else if( $data['IP_ADDRESS']!=$ip_address )
+                {
+                    $this->session->sess_destroy();// 銷毀Session
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS');
+                }
+                else if( empty($data['USER_AGENT']) )
+                {
+                    $this->session->sess_destroy();// 銷毀Session
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT empty');
+                }
+                else if( $data['USER_AGENT']!=$user_agent )
+                {
+                    $this->session->sess_destroy();// 銷毀Session
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT');
+                }
+                // 更新 session
+                $data = $this->_mod_session_info($session_id);
+            }
+        }
+        if( $post )
+        {
+            echo json_encode($data);
+        }
+        else
+        {
+            return $data;
+        }
+    }
+
+    private function _add_session_info($session_id='',$input=array())
+    {
+        $data = array();
+        if( empty($session_id) )
+        {
+            $status = 201;
+        }
+        else if( empty($input) || !is_array($input) )
+        {
+            $status = 202;
+        }
+        else
+        {
+            $add = $this->session_test_model->add_session_info($session_id,$input);
+            if( intval($add['status'])!=100 )
+            {
+                $status = intval($add['status']);
+            }
+            else
+            {
+                $SESSION_LOGS = $this->get_session_info($session_id);
+                $status = ( intval($SESSION_LOGS['total'])==1 ) ? 100 : 101 ;
+                $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
+            }
+        }
+        return array('status'=>$status,'data'=>$data);
+    }
+
+    private function _mod_session_info($session_id='')
+    {
+        $data = array();
+        if( empty($session_id) )
+        {
+            $status = 201;
+        }
+        else
+        {
+            $mod = $this->session_test_model->mod_session_info($session_id);
+            if( intval($mod['status'])!=100 )
+            {
+                $status = intval($mod['status']);
+            }
+            else
+            {
+                $SESSION_LOGS = $this->get_session_info($session_id);
+                $status = ( intval($SESSION_LOGS['total'])==1 ) ? 100 : 101 ;
+                $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
+            }
+        }
+        return array('status'=>$status,'data'=>$data);
+    }
+
+    public function sess_destroy()
+    {
+        $this->session->sess_destroy();// 銷毀Session
+    }
+
+    public function get_session_info($session_id)
+    {
+        $this->load->model('session_test_model','',TRUE);
+        $info = $this->session_test_model->get_session_info($session_id);
+        if( $info['total']<1 )
+        {
+            $data = array();
+        }
+        else
+        {
+            $data = $this->pub->o2a($info['data'][0]);
+        }
+        return array('data'=>$data,'total'=>$info['total']);
     }
 }
 ?>
