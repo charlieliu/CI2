@@ -41,8 +41,12 @@ class Js_test extends CI_Controller {
             'content_url' => 'js_test/get_filesize'
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery 測試',
+            'content_title' => 'jQuery 測試 - 效果',
             'content_url' => 'js_test/jquery_test'
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 - attr()/prop()',
+            'content_url' => 'js_test/jquery_test/2'
         ) ;
 
         // 標題 內容顯示
@@ -428,7 +432,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
-    public function jquery_test()
+    public function jquery_test($in='1')
     {
         // 標題 內容顯示
         $data = array(
@@ -441,8 +445,10 @@ class Js_test extends CI_Controller {
             'base_url'=>base_url(),
         );
 
+        $in = intval($in)==2 ? $in : 1 ;
+
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('jquery_test_view', $data, true);
+        $content_div = $this->parser->parse('jquery_test/jquery_test_'.$in.'_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;

@@ -3,21 +3,21 @@
 
     <div style="margin:1em;">
         <input id="userfile_1" class="fileupload" type="file">
-        <div>File Size:<span>0 bytes</span></div>
+        <div>File Size:<span></span></div>
     </div>
 
     <div style="margin:1em;">
         <input id="userfile_2" class="fileupload" type="file">
-        <div>File Size:<span>0 bytes</span></div>
+        <div>File Size:<span></span></div>
     </div>
 
     <div style="margin:1em;">
         <input id="userfile_3" class="fileupload" type="file">
-        <div>File Size:<span>0 bytes</span></div>
+        <div>File Size:<span></span></div>
     </div>
 
     <div style="margin:1em;">
-        <div>Total Size:<span id="totalsize">0 bytes</span></div>
+        <div>Total Size:<span id="totalsize"></span></div>
     </div>
 
     <div style="margin:1em;">
@@ -64,7 +64,7 @@
                 arr.push('obj.files[0].name : '+obj.files[0].name );
                 arr.push('obj.files[0].type : '+obj.files[0].type );
                 arr.push('obj.files[0].size : '+obj.files[0].size );
-                arr.push('obj.files[0].lice : '+obj.files[0].slice );
+                arr.push('obj.files[0].slice : '+obj.files[0].slice );
             }
             return arr.join('<br>');
         }
@@ -72,29 +72,19 @@
         function getFormate(bytes)
         {
             if( bytes<1024 )
-            {
                 return bytes + ' bytes';
-            }
             else if( bytes<(1024*1024) )
-            {
                 return bytes + ' bytes' + '(' + (bytes/1024).toFixed(2) + ' kb)';
-            }
             else if( bytes<(1024*1024*1024) )
-            {
                 return bytes + ' bytes' + '(' + (bytes/(1024*1024)).toFixed(2) + ' MB)';
-            }
             else
-            {
                 return bytes + ' bytes' + '(' + (bytes/(1024*1024*1024)).toFixed(2) + ' GB)';
-            }
         }
 
         function getTotalSize()
         {
             var totalsize = 0;
-            $('.fileupload').each(function(){
-                totalsize += getFileSize(this);
-            });
+            $('.fileupload').each(function(){ totalsize += getFileSize(this); });
             $('#totalsize').html(getFormate(totalsize));
             totalsize = null;
         }
@@ -116,7 +106,7 @@
             $('#fileinfo1').html(getFileinfo(this));
             $('#fileinfo2').html(getInfo(this));
             $('#fileinfo3').html(getInfo($(this)));
-        });
+        }).change();
     }
     else
     {
@@ -131,7 +121,9 @@
         $('#err_msg').html(fileobj.join('<br>'));
         fileobj = null;// 釋放IE記憶體
         */
-        $(this).siblings('div').find('span').html('Browser do not support');
+        $('.fileupload').each(function(){
+            $(this).siblings('div').find('span').html('Browser do not support');
+        });
     }
     -->
 </script>
