@@ -4,6 +4,13 @@ class Login extends CI_Controller {
 
     public $current_title = 'Login 測試';
 
+    public $page_list = '';
+
+    public function getPageList()
+    {
+        echo json_encode($this->page_list);
+    }
+
     public function __construct()
     {
         parent::__construct();

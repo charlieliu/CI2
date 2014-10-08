@@ -2,6 +2,13 @@
 
 class Svg_test extends CI_Controller {
 
+    public $page_list = '';
+
+    public function getPageList()
+    {
+        echo json_encode($this->page_list);
+    }
+
     public function __construct()
     {
         parent::__construct();

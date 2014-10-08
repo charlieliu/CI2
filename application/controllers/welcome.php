@@ -4,6 +4,13 @@ class Welcome extends CI_Controller {
 
     public $current_title = '首頁';
 
+    public $page_list = '';
+
+    public function getPageList()
+    {
+        echo json_encode($this->page_list);
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -12,17 +19,7 @@ class Welcome extends CI_Controller {
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
         $this->pub->check_session($this->session->userdata('session_id'));
-    }
 
-    /**
-     * Index Page for this controller.
-     *
-     * @author Charlie Liu <liuchangli0107@gmail.com>
-     */
-    public function index()
-    {
-        // load parser
-        $this->load->library('parser');
 
         // 顯示資料
         $content = array();
@@ -34,36 +31,47 @@ class Welcome extends CI_Controller {
         ) ;
         */
         $content[] = array(
-            'content_value' => 'css_test',
             'content_title' => 'CSS效果測試',
-            'content_url' => 'css_test'
+            'content_url' => base_url().'css_test',
+            'c'=>'css_test',
         ) ;
         $content[] = array(
-            'content_value' => 'svg_test',
             'content_title' => 'SVG效果測試',
-            'content_url' => 'svg_test'
+            'content_url' => base_url().'svg_test',
+            'c'=>'',
         ) ;
         $content[] = array(
-            'content_value' => 'PHP_test',
             'content_title' => 'PHP 測試',
-            'content_url' => 'php_test'
+            'content_url' => base_url().'php_test',
+            'c'=>'php_test',
         ) ;
         $content[] = array(
-            'content_value' => 'JS_test',
             'content_title' => 'JS 測試',
-            'content_url' => 'js_test'
+            'content_url' => base_url().'js_test',
+            'c'=>'js_test',
         ) ;
         $content[] = array(
-            'content_value' => 'login',
             'content_title' => 'Login 測試',
-            'content_url' => 'login'
+            'content_url' => base_url().'login',
+            'c'=>'',
         ) ;
         $content[] = array(
-            'content_value' => 'phpinfo',
             'content_title' => 'phpinfo',
-            'content_url' => 'welcome/phpinfo'
+            'content_url' => base_url().'welcome/phpinfo',
+            'c'=>'',
         ) ;
 
+        $this->page_list = $content ;
+    }
+
+    /**
+     * Index Page for this controller.
+     *
+     * @author Charlie Liu <liuchangli0107@gmail.com>
+     */
+    public function index()
+    {
+        $content = $this->page_list;
         // 標題 內容顯示
         $data = array(
             'title' => 'Welcome to CodeIgniter',

@@ -4,6 +4,13 @@ class Css_test extends CI_Controller {
 
     public $current_title = 'CSS 測試';
 
+    public $page_list = '';
+
+    public function getPageList()
+    {
+        echo json_encode($this->page_list);
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -12,15 +19,7 @@ class Css_test extends CI_Controller {
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
         $this->pub->check_session($this->session->userdata('session_id'));
-    }
 
-    /**
-     * Floating-point test Page for this controller.
-     *
-     * @author Charlie Liu <liuchangli0107@gmail.com>
-     */
-    public function index()
-    {
         // 顯示資料
         $content = array();
         $content[] = array(
@@ -43,6 +42,18 @@ class Css_test extends CI_Controller {
             'content_title' => 'CSS3 2D Transforms',
             'content_url' => 'css_test/css_test_5'
         );
+
+        $this->page_list = $content ;
+    }
+
+    /**
+     * Floating-point test Page for this controller.
+     *
+     * @author Charlie Liu <liuchangli0107@gmail.com>
+     */
+    public function index()
+    {
+        $content = $this->page_list ;
 
         // 標題 內容顯示
         $data = array(

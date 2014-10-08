@@ -4,6 +4,13 @@ class Php_test extends CI_Controller {
 
     public $current_title = 'PHP 測試';
 
+    public $page_list = '';
+
+    public function getPageList()
+    {
+        echo json_encode($this->page_list);
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -11,6 +18,35 @@ class Php_test extends CI_Controller {
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
+
+        // 顯示資料
+        $content = array();
+        $content[] = array(
+            'content_title' => 'PHP浮點 測試',
+            'content_url' => 'php_test/float_test',
+        ) ;
+        $content[] = array(
+            'content_title' => '時間格式顯示',
+            'content_url' => 'php_test/date_test',
+        ) ;
+        $content[] = array(
+            'content_title' => 'CI session 測試',
+            'content_url' => 'php_test/session_test',
+        ) ;
+        $content[] = array(
+            'content_title' => 'count() sizeof() 效能比較',
+            'content_url' => 'php_test/count_sizeof'
+        ) ;
+        $content[] = array(
+            'content_title' => 'Hash 測試',
+            'content_url' => 'php_test/hash_test',
+        ) ;
+        $content[] = array(
+            'content_title' => 'if else & switch 效能比較',
+            'content_url' => 'php_test/switch_test',
+        ) ;
+
+        $this->page_list = $content ;
     }
 
     /**
@@ -20,38 +56,7 @@ class Php_test extends CI_Controller {
     {
         $this->check_session();
 
-        // 顯示資料
-        $content = array();
-        $content[] = array(
-            'content_value' => 'float_test',
-            'content_title' => 'PHP浮點 測試',
-            'content_url' => 'php_test/float_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'date_test',
-            'content_title' => '時間格式顯示',
-            'content_url' => 'php_test/date_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'session_test',
-            'content_title' => 'CI session 測試',
-            'content_url' => 'php_test/session_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'count_sizeof',
-            'content_title' => 'count() sizeof() 效能比較',
-            'content_url' => 'php_test/count_sizeof'
-        ) ;
-        $content[] = array(
-            'content_value' => 'hash_test',
-            'content_title' => 'Hash 測試',
-            'content_url' => 'php_test/hash_test'
-        ) ;
-        $content[] = array(
-            'content_value' => 'switch_test',
-            'content_title' => 'if else & switch 效能比較',
-            'content_url' => 'php_test/switch_test'
-        ) ;
+        $content = $this->page_list ;
 
         // 標題 內容顯示
         $data = array(
