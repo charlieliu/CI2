@@ -382,7 +382,22 @@ class Js_test extends CI_Controller {
 
         //var_dump($head_list);
 
-        $this->load->view('jqm_index_view', array('head_list'=>$head_list));
+
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'JQuery mobile 測試',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => '',
+            'base_url'=>base_url(),
+            'head_list'=>$head_list,
+        );
+
+        // 中間挖掉的部分
+        $content_div = $data;
+
+        $this->load->view('jqm_index_view', $content_div);
     }
 }
 ?>
