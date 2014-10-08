@@ -380,24 +380,23 @@ class Js_test extends CI_Controller {
             $head_list[] = $v ;
         }
 
-        //var_dump($head_list);
-
-
         // 標題 內容顯示
         $data = array(
             'title' => 'JQuery mobile 測試',
             'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'content' => '',
             'base_url'=>base_url(),
-            'head_list'=>$head_list,
         );
 
-        // 中間挖掉的部分
-        $content_div = $data;
+        $data['header_view'] = $this->parser->parse('jqm/jqm_header_view', array('title'=>'JQuery mobile 測試','username'=>'username'), true);
+        $data['menu_view'] = $this->load->view('jqm/jqm_menu_view', array('head_list' =>$head_list), true);
+        $data['info_view'] = $this->parser->parse('jqm/jqm_info_view', array(), true);
+        $data['footer_view'] = $this->parser->parse('jqm/jqm_footer_view', array(), true);
 
-        $this->load->view('jqm_index_view', $content_div);
+        $data['content'] = $this->parser->parse('jqm/jqm_index_view', $data, true);
+
+        $this->parser->parse('jqm/jqm_outer_view', $data);
     }
 }
 ?>
