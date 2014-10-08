@@ -1,30 +1,30 @@
 <div id="body">
     <p>{current_page}/{current_fun}</p>
 
-    <form id="frm1" action="<?=base_url()?>login/{btn_url}" method="POST">
+    <form id="frm1" action="{base_url}login/{btn_url}" method="POST">
         <table>
             <tr>
-                <th>帳號 : </th>
+                <th><label for="username">帳號 : </label></th>
                 <td><input type="text" id="username" name="username" placeholder="username"></td>
             </tr>
             <tr>
-                <th>密碼 : </th>
+                <th><label for="pwd">密碼 : </label></th>
                 <td><input type="password" id="pwd" name="pwd" placeholder="password"></td>
             </tr>
             <tr>
-                <th>確認密碼 : </th>
+                <th><label for="repwd">確認密碼 : </label></th>
                 <td><input type="password" id="repwd" name="repwd" placeholder="re-password"></td>
             </tr>
             <tr>
-                <th>Enail : </th>
+                <th><label for="email">Enail : </label></th>
                 <td><input type="text" id="email" name="email" placeholder="email"></td>
             </tr>
             <tr>
-                <th>地址 : </th>
+                <th><label for="addr">地址 : </label></th>
                 <td><textarea id="addr" name="addr" placeholder="address"></textarea></td>
             </tr>
             <tr>
-                <th></th>
+                <th><label for=""></label></th>
                 <td></td>
             </tr>
         </table>
@@ -74,7 +74,7 @@
             else
             {
                 $.post(
-                    "<?=base_url()?>login/{btn_url}",
+                    "{base_url}login/{btn_url}",
                     {
                         "username":$('#username').val(),
                         "pwd":$('#pwd').val(),
