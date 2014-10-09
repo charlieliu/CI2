@@ -360,17 +360,14 @@ class Js_test extends CI_Controller {
         // 取得列表資料
         $head_list = array();
         $head_1 = json_decode($this->pub->CurlPost(base_url().'welcome/getPageList'));
+        $head_1 = $this->pub->o2a($head_1);
 
         foreach ($head_1 as $v)
         {
-            $v = $this->pub->o2a($v);
             if( !empty($v['c']) )
             {
                 $head_2 = json_decode($this->pub->CurlPost(base_url().$v['c'].'/getPageList'));
-                foreach ($head_2 as $k2=>$v2)
-                {
-                    $head_2[$k2] = $this->pub->o2a($v2);
-                }
+                $head_2 = $this->pub->o2a($head_2);
             }
             else
             {
