@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8"><!--HTML5-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"><!-- HTML 4.01-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="{title}" />
-    <meta name="description" content="{title}" />
+    <meta name="title" content="{title}">
+    <meta name="description" content="{title}">
+    <meta property="og:image" content="<?=base_url()?>images/joba.jpg">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 
     <title>{title}</title>
@@ -16,7 +17,7 @@
     $link = array(
         'type'  => "image/x-icon",
         'rel'   => "shortcut icon",
-        'href'  => "images/joba.jpg",
+        'href'  => base_url()."images/joba.jpg",
         'ver'   => date('YmdHis')
     );
     echo load_html_file($link);
