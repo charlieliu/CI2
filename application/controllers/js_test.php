@@ -389,6 +389,7 @@ class Js_test extends CI_Controller {
             'base_url'=>base_url(),
         );
         $username = $this->session->userdata('username');
+        $username = !empty($username) ? $username : 'plz login' ;
 
         $data['header_view'] = $this->parser->parse('jqm/jqm_header_view', array('title'=>'JQuery mobile 測試','username'=>$username), true);
         $data['menu_view'] = $this->load->view('jqm/jqm_menu_view', array('head_list' =>$head_list), true);
