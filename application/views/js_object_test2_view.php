@@ -14,8 +14,10 @@
     </div>
     <script type="text/javascript">
         <!--
-        $('.more').click(function(){
-            $(this).parents('div').find('ul').addClass('my-class');
+        $(function(){
+            $('.more').click(function(){
+                $(this).parents('div').find('ul').addClass('my-class');
+            });
         });
         -->
     </script>
