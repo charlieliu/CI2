@@ -19,7 +19,7 @@ class Session_test_model extends CI_Model {
         {
             $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."';";
             $query = $this->db->query($sql);
-            return array('data'=>$query->result(),'total'=>$query->num_rows());
+            return array('data'=>$query->result_array(),'total'=>$query->num_rows());
         }
         else
         {
