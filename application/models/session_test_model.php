@@ -13,14 +13,6 @@ class Session_test_model extends CI_Model {
         $this->load->database();
     }
 
-    public function get_session_num($SESSION_LOGS=null)
-    {
-        // 取得存在DB個數
-        $query = $this->db->get_where('SESSION_LOGS', $SESSION_LOGS) ;
-        $count_num = $query->num_rows() ;
-        return $count_num ;
-    }
-
     public function get_session_info($session_id='')
     {
         if( !empty($session_id) )
@@ -112,6 +104,16 @@ class Session_test_model extends CI_Model {
             $status = 300;
         }
         return array('status'=>$status,'dt'=>$dt);
+    }
+
+    public function get_session_num($SESSION_LOGS=null)
+    {
+        /*
+        // 取得存在DB個數
+        $query = $this->db->get_where('SESSION_LOGS', $SESSION_LOGS) ;
+        $count_num = $query->num_rows() ;
+        return $count_num ;
+        */
     }
 
     public function session_test_updata($SESSION_LOGS=null)

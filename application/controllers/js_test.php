@@ -388,8 +388,9 @@ class Js_test extends CI_Controller {
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'base_url'=>base_url(),
         );
+        $username = $this->session->userdata('username');
 
-        $data['header_view'] = $this->parser->parse('jqm/jqm_header_view', array('title'=>'JQuery mobile 測試','username'=>'username'), true);
+        $data['header_view'] = $this->parser->parse('jqm/jqm_header_view', array('title'=>'JQuery mobile 測試','username'=>$username), true);
         $data['menu_view'] = $this->load->view('jqm/jqm_menu_view', array('head_list' =>$head_list), true);
         $data['info_view'] = $this->parser->parse('jqm/jqm_info_view', array(), true);
         $data['footer_view'] = $this->parser->parse('jqm/jqm_footer_view', array(), true);

@@ -19,7 +19,7 @@ class Login_model extends CI_Model {
         {
             $sql = "SELECT * FROM user  WHERE `username`='".$input."'";
             $query = $this->db->query($sql);
-            return array('data'=>$query->result(),'total'=>$query->num_rows());
+            return array('data'=>$query->result_array(),'total'=>$query->num_rows());
         }
         else
         {

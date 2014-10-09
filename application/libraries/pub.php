@@ -38,7 +38,8 @@ class Pub{
                 'user_agent'=>$_SERVER["HTTP_USER_AGENT"],
             );
             $data = json_decode($this->CurlPost($url,$data));
-            if( $data->status!=100 )
+            $data = $this->o2a($data);
+            if( $data['status']!=100 )
             {
                 var_dump($data);
                 exit();
@@ -114,7 +115,24 @@ class Pub{
 
     function o2a($input)
     {
-        return get_object_vars($input);
+        if( is_array($input) )
+        {
+            foreach ($input as $key=>$value) {
+                if( is_object($value) )
+                {
+                    $input[$key] = get_object_vars($value);
+                }
+            }
+            return $input;
+        }
+        else if( is_object($input) )
+        {
+            return get_object_vars($input);
+        }
+        else
+        {
+            return $input;
+        }
     }
 }
 ?>

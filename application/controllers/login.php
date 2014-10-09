@@ -33,12 +33,13 @@ class Login extends CI_Controller {
     {
         // 標題 內容顯示
         $data = array(
-            'title' => $this->current_title,
+            'title'         => $this->current_title,
             'current_title' => $this->current_title,
-            'current_page' => strtolower(__CLASS__), // 當下類別
-            'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'btn_value' => 'login',
-            'btn_url' => 'check_login',
+            'current_page'  => strtolower(__CLASS__), // 當下類別
+            'current_fun'   => strtolower(__FUNCTION__), // 當下function
+            'btn_value'     => 'login',
+            'btn_url'       => 'check_login',
+            'base_url'      => base_url(),
         );
 
         // Template parser class
@@ -56,18 +57,32 @@ class Login extends CI_Controller {
     {
         $post = $this->input->post();
         $post = $this->pub->trim_val($post);
+        $status = '' ;
         if( empty($post['username']) )
         {
-            exit('name is empty');
+            $status =  'name is empty';
         }
         if( empty($post['pwd']) )
         {
-            exit('pwd is empty');
+            $status = 'pwd is empty' ;
         }
         $post['password'] = $post['pwd'];
         $this->load->model('Login_model','',TRUE);
-        $content = $this->Login_model->getUsers($post['username']);
-        var_dump($content);
+        $users = $this->Login_model->getUsers($post['username']);
+        if( intval($users['total'])!=1 )
+        {
+            $status = 'users total'.intval($users['total']) ;
+        }
+        else
+        {
+            $userdata = array(
+                'uid'=>$users['data'][0]['uid'],
+                'username'=>$users['data'][0]['username'],
+            );
+            $this->session->set_userdata($userdata);
+            $status = 100;
+        }
+        echo json_encode(array('status'=>$status,));
     }
 
     public function register()
@@ -76,10 +91,11 @@ class Login extends CI_Controller {
         $data = array(
             'title' => '註冊 測試',
             'current_title' => $this->current_title,
-            'current_page' => strtolower(__CLASS__), // 當下類別
-            'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'btn_value' => 'create',
-            'btn_url' => 'do_register',
+            'current_page'  => strtolower(__CLASS__), // 當下類別
+            'current_fun'   => strtolower(__FUNCTION__), // 當下function
+            'btn_value'     => 'create',
+            'btn_url'       => 'do_register',
+            'base_url'      => base_url(),
         );
 
         // Template parser class

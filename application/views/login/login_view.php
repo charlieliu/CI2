@@ -31,8 +31,27 @@
         }
         else
         {
-            //alert($('#username').val());
-            $('#frm1').submit();
+            $.post(
+                "{base_url}login/{btn_url}",
+                {
+                    "username":$('#username').val(),
+                    "pwd":$('#pwd').val(),
+                    "repwd":$('#repwd').val(),
+                    "email":$('#email').val(),
+                    "addr":$('#addr').val()
+                },
+                function(response){
+                    if(response.status!='100')
+                    {
+                        alert(response.status);
+                    }
+                    else
+                    {
+                        alert(response.status);
+                    }
+                },
+                "json"
+            );
         }
     });
     -->
