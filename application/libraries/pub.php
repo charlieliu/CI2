@@ -122,6 +122,10 @@ class Pub{
                 {
                     $input[$key] = get_object_vars($value);
                 }
+                else
+                {
+                    $input[$key] = $this->o2a($value);
+                }
             }
             return $input;
         }

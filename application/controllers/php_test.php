@@ -1032,7 +1032,8 @@ class Php_test extends CI_Controller {
         }
         else
         {
-            $data = $this->pub->o2a($info['data'][0]);
+            //$data = $this->pub->o2a($info['data'][0]);
+            $data = $info['data'][0];
         }
         return array('data'=>$data,'total'=>$info['total']);
     }
