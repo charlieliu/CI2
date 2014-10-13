@@ -1,5 +1,11 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+ *	index.php require( system/core/CodeIgniter.php )
+ *	system/core/CodeIgniter.php require( system/core/Common.php )
+ *	system/core/CodeIgniter.php require( application/config/constants.php )
+ */
+
+/**
  * CodeIgniter
  *
  * An open source application development framework for PHP 5.1.6 or newer
