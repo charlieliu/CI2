@@ -100,6 +100,7 @@
 /*
  * ------------------------------------------------------
  *  Set a liberal script execution time limit
+ * 	設定 time out
  * ------------------------------------------------------
  */
 	if (function_exists("set_time_limit") == TRUE AND @ini_get("safe_mode") == 0)

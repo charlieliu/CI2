@@ -47,6 +47,7 @@ if (defined('ENVIRONMENT'))
 /*
  *---------------------------------------------------------------
  * SYSTEM FOLDER NAME
+ * 系統路徑
  *---------------------------------------------------------------
  *
  * This variable must contain the name of your "system" folder.
@@ -59,6 +60,7 @@ if (defined('ENVIRONMENT'))
 /*
  *---------------------------------------------------------------
  * APPLICATION FOLDER NAME
+ * application 路徑
  *---------------------------------------------------------------
  *
  * If you want this front controller to use a different "application"
@@ -155,6 +157,7 @@ if (defined('ENVIRONMENT'))
 /*
  * -------------------------------------------------------------------
  *  Now that we know the path, set the main path constants
+ *  基本常數設定
  * -------------------------------------------------------------------
  */
     // The name of THIS file
@@ -165,6 +168,7 @@ if (defined('ENVIRONMENT'))
     define('EXT', '.php');
 
     // Path to the system folder
+    // 系統路徑 LINE 1 判斷是否載入CI
     define('BASEPATH', str_replace("\\", "/", $system_path));
 
     // Path to the front controller (this file)
@@ -189,8 +193,8 @@ if (defined('ENVIRONMENT'))
         define('APPPATH', BASEPATH.$application_folder.'/');
     }
 
-/*
- *時區設定
+/**
+ *  時區設定
  */
 if( ! ini_get('date.timezone') )
 {
