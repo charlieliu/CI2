@@ -122,7 +122,7 @@ class Pub{
                 {
                     $input[$key] = get_object_vars($value);
                 }
-                else
+                else if( is_array($value) )
                 {
                     $input[$key] = $this->o2a($value);
                 }
