@@ -56,6 +56,10 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery UI',
             'content_url' => base_url().'js_test/ui',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery on() bind()',
+            'content_url' => base_url().'js_test/on_bind',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -425,6 +429,27 @@ class Js_test extends CI_Controller {
         $html_date['css'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.css';
         $html_date['js'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.js';
         $html_date['js'][] = 'js/ui.js';
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function on_bind()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'jQuery on() bind()',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => '',
+            '_FILES'=>$_FILES,
+            'base_url'=>base_url(),
+        );
+
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('jquery_test/jquery_on_bind_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
         $this->parser->parse('index_view', $html_date ) ;
     }
 }
