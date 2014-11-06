@@ -71,8 +71,7 @@
             });
 
             $( "#datepicker" ).datepicker({
-                dateFormat: "yy/mm/dd",
-                currentText: "Now"
+                dateFormat: "yy/mm/dd"
             });
 
             $( "#spinner" ).spinner({
