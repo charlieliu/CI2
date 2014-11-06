@@ -50,7 +50,7 @@
                 { label: "Scala", value: "21" },
                 { label: "Scheme", value: "22" }
             ];
-            $( "#tags" ).autocomplete({
+            $('#tags').autocomplete({
                 source:availableTags,
                 select:function( event, ui ){
                     $(this).val(ui.item.label);
@@ -70,55 +70,55 @@
                 catche:false
             });
 
-            $( "#datepicker" ).datepicker({
+            $('#datepicker').datepicker({
                 dateFormat: "yy/mm/dd"
             });
 
-            $( "#spinner" ).spinner({
-                change: function( event, ui ) {
-                    if( availableTags[$(this).spinner( "value" )-1]!=undefined )
+            $('#spinner').spinner({
+                max:22,
+                min:1,
+                change: function( event, ui ){
+                    if( availableTags[$(this).spinner("value")-1]!=undefined )
                     {
-                        $( "#tags" ).val(availableTags[$(this).spinner( "value" )-1].label);
+                        $('#tags').val(availableTags[$(this).spinner('value')-1].label);
                     }
                     else
                     {
-                        $( "#tags" ).val('');
+                        $('#tags').val('');
                     }
                 },
                 stop: function( event, ui ) {
-                    if( availableTags[$(this).spinner( "value" )-1]!=undefined )
+                    if( availableTags[$(this).spinner('value')-1]!=undefined )
                     {
-                        $( "#tags" ).val(availableTags[$(this).spinner( "value" )-1].label);
+                        $('#tags').val(availableTags[$(this).spinner('value')-1].label);
                     }
                     else
                     {
-                        $( "#tags" ).val('');
+                        $('#tags').val('');
                     }
                 }
             });
 
-            $( "#disable" ).click(function() {
-                if ( $( "#spinner" ).spinner( "option", "disabled" ) ) {
-                    $( "#spinner" ).spinner( "enable" );
-                } else {
-                    $( "#spinner" ).spinner( "disable" );
-                }
+            $('#disable').click(function() {
+                if( $('#spinner').spinner("option", "disabled") )
+                    $('#spinner').spinner("enable");
+                else
+                    $('#spinner').spinner("disable");
             });
-            $( "#destroy" ).click(function() {
-                if ( $( "#spinner" ).spinner( "instance" ) ) {
-                    $( "#spinner" ).spinner( "destroy" );
-                } else {
-                    $( "#spinner" ).spinner();
-                }
+            $('#destroy').click(function(){
+                if( $('#spinner').spinner("instance") )
+                    $('#spinner').spinner("destroy");
+                else
+                    $('#spinner').spinner();
             });
-            $( "#getvalue" ).click(function() {
-                alert( $( "#spinner" ).spinner( "value" ) );
+            $('#getvalue').click(function(){
+                alert( $('#spinner').spinner("value") );
             });
-            $( "#setvalue" ).click(function() {
-                $( "#spinner" ).spinner( "value", 5 );
+            $('#setvalue').click(function(){
+                $('#spinner').spinner("value", 5);
             });
 
-            $( "button" ).button();
+            $('button').button();
         });
     </script>
 </div>
