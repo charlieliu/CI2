@@ -52,6 +52,10 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery mobile 測試',
             'content_url' => base_url().'js_test/jqm',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery Autocomplete 測試',
+            'content_url' => base_url().'js_test/autocomplete',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -396,6 +400,30 @@ class Js_test extends CI_Controller {
         $data['content'] = $this->parser->parse('jqm/jqm_index_view', $data, true);
 
         $this->parser->parse('jqm/jqm_outer_view', $data);
+    }
+
+    public function autocomplete()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'jQuery Autocomplete 測試',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => '',
+            '_FILES'=>$_FILES,
+            'base_url'=>base_url(),
+        );
+
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('jquery_test/jquery_autocomplete_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $html_date['css'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.css';
+        $html_date['js'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.js';
+
+        $this->parser->parse('index_view', $html_date ) ;
     }
 }
 ?>
