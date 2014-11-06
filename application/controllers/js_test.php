@@ -135,6 +135,8 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
+        $html_date['css'][] = 'css/abgne_tab.css';
+        $html_date['js'][] = 'js/abgne_tab.js';
         $this->parser->parse('index_view', $html_date ) ;
     }
 
@@ -422,7 +424,7 @@ class Js_test extends CI_Controller {
         $html_date['content_div'] = $content_div ;
         $html_date['css'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.css';
         $html_date['js'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.js';
-
+        $html_date['js'][] = 'js/ui.js';
         $this->parser->parse('index_view', $html_date ) ;
     }
 }
