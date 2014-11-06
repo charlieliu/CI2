@@ -10,7 +10,7 @@
     <style>
         .test { color: #000; padding: .5em; border: 1px solid #444; }
         .test2 { color: #000; padding: .5em; border: 1px solid #444; }
-        .active { color: #900; }
+        .active { color: red; }
         .inside { background-color: aqua; }
     </style>
 
