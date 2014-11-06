@@ -74,23 +74,26 @@
                 dateFormat: "yy/mm/dd"
             });
 
-            $('#spinner').spinner({
-                max:22,
-                min:1,
-                change: function( event, ui ){
-                    if( availableTags[$(this).spinner("value")-1]!=undefined )
-                        $('#tags').val(availableTags[$(this).spinner('value')-1].label);
-                    else
-                        $('#tags').val('');
-                },
-                stop: function( event, ui ) {
-                    if( availableTags[$(this).spinner('value')-1]!=undefined )
-                        $('#tags').val(availableTags[$(this).spinner('value')-1].label);
-                    else
-                        $('#tags').val('');
-                }
-            });
-
+            function spinner_it()
+            {
+                $('#spinner').spinner({
+                    max:22,
+                    min:1,
+                    change: function( event, ui ){
+                        if( availableTags[$(this).spinner("value")-1]!=undefined )
+                            $('#tags').val(availableTags[$(this).spinner('value')-1].label);
+                        else
+                            $('#tags').val('');
+                    },
+                    stop: function( event, ui ) {
+                        if( availableTags[$(this).spinner('value')-1]!=undefined )
+                            $('#tags').val(availableTags[$(this).spinner('value')-1].label);
+                        else
+                            $('#tags').val('');
+                    }
+                });
+            };
+            spinner_it();
             $('#disable').click(function() {
                 if( $('#spinner').spinner("option", "disabled") )
                     $('#spinner').spinner("enable");
@@ -110,22 +113,7 @@
                 }
                 else
                 {
-                    $('#spinner').spinner({
-                        max:22,
-                        min:1,
-                        change: function( event, ui ){
-                            if( availableTags[$(this).spinner("value")-1]!=undefined )
-                                $('#tags').val(availableTags[$(this).spinner('value')-1].label);
-                            else
-                                $('#tags').val('');
-                        },
-                        stop: function( event, ui ) {
-                            if( availableTags[$(this).spinner('value')-1]!=undefined )
-                                $('#tags').val(availableTags[$(this).spinner('value')-1].label);
-                            else
-                                $('#tags').val('');
-                        }
-                    });
+                    spinner_it();
                     $('#getvalue').prop('disabled',false);
                     $('#setvalue').prop('disabled',false);
                     $('#disable').prop('disabled',false);
