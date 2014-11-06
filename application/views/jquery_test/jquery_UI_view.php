@@ -79,23 +79,15 @@
                 min:1,
                 change: function( event, ui ){
                     if( availableTags[$(this).spinner("value")-1]!=undefined )
-                    {
                         $('#tags').val(availableTags[$(this).spinner('value')-1].label);
-                    }
                     else
-                    {
                         $('#tags').val('');
-                    }
                 },
                 stop: function( event, ui ) {
                     if( availableTags[$(this).spinner('value')-1]!=undefined )
-                    {
                         $('#tags').val(availableTags[$(this).spinner('value')-1].label);
-                    }
                     else
-                    {
                         $('#tags').val('');
-                    }
                 }
             });
 
@@ -104,21 +96,55 @@
                     $('#spinner').spinner("enable");
                 else
                     $('#spinner').spinner("disable");
-            });
-            $('#destroy').click(function(){
-                if( $('#spinner').spinner("instance") )
-                    $('#spinner').spinner("destroy");
-                else
-                    $('#spinner').spinner();
-            });
-            $('#getvalue').click(function(){
-                alert( $('#spinner').spinner("value") );
-            });
-            $('#setvalue').click(function(){
-                $('#spinner').spinner("value", 5);
+            }).button({
+                icons: { primary: "ui-icon-alert", secondary: null }
             });
 
-            $('button').button();
+            $('#destroy').click(function(){
+                if( $('#spinner').spinner("instance") )
+                {
+                    $('#spinner').spinner("destroy");
+                    $('#getvalue').prop('disabled',true);
+                    $('#setvalue').prop('disabled',true);
+                    $('#disable').prop('disabled',true);
+                }
+                else
+                {
+                    $('#spinner').spinner({
+                        max:22,
+                        min:1,
+                        change: function( event, ui ){
+                            if( availableTags[$(this).spinner("value")-1]!=undefined )
+                                $('#tags').val(availableTags[$(this).spinner('value')-1].label);
+                            else
+                                $('#tags').val('');
+                        },
+                        stop: function( event, ui ) {
+                            if( availableTags[$(this).spinner('value')-1]!=undefined )
+                                $('#tags').val(availableTags[$(this).spinner('value')-1].label);
+                            else
+                                $('#tags').val('');
+                        }
+                    });
+                    $('#getvalue').prop('disabled',false);
+                    $('#setvalue').prop('disabled',false);
+                    $('#disable').prop('disabled',false);
+                }
+            }).button({
+                icons: { primary: "ui-icon-circle-minus", secondary: null }
+            });
+
+            $('#getvalue').click(function(){
+                alert( $('#spinner').spinner("value") );
+            }).button({
+                icons: { primary: "ui-icon-comment", secondary: null }
+            });
+
+            $('#setvalue').click(function(){
+                $('#spinner').spinner("value", 5);
+            }).button({
+                icons: { primary: "ui-icon-wrench", secondary: null }
+            });
         });
     </script>
 </div>
