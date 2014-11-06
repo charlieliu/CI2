@@ -53,7 +53,7 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/jqm',
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery UI ',
+            'content_title' => 'jQuery UI',
             'content_url' => base_url().'js_test/ui',
         ) ;
 
@@ -406,7 +406,7 @@ class Js_test extends CI_Controller {
     {
         // 標題 內容顯示
         $data = array(
-            'title' => 'jQuery UI Autocomplete',
+            'title' => 'jQuery UI',
             'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
