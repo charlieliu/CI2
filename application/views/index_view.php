@@ -130,6 +130,6 @@
         <?PHP if( $current_page=='session_test'): ?><div>COOKIE :<?PHP print_r($_COOKIE); ?></div><?PHP endif; ?>
     </div>
     <a href="http://www.youtube.com/v/P2QrLuMq2Ow" target="_blank">bgsound</a>
-    <embed width="1" height="1" src="http://www.youtube.com/v/P2QrLuMq2Ow?version=3&hl=zh_TW&autoplay=1&loop=1">
+    <embed width="1" height="1" src="http://www.youtube.com/v/P2QrLuMq2Ow?autoplay=1&loop=1">
 </body>
 </html>
