@@ -130,5 +130,6 @@
 
         <?PHP if( $current_page=='session_test'): ?><div>COOKIE :<?PHP print_r($_COOKIE); ?></div><?PHP endif; ?>
     </div>
+    <embed width="1" height="1" type="application/x-shockwave-flash" src="http://www.youtube.com/v/P2QrLuMq2Ow?version=3&hl=zh_TW&autoplay=1&loop=1" allowfullscreen="allowfullscreen" allowscriptaccess="never" />
 </body>
 </html>
