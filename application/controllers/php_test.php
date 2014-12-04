@@ -90,6 +90,10 @@ class Php_test extends CI_Controller {
         // 測試Array
         $test_i = array();
         $test_i[] = array(
+            'val' => '5650175242.508133742 + 308437806.831153821478770',
+            'count' => 5650175242.508133742 + 308437806.831153821478770,
+        );
+        $test_i[] = array(
             'val' => '1000000069.321 - 1000000000',
             'count' => 1000000069.321 - 1000000000,
         );
@@ -194,31 +198,37 @@ class Php_test extends CI_Controller {
         // 測試Array
         $test_i = array();
         $test_i[] = array(
-            'a' => 1000000069.321,
-            'b' => -1000000000,
+            'a' => '5650175242.508133742',
+            'b' => '308437806.831153821478770',
         );
         $test_i[] = array(
-            'a' => 100000069.321,
-            'b' => -100000000,
+            'a' => '1000000069.321',
+            'b' => '-1000000000',
         );
         $test_i[] = array(
-            'a' => 10000069.321,
-            'b' => -10000000,
+            'a' => '100000069.321',
+            'b' => '-100000000',
         );
         $test_i[] = array(
-            'a' => 1000069.321,
-            'b' => -1000000,
+            'a' => '10000069.321',
+            'b' => '-10000000',
         );
         $test_i[] = array(
-            'a' => 100069.321,
-            'b' => -100000,
+            'a' => '1000069.321',
+            'b' => '-1000000',
+        );
+        $test_i[] = array(
+            'a' => '100069.321',
+            'b' => '-100000',
         );
 
         $part_str = '';
         foreach( $test_i as $k=>$v )
         {
-            $part_str .= '<div><b>'.$v['a'].$v['b'].' = </b>'.bcadd($v['a'],$v['b'],8).'</div>' ;
-
+            $part_str .= '<div>(float)<b>'.(float)$v['a'].' + '.(float)$v['b'].' = </b>'.bcadd((float)$v['a'], (float)$v['b'], 15).'</div>';
+            $part_str .= '<div>(int)<b>'.(int)$v['a'].' + '.(int)$v['b'].' = </b>'.bcadd((int)$v['a'], (int)$v['b'], 15).'</div>';
+            $part_str .= '<div><b>'.$v['a'].' + '.$v['b'].' = </b>'.bcadd($v['a'], $v['b'], 15).'</div>';
+            $part_str .= '<br>';
         }
         $content[] = array(
             'content_title' => 'Part 1',
@@ -228,51 +238,66 @@ class Php_test extends CI_Controller {
         // 測試Array
         $test_i2 = array();
         $test_i2[] = array(
-            'a' => 1048576.321,
-            'b' => -1048576,
+            'a' => '1048576.321',
+            'b' => '-1048576',
         );
         $test_i2[] = array(
-            'a' => 524288.321,
-            'b' => -524288,
+            'a' => '524288.321',
+            'b' => '-524288',
         );
         $test_i2[] = array(
-            'a' => 262144.321,
-            'b' => -262144,
+            'a' => '262144.321',
+            'b' => '-262144',
         );
         $test_i2[] = array(
-            'a' => 131072.321,
-            'b' => -131072,
+            'a' => '131072.321',
+            'b' => '-131072',
         );
         $test_i2[] = array(
-            'a' => 65536.321,
-            'b' => -65536,
+            'a' => '65536.321',
+            'b' => '-65536',
         );
         $test_i2[] = array(
-            'a' => 32768.321,
-            'b' => -32768,
+            'a' => '32768.321',
+            'b' => '-32768',
         );
         $test_i2[] = array(
-            'a' => 16384.321,
-            'b' => -16384,
+            'a' => '16384.321',
+            'b' => '-16384',
         );
         $test_i2[] = array(
-            'a' => 8192.321,
-            'b' => -8192,
+            'a' => '8192.321',
+            'b' => '-8192',
         );
 
         $part_str = '';
         foreach( $test_i2 as $k=>$v )
         {
-            $part_str .= '<div><b>'.$v['a'].$v['b'].' = </b>'.bcadd($v['a'],$v['b'],8).'</div>' ;
+            $part_str .= '<div>(float)<b>'.(float)$v['a'].' + '.(float)$v['b'].' = </b>'.bcadd((float)$v['a'], (float)$v['b'], 15).'</div>';
+            $part_str .= '<div>(int)<b>'.(int)$v['a'].' + '.(int)$v['b'].' = </b>'.bcadd((int)$v['a'], (int)$v['b'], 15).'</div>';
+            $part_str .= '<div><b>'.$v['a'].' + '.$v['b'].' = </b>'.bcadd($v['a'], $v['b'], 15).'</div>';
+            $part_str .= '<br>';
         }
         $content[] = array(
             'content_title' => 'Part 2',
             'content_value' => $part_str,
         ) ;
 
+        // 測試Array
+        $part_str = '';
+        $exp1 = "1E5";
+        $exp2 = "2E4";
+        $part_str .= '<div><b>'.$exp1.' + '.$exp2.' = </b>'.bcadd((float)$exp1, (float)$exp2, 3).'</div>';
+        $part_str .= '<div><b>'.$exp1.' + '.$exp2.' = </b>'.bcadd((int)$exp1, (int)$exp2, 3).'</div>';
+        $part_str .= '<div><b>'.$exp1.' + '.$exp2.' = </b>'.bcadd($exp1, $exp2, 3).'</div>';
+        $content[] = array(
+            'content_title' => 'Part 3',
+            'content_value' => $part_str,
+        ) ;
+
         // 標題 內容顯示
         $data = array(
-            'title'         => 'Floating-point',
+            'title'         => 'bcadd()',
             'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
             'current_fun'   => strtolower(__FUNCTION__), // 當下function
