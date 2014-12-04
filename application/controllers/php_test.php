@@ -46,6 +46,10 @@ class Php_test extends CI_Controller {
             'content_url' => 'php_test/hash_test',
         ) ;
         $content[] = array(
+            'content_title' => '正規表示式 測試',
+            'content_url' => 'php_test/preg_test',
+        ) ;
+        $content[] = array(
             'content_title' => 'if else & switch 效能比較',
             'content_url' => 'php_test/switch_test',
         ) ;
@@ -203,97 +207,78 @@ class Php_test extends CI_Controller {
         );
         $test_i[] = array(
             'a' => '1000000069.321',
-            'b' => '-1000000000',
+            'b' => '-1000000000.339287563478770',
         );
         $test_i[] = array(
             'a' => '100000069.321',
-            'b' => '-100000000',
+            'b' => '-100000000.339287563478770',
         );
         $test_i[] = array(
             'a' => '10000069.321',
-            'b' => '-10000000',
+            'b' => '-10000000.339287563478770',
         );
         $test_i[] = array(
             'a' => '1000069.321',
-            'b' => '-1000000',
+            'b' => '-1000000.339287563478770',
         );
         $test_i[] = array(
             'a' => '100069.321',
-            'b' => '-100000',
+            'b' => '-100000.339287563478770',
         );
-
-        $part_str = '';
-        foreach( $test_i as $k=>$v )
-        {
-            $part_str .= '<div>(float)<b>'.(float)$v['a'].' + '.(float)$v['b'].' = </b>'.bcadd((float)$v['a'], (float)$v['b'], 15).'</div>';
-            $part_str .= '<div>(int)<b>'.(int)$v['a'].' + '.(int)$v['b'].' = </b>'.bcadd((int)$v['a'], (int)$v['b'], 15).'</div>';
-            $part_str .= '<div><b>'.$v['a'].' + '.$v['b'].' = </b>'.bcadd($v['a'], $v['b'], 15).'</div>';
-            $part_str .= '<br>';
-        }
-        $content[] = array(
-            'content_title' => 'Part 1',
-            'content_value' => $part_str,
-        ) ;
-
-        // 測試Array
-        $test_i2 = array();
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '1048576.321',
             'b' => '-1048576',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '524288.321',
             'b' => '-524288',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '262144.321',
             'b' => '-262144',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '131072.321',
             'b' => '-131072',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '65536.321',
             'b' => '-65536',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '32768.321',
             'b' => '-32768',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '16384.321',
             'b' => '-16384',
         );
-        $test_i2[] = array(
+        $test_i[] = array(
             'a' => '8192.321',
             'b' => '-8192',
         );
+        $test_i[] = array(
+            'a' => '1E5',
+            'b' => '2E4',
+        );
+        $test_i[] = array(
+            'a' => '" OR 1=1 #',
+            'b' => 'alert(1)',
+        );
 
-        $part_str = '';
-        foreach( $test_i2 as $k=>$v )
+        foreach( $test_i as $k=>$v )
         {
-            $part_str .= '<div>(float)<b>'.(float)$v['a'].' + '.(float)$v['b'].' = </b>'.bcadd((float)$v['a'], (float)$v['b'], 15).'</div>';
-            $part_str .= '<div>(int)<b>'.(int)$v['a'].' + '.(int)$v['b'].' = </b>'.bcadd((int)$v['a'], (int)$v['b'], 15).'</div>';
-            $part_str .= '<div><b>'.$v['a'].' + '.$v['b'].' = </b>'.bcadd($v['a'], $v['b'], 15).'</div>';
-            $part_str .= '<br>';
+            $part_str = '<table border=1>';
+            $part_str .= '<tr><th>type</th><th>a</th><th>b</th><th>bcadd(a,b)</th></tr>';
+            $part_str .= '<tr><td>(string)</td><td>'.(string)$v['a'].'</td><td>'.(string)$v['b'].' </td><td>'.bcadd((string)$v['a'], (string)$v['b'], 15).'</td></tr>';
+            $part_str .= '<tr><td>(float)</td><td>'.(float)$v['a'].'</td><td>'.(float)$v['b'].' </td><td>'.bcadd((float)$v['a'], (float)$v['b'], 15).'</td></tr>';
+            $part_str .= '<tr><td>(int)</td><td>'.(int)$v['a'].'</td><td>'.(int)$v['b'].' </td><td>'.bcadd((int)$v['a'], (int)$v['b'], 15).'</td></tr>';
+            $part_str .= '</table><br>';
+            $content[] = array(
+                'content_title' => 'Part '.($k+1),
+                'content_value' => $part_str,
+            ) ;
         }
-        $content[] = array(
-            'content_title' => 'Part 2',
-            'content_value' => $part_str,
-        ) ;
-
-        // 測試Array
-        $part_str = '';
-        $exp1 = "1E5";
-        $exp2 = "2E4";
-        $part_str .= '<div><b>'.$exp1.' + '.$exp2.' = </b>'.bcadd((float)$exp1, (float)$exp2, 3).'</div>';
-        $part_str .= '<div><b>'.$exp1.' + '.$exp2.' = </b>'.bcadd((int)$exp1, (int)$exp2, 3).'</div>';
-        $part_str .= '<div><b>'.$exp1.' + '.$exp2.' = </b>'.bcadd($exp1, $exp2, 3).'</div>';
-        $content[] = array(
-            'content_title' => 'Part 3',
-            'content_value' => $part_str,
-        ) ;
 
         // 標題 內容顯示
         $data = array(
@@ -846,6 +831,106 @@ class Php_test extends CI_Controller {
         // Template parser class
         // 中間挖掉的部分
         $content_div = $this->parser->parse('hash_test_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function preg_test()
+    {
+        $this->check_session();
+        $post = $this->input->post();
+
+        $str = !empty($post['str']) ? $post['str'] : '' ;
+
+        // 正規表達式
+        $preg_array = array();
+        $preg_array[] = array(
+            'fun'       => 'URL',
+            'remark'    => '/^(https?:\/\/+[\w\-]+\.[\w\-]+)/i',
+            'reg'       => preg_match('/^(https?:\/\/+[\w\-]+\.[\w\-]+)/i',$str),
+            'remark2'   => '',
+            'reg2'      => '',
+        );
+        $preg_array[] = array(
+            'fun'       => '手機號碼',
+            'remark'    => '/^09[0-9]{8}$/',
+            'reg'       => preg_match('/^09[0-9]{8}$/',$str),
+            'remark2'   => '',
+            'reg2'      => '',
+        );
+        $preg_array[] = array(
+            'fun'       => '身分證字號',
+            'remark'    => '/^[A-Z]{1}[0-9]{9}$/',
+            'reg'       => preg_match('/^[A-Z]{1}[0-9]{9}$/',$str),
+            'remark2'   => '',
+            'reg2'      => '',
+        );
+        $preg_array[] = array(
+            'fun'       => '正整數 或 空值',
+            'remark'    => '/^\d*$/',
+            'reg'       => preg_match('/^\d*$/',$str),
+            'remark2'   => '',
+            'reg2'      => '',
+        );
+        $preg_array[] = array(
+            'fun'       => '正整數',
+            'remark'    => '/^\d+$/',
+            'reg'       => preg_match('/^\d+$/',$str),
+            'remark2'   => '/^[0-9]+$/',
+            'reg2'      => preg_match('/^[0-9]+$/',$str),
+        );
+        $preg_array[] = array(
+            'fun'       => '非數字',
+            'remark'    => '/^\D+$/',
+            'reg'       => preg_match('/^\D+$/',$str),
+            'remark2'   => '/^[^0-9]+$/',
+            'reg2'      => preg_match('/^[^0-9]+$/',$str),
+        );
+        $preg_array[] = array(
+            'fun'       => '英文字母',
+            'remark'    => '/^[a-z]+$/',
+            'reg'       => preg_match('/^[a-z]+$/',$str),
+            'remark2'   => '/^[A-Z]+$/',
+            'reg2'      => preg_match('/^[A-Z]+$/',$str),
+        );
+        $preg_array[] = array(
+            'fun'       => '數字字母',
+            'remark'    => '/^\w+$/',
+            'reg'       => preg_match('/^\w+$/',$str),
+            'remark2'   => '/^[A-Za-z0-9_]+$/',
+            'reg2'      => preg_match('/^[A-Za-z0-9_]+$/',$str),
+        );
+
+
+        // 顯示資料
+        $content = array();
+
+        foreach( $preg_array as $v )
+        {
+            $content[] = array(
+                'content_name'  => $v['fun'],
+                'content_title' => $v['remark'],
+                'content_value' => $v['reg'],
+                'content_title2'=> $v['remark2'],
+                'content_value2'=> $v['reg2'],
+            ) ;
+        }
+
+        // 標題 內容顯示
+        $data = array(
+            'title' => '正規表達式 測試',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => $content,
+            'str'=> $str,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('preg_test_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
