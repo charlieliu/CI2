@@ -26,6 +26,10 @@ class Php_test extends CI_Controller {
             'content_url' => 'php_test/float_test',
         ) ;
         $content[] = array(
+            'content_title' => 'PHP bcadd() 測試',
+            'content_url' => 'php_test/bcadd_test',
+        ) ;
+        $content[] = array(
             'content_title' => '時間格式顯示',
             'content_url' => 'php_test/date_test',
         ) ;
@@ -156,6 +160,110 @@ class Php_test extends CI_Controller {
         foreach( $test_i2 as $k=>$v )
         {
             $part_str .= '<div><b>'.$v['val'].' = </b>'.$v['count'].'</div>' ;
+        }
+        $content[] = array(
+            'content_title' => 'Part 2',
+            'content_value' => $part_str,
+        ) ;
+
+        // 標題 內容顯示
+        $data = array(
+            'title'         => 'Floating-point',
+            'current_title' => $this->current_title,
+            'current_page'  => strtolower(__CLASS__), // 當下類別
+            'current_fun'   => strtolower(__FUNCTION__), // 當下function
+            'content'       => $content,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('test_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function bcadd_test()
+    {
+        $this->check_session();
+
+        // 顯示資料
+        $content = array();
+
+        // 測試Array
+        $test_i = array();
+        $test_i[] = array(
+            'a' => 1000000069.321,
+            'b' => -1000000000,
+        );
+        $test_i[] = array(
+            'a' => 100000069.321,
+            'b' => -100000000,
+        );
+        $test_i[] = array(
+            'a' => 10000069.321,
+            'b' => -10000000,
+        );
+        $test_i[] = array(
+            'a' => 1000069.321,
+            'b' => -1000000,
+        );
+        $test_i[] = array(
+            'a' => 100069.321,
+            'b' => -100000,
+        );
+
+        $part_str = '';
+        foreach( $test_i as $k=>$v )
+        {
+            $part_str .= '<div><b>'.$v['a'].$v['b'].' = </b>'.bcadd($v['a'],$v['b'],8).'</div>' ;
+
+        }
+        $content[] = array(
+            'content_title' => 'Part 1',
+            'content_value' => $part_str,
+        ) ;
+
+        // 測試Array
+        $test_i2 = array();
+        $test_i2[] = array(
+            'a' => 1048576.321,
+            'b' => -1048576,
+        );
+        $test_i2[] = array(
+            'a' => 524288.321,
+            'b' => -524288,
+        );
+        $test_i2[] = array(
+            'a' => 262144.321,
+            'b' => -262144,
+        );
+        $test_i2[] = array(
+            'a' => 131072.321,
+            'b' => -131072,
+        );
+        $test_i2[] = array(
+            'a' => 65536.321,
+            'b' => -65536,
+        );
+        $test_i2[] = array(
+            'a' => 32768.321,
+            'b' => -32768,
+        );
+        $test_i2[] = array(
+            'a' => 16384.321,
+            'b' => -16384,
+        );
+        $test_i2[] = array(
+            'a' => 8192.321,
+            'b' => -8192,
+        );
+
+        $part_str = '';
+        foreach( $test_i2 as $k=>$v )
+        {
+            $part_str .= '<div><b>'.$v['a'].$v['b'].' = </b>'.bcadd($v['a'],$v['b'],8).'</div>' ;
         }
         $content[] = array(
             'content_title' => 'Part 2',
