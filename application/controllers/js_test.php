@@ -60,6 +60,10 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery on() bind()',
             'content_url' => base_url().'js_test/on_bind',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery append() preppend()',
+            'content_url' => base_url().'js_test/append',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -447,6 +451,27 @@ class Js_test extends CI_Controller {
 
         // 中間挖掉的部分
         $content_div = $this->parser->parse('jquery_test/jquery_on_bind_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function append()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'jQuery append() prepend()',
+            'current_title' => $this->current_title,
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'content' => '',
+            '_FILES'=>$_FILES,
+            'base_url'=>base_url(),
+        );
+
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('jquery_test/jquery_append_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
