@@ -882,6 +882,13 @@ class Php_test extends CI_Controller {
             'reg2'      => preg_match('/^[0-9]+$/',$str),
         );
         $preg_array[] = array(
+            'fun'       => '含數字',
+            'remark'    => '/\d/',
+            'reg'       => preg_match('/\d/',$str),
+            'remark2'   => '/[0-9]/',
+            'reg2'      => preg_match('/[0-9]/',$str),
+        );
+        $preg_array[] = array(
             'fun'       => '非數字',
             'remark'    => '/^\D+$/',
             'reg'       => preg_match('/^\D+$/',$str),
@@ -896,11 +903,39 @@ class Php_test extends CI_Controller {
             'reg2'      => preg_match('/^[A-Z]+$/',$str),
         );
         $preg_array[] = array(
+            'fun'       => '含英文字母',
+            'remark'    => '/[a-z]/',
+            'reg'       => preg_match('/[a-z]/',$str),
+            'remark2'   => '/[A-Z]/',
+            'reg2'      => preg_match('/[A-Z]/',$str),
+        );
+        $preg_array[] = array(
             'fun'       => '數字字母',
             'remark'    => '/^\w+$/',
             'reg'       => preg_match('/^\w+$/',$str),
             'remark2'   => '/^[A-Za-z0-9_]+$/',
             'reg2'      => preg_match('/^[A-Za-z0-9_]+$/',$str),
+        );
+        $preg_array[] = array(
+            'fun'       => '非數字字母',
+            'remark'    => '/^\W+$/',
+            'reg'       => preg_match('/^\W+$/',$str),
+            'remark2'   => '/^[^A-Za-z0-9_]+$/',
+            'reg2'      => preg_match('/^[^A-Za-z0-9_]+$/',$str),
+        );
+        $preg_array[] = array(
+            'fun'       => '空白字元',
+            'remark'    => '/^\s+$/',
+            'reg'       => preg_match('/^\s+$/',$str),
+            'remark2'   => '',
+            'reg2'      => '',
+        );
+        $preg_array[] = array(
+            'fun'       => '非空白字元',
+            'remark'    => '/^\S+$/',
+            'reg'       => preg_match('/^\S+$/',$str),
+            'remark2'   => '',
+            'reg2'      => '',
         );
 
 
