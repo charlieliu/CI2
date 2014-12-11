@@ -50,6 +50,10 @@ class Php_test extends CI_Controller {
             'content_url' => 'php_test/preg_test',
         ) ;
         $content[] = array(
+            'content_title' => 'php chr()',
+            'content_url' => 'php_test/php_chr',
+        ) ;
+        $content[] = array(
             'content_title' => 'if else & switch 效能比較',
             'content_url' => 'php_test/switch_test',
         ) ;
@@ -966,6 +970,70 @@ class Php_test extends CI_Controller {
         // Template parser class
         // 中間挖掉的部分
         $content_div = $this->parser->parse('preg_test_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function php_chr()
+    {
+        // 顯示資料
+        $content = array();
+
+        //$ascii_arr[] = array('s'=>0,'e'=>32,'t'=>'空白');
+        //$ascii_arr[] = array('s'=>33,'e'=>47,'t'=>'符號');
+        $ascii_arr[] = array('s'=>48,'e'=>57,'t'=>'數字');
+        //$ascii_arr[] = array('s'=>58,'e'=>64,'t'=>'符號');
+        $ascii_arr[] = array('s'=>65,'e'=>90,'t'=>'大寫');
+        //$ascii_arr[] = array('s'=>91,'e'=>96,'t'=>'符號');
+        $ascii_arr[] = array('s'=>97,'e'=>122,'t'=>'小寫');
+        //$ascii_arr[] = array('s'=>123,'e'=>127,'t'=>'符號');
+        //$ascii_arr[] = array('s'=>128,'e'=>256,'t'=>'字符');
+        foreach ($ascii_arr as $row) {
+            $content_value = '<table><tr><th>$ascii</th><th>chr($ascii)</th></tr>';
+            for($i=$row['s'];$i<=$row['e'];$i++)
+            {
+                /*
+                    chr() 参数可以是十进制、八进制或十六进制。
+                    通过前置 0 来规定八进制，
+                    通过前置 0x 来规定十六进制。
+                */
+                $content_value .= '<tr><td>'.$i.'</td><td>'.chr($i).'</td></tr>';
+            }
+            $content_value .= '</table>';
+            $content[] = array(
+                'content_title'=>$row['t'],
+                'content_value'=>$content_value,
+            ) ;
+        }
+
+        $content[] = array(
+            'content_title'=>"ord(' ')",
+            'content_value'=>ord(' '),
+        ) ;
+        $content[] = array(
+            'content_title'=>"ord('_')",
+            'content_value'=>ord('_'),
+        ) ;
+        $content[] = array(
+            'content_title'=>"ord('-')",
+            'content_value'=>ord('-'),
+        ) ;
+
+
+        // 標題 內容顯示
+        $data = array(
+            'title'         => 'php chr()',
+            'current_title' => $this->current_title,
+            'current_page'  => strtolower(__CLASS__), // 當下類別
+            'current_fun'   => strtolower(__FUNCTION__), // 當下function
+            'content'       => $content,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('test_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
