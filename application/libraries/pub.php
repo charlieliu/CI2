@@ -42,7 +42,7 @@ class Pub{
             if( $data['status']!=100 )
             {
                 var_dump($data);
-                exit();
+                //exit();
             }
         }
     }
