@@ -50,7 +50,7 @@ class Php_test extends CI_Controller {
             'content_url' => 'php_test/preg_test',
         ) ;
         $content[] = array(
-            'content_title' => 'php chr()',
+            'content_title' => 'php chr() -- ASCII',
             'content_url' => 'php_test/php_chr',
         ) ;
         $content[] = array(
