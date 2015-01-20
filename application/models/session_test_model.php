@@ -35,6 +35,7 @@ class Session_test_model extends CI_Model {
         if( empty($session_id) )
         {
             $status = 200;
+            $data   = 'empty session_id';
         }
         else
         {

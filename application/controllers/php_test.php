@@ -1233,7 +1233,7 @@ class Php_test extends CI_Controller {
         // 取得 session 資訊
         $SESSION_LOGS = $this->get_session_info($session_id);
         $total = intval($SESSION_LOGS['total']);
-        $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
+        $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : '' ;
 
         if( $total>1 )
         {
@@ -1276,26 +1276,36 @@ class Php_test extends CI_Controller {
                 $data = $this->_mod_session_info($session_id);
             }
         }
+
         if( $post )
         {
             echo json_encode($data);
         }
         else
         {
-            return $data;
+            if( empty($data) )
+            {
+                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
+            }
+            else if( $data['status']!=100 )
+            {
+                var_dump($data);
+                //echo $data;
+            }
         }
     }
 
     private function _add_session_info($session_id='',$input=array())
     {
-        $data = array();
         if( empty($session_id) )
         {
             $status = 201;
+            $date   = 'empty session_id';
         }
         else if( empty($input) || !is_array($input) )
         {
             $status = 202;
+            $date   = 'empty input';
         }
         else
         {
@@ -1303,6 +1313,7 @@ class Php_test extends CI_Controller {
             if( intval($add['status'])!=100 )
             {
                 $status = intval($add['status']);
+                $data   = $add['data'];
             }
             else
             {
