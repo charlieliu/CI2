@@ -957,23 +957,35 @@ class Php_test extends CI_Controller {
             ) ;
         }
 
-        // 標題 內容顯示
-        $data = array(
-            'title' => '正規表達式 測試',
-            'current_title' => $this->current_title,
-            'current_page' => strtolower(__CLASS__), // 當下類別
-            'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'content' => $content,
-            'str'=> $str,
-        );
+        // tbody
+        $grid_view = $this->parser->parse('preg_test_grid_view', array('content'=>$content), true);
 
-        // Template parser class
-        // 中間挖掉的部分
-        $content_div = $this->parser->parse('preg_test_view', $data, true);
-        // 中間部分塞入外框
-        $html_date = $data ;
-        $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+        if( !isset($post['str']) )
+        {
+
+            // 標題 內容顯示
+            $data = array(
+                'title' => '正規表達式 測試',
+                'current_title' => $this->current_title,
+                'current_page' => strtolower(__CLASS__), // 當下類別
+                'current_fun' => strtolower(__FUNCTION__), // 當下function
+                'grid_view' => $grid_view,
+                'str'=> $str,
+            );
+            // Template parser class
+            // 中間挖掉的部分
+            $content_div = $this->parser->parse('preg_test_outer_view', $data, true);
+
+            // 中間部分塞入外框
+            $html_date = $data ;
+            $html_date['content_div'] = $content_div ;
+            $html_date['js'][] = 'js/preg_test.js';
+            $this->parser->parse('index_view', $html_date ) ;
+        }
+        else
+        {
+            echo json_encode(array('grid_view'=>$grid_view)) ;
+        }
     }
 
     public function php_chr()
