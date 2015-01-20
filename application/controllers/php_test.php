@@ -879,7 +879,7 @@ class Php_test extends CI_Controller {
             'reg2'      => '',
         );
         $preg_array[] = array(
-            'fun'       => '正整數',
+            'fun'       => '全部是正整數',
             'remark'    => '/^\d+$/',
             'reg'       => preg_match('/^\d+$/',$str),
             'remark2'   => '/^[0-9]+$/',
@@ -893,14 +893,14 @@ class Php_test extends CI_Controller {
             'reg2'      => preg_match('/[0-9]/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '非數字',
+            'fun'       => '全部非數字',
             'remark'    => '/^\D+$/',
             'reg'       => preg_match('/^\D+$/',$str),
             'remark2'   => '/^[^0-9]+$/',
             'reg2'      => preg_match('/^[^0-9]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '英文字母',
+            'fun'       => '全部是英文字母',
             'remark'    => '/^[a-z]+$/',
             'reg'       => preg_match('/^[a-z]+$/',$str),
             'remark2'   => '/^[A-Z]+$/',
@@ -914,28 +914,28 @@ class Php_test extends CI_Controller {
             'reg2'      => preg_match('/[A-Z]/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '數字字母',
+            'fun'       => '含數字或英文字母或_',
             'remark'    => '/^\w+$/',
             'reg'       => preg_match('/^\w+$/',$str),
             'remark2'   => '/^[A-Za-z0-9_]+$/',
             'reg2'      => preg_match('/^[A-Za-z0-9_]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '非數字字母',
+            'fun'       => '全部是數字或英文字母或_',
             'remark'    => '/^\W+$/',
             'reg'       => preg_match('/^\W+$/',$str),
             'remark2'   => '/^[^A-Za-z0-9_]+$/',
             'reg2'      => preg_match('/^[^A-Za-z0-9_]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '空白字元',
+            'fun'       => '全部是空白字元',
             'remark'    => '/^\s+$/',
             'reg'       => preg_match('/^\s+$/',$str),
             'remark2'   => '',
             'reg2'      => '',
         );
         $preg_array[] = array(
-            'fun'       => '非空白字元',
+            'fun'       => '全部非空白字元',
             'remark'    => '/^\S+$/',
             'reg'       => preg_match('/^\S+$/',$str),
             'remark2'   => '',
