@@ -1296,6 +1296,7 @@ class Php_test extends CI_Controller {
             }
             else if( $data['status']!=100 )
             {
+                $data['data'] = __FUNCTION__.'/LINE'.__LINE__.' '.$data['data'] ;
                 echo json_encode($data);
             }
         }
@@ -1306,12 +1307,12 @@ class Php_test extends CI_Controller {
         if( empty($session_id) )
         {
             $status = 201;
-            $date = '_add_session_info LINE '.__LINE__.' empty session_id';
+            $data = __FUNCTION__.'/LINE '.__LINE__.' empty session_id';
         }
         else if( empty($input) || !is_array($input) )
         {
             $status = 202;
-            $date = '_add_session_info LINE '.__LINE__.' empty input';
+            $data = __FUNCTION__.'/LINE '.__LINE__.' empty input';
         }
         else
         {
@@ -1328,6 +1329,12 @@ class Php_test extends CI_Controller {
                 $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
             }
         }
+
+        if( empty($data) )
+        {
+            $data = __FUNCTION__.'/LINE '.__LINE__.' empty data';
+        }
+
         return array('status'=>$status,'data'=>$data);
     }
 
@@ -1336,7 +1343,7 @@ class Php_test extends CI_Controller {
         if( empty($session_id) )
         {
             $status = 201;
-            $date = '_mod_session_info LINE '.__LINE__.' empty session_id';
+            $data = __FUNCTION__.'/LINE '.__LINE__.' empty session_id';
         }
         else
         {
@@ -1352,6 +1359,10 @@ class Php_test extends CI_Controller {
                 $status = ( intval($SESSION_LOGS['total'])==1 ) ? 100 : 101 ;
                 $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
             }
+        }
+        if( empty($data) )
+        {
+            $data = __FUNCTION__.'/LINE '.__LINE__.' empty data';
         }
         return array('status'=>$status,'data'=>$data);
     }
