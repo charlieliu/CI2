@@ -1306,12 +1306,12 @@ class Php_test extends CI_Controller {
         if( empty($session_id) )
         {
             $status = 201;
-            $date   = 'empty session_id';
+            $date = '_add_session_info LINE '.__LINE__.' empty session_id';
         }
         else if( empty($input) || !is_array($input) )
         {
             $status = 202;
-            $date   = 'empty input';
+            $date = '_add_session_info LINE '.__LINE__.' empty input';
         }
         else
         {
@@ -1319,7 +1319,7 @@ class Php_test extends CI_Controller {
             if( intval($add['status'])!=100 )
             {
                 $status = intval($add['status']);
-                $data   = $add['data'];
+                $data = $add['data'];
             }
             else
             {
@@ -1333,10 +1333,10 @@ class Php_test extends CI_Controller {
 
     private function _mod_session_info($session_id='')
     {
-        $data = array();
         if( empty($session_id) )
         {
             $status = 201;
+            $date = '_mod_session_info LINE '.__LINE__.' empty session_id';
         }
         else
         {
@@ -1344,6 +1344,7 @@ class Php_test extends CI_Controller {
             if( intval($mod['status'])!=100 )
             {
                 $status = intval($mod['status']);
+                $data = $mod['data'];
             }
             else
             {
