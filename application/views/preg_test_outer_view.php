@@ -2,8 +2,8 @@
     <p>{current_page}/{current_fun}</p>
 
     <form method="POST">
-        <input type="text" name="str" value="{str}">
-        <input type="submit" value="查詢">
+        <input id="str" type="text" value="">
+        <input id="seach" type="button" value="查詢">
     </form>
 
     <!-- Variable Pairs -->
@@ -17,16 +17,8 @@
                 <th>測試結果</th>
             </tr>
         </thead>
-        <tbody>
-            {content}
-            <tr>
-                <td>{content_name}</td>
-                <td>{content_title}</td>
-                <td>{content_value}</td>
-                <td>{content_title2}</td>
-                <td>{content_value2}</td>
-            </tr>
-            {/content}
+        <tbody id="grid_view">
+            {grid_view}
         </tbody>
     </table>
     <!-- Variable Pairs -->

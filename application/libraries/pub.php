@@ -31,7 +31,7 @@ class Pub{
         }
         else
         {
-            $url = base_url().'php_test/check_session';
+            $url = base_url().'index.php?/php_test/check_session';
             $data = array(
                 'session_id'=>$session_id,
                 'ip_address'=>$_SERVER["REMOTE_ADDR"],
@@ -39,10 +39,12 @@ class Pub{
             );
             $data = json_decode($this->CurlPost($url,$data));
             $data = $this->o2a($data);
+
             if( $data['status']!=100 )
             {
                 var_dump($data);
                 //exit();
+                //echo '<script>alert("'.$data['status'].'");</script>';
             }
         }
     }

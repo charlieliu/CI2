@@ -50,7 +50,7 @@ class Php_test extends CI_Controller {
             'content_url' => 'php_test/preg_test',
         ) ;
         $content[] = array(
-            'content_title' => 'php chr()',
+            'content_title' => 'php chr() -- ASCII',
             'content_url' => 'php_test/php_chr',
         ) ;
         $content[] = array(
@@ -879,7 +879,7 @@ class Php_test extends CI_Controller {
             'reg2'      => '',
         );
         $preg_array[] = array(
-            'fun'       => '正整數',
+            'fun'       => '全部是正整數',
             'remark'    => '/^\d+$/',
             'reg'       => preg_match('/^\d+$/',$str),
             'remark2'   => '/^[0-9]+$/',
@@ -893,14 +893,14 @@ class Php_test extends CI_Controller {
             'reg2'      => preg_match('/[0-9]/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '非數字',
+            'fun'       => '全部非數字',
             'remark'    => '/^\D+$/',
             'reg'       => preg_match('/^\D+$/',$str),
             'remark2'   => '/^[^0-9]+$/',
             'reg2'      => preg_match('/^[^0-9]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '英文字母',
+            'fun'       => '全部是英文字母',
             'remark'    => '/^[a-z]+$/',
             'reg'       => preg_match('/^[a-z]+$/',$str),
             'remark2'   => '/^[A-Z]+$/',
@@ -914,28 +914,28 @@ class Php_test extends CI_Controller {
             'reg2'      => preg_match('/[A-Z]/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '數字字母',
+            'fun'       => '含數字或英文字母或_',
             'remark'    => '/^\w+$/',
             'reg'       => preg_match('/^\w+$/',$str),
             'remark2'   => '/^[A-Za-z0-9_]+$/',
             'reg2'      => preg_match('/^[A-Za-z0-9_]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '非數字字母',
+            'fun'       => '全部是數字或英文字母或_',
             'remark'    => '/^\W+$/',
             'reg'       => preg_match('/^\W+$/',$str),
             'remark2'   => '/^[^A-Za-z0-9_]+$/',
             'reg2'      => preg_match('/^[^A-Za-z0-9_]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '空白字元',
+            'fun'       => '全部是空白字元',
             'remark'    => '/^\s+$/',
             'reg'       => preg_match('/^\s+$/',$str),
             'remark2'   => '',
             'reg2'      => '',
         );
         $preg_array[] = array(
-            'fun'       => '非空白字元',
+            'fun'       => '全部非空白字元',
             'remark'    => '/^\S+$/',
             'reg'       => preg_match('/^\S+$/',$str),
             'remark2'   => '',
@@ -957,23 +957,35 @@ class Php_test extends CI_Controller {
             ) ;
         }
 
-        // 標題 內容顯示
-        $data = array(
-            'title' => '正規表達式 測試',
-            'current_title' => $this->current_title,
-            'current_page' => strtolower(__CLASS__), // 當下類別
-            'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'content' => $content,
-            'str'=> $str,
-        );
+        // tbody
+        $grid_view = $this->parser->parse('preg_test_grid_view', array('content'=>$content), true);
 
-        // Template parser class
-        // 中間挖掉的部分
-        $content_div = $this->parser->parse('preg_test_view', $data, true);
-        // 中間部分塞入外框
-        $html_date = $data ;
-        $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+        if( !isset($post['str']) )
+        {
+
+            // 標題 內容顯示
+            $data = array(
+                'title' => '正規表達式 測試',
+                'current_title' => $this->current_title,
+                'current_page' => strtolower(__CLASS__), // 當下類別
+                'current_fun' => strtolower(__FUNCTION__), // 當下function
+                'grid_view' => $grid_view,
+                'str'=> $str,
+            );
+            // Template parser class
+            // 中間挖掉的部分
+            $content_div = $this->parser->parse('preg_test_outer_view', $data, true);
+
+            // 中間部分塞入外框
+            $html_date = $data ;
+            $html_date['content_div'] = $content_div ;
+            $html_date['js'][] = 'js/preg_test.js';
+            $this->parser->parse('index_view', $html_date ) ;
+        }
+        else
+        {
+            echo json_encode(array('grid_view'=>$grid_view)) ;
+        }
     }
 
     public function php_chr()
@@ -1220,82 +1232,86 @@ class Php_test extends CI_Controller {
         {
             exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/REMOTE_ADDR');// ip address
         }
-
-        $this->load->model('session_test_model','',TRUE);
-
-        // 2分鐘內 session 失效
-        $del = $this->session_test_model->del_session_info();
-        if( $del['status']!=100 )
-        {
-            exit('del_session_info :'.$del['status']);
-        }
-
-        // 取得 session 資訊
-        $SESSION_LOGS = $this->get_session_info($session_id);
-        $total = intval($SESSION_LOGS['total']);
-        $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : array() ;
-
-        if( $total>1 )
-        {
-            exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/get_session_info :'.$SESSION_LOGS['total']);
-        }
-        else if( $total<1 )
-        {
-            // 新增 session
-            $data = $this->_add_session_info($session_id,$post);
-        }
         else
         {
-            if( empty($data) )
+            $this->load->model('session_test_model','',TRUE);
+
+            // 2分鐘內 session 失效
+            $del = $this->session_test_model->del_session_info();
+            if( $del['status']!=100 )
             {
-                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
+                exit('del_session_info :'.$del['status']);
+            }
+
+            // 取得 session 資訊
+            $SESSION_LOGS = $this->get_session_info($session_id);
+            $total = intval($SESSION_LOGS['total']);
+            $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : '' ;
+
+            if( $total>1 )
+            {
+                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/get_session_info :'.$SESSION_LOGS['total']);
+            }
+            else if( $total<1 )
+            {
+                // 新增 session
+                $data = $this->_add_session_info($session_id,$post);
             }
             else
             {
-                if( empty($data['IP_ADDRESS']) )
+                if( empty($data) )
                 {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS empty');
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
                 }
-                else if( $data['IP_ADDRESS']!=$ip_address )
+                else
                 {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS');
+                    if( empty($data['IP_ADDRESS']) )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS empty');
+                    }
+                    else if( $data['IP_ADDRESS']!=$ip_address )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS');
+                    }
+                    else if( empty($data['USER_AGENT']) )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT empty');
+                    }
+                    else if( $data['USER_AGENT']!=$user_agent )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT');
+                    }
+                    // 更新 session
+                    $data = $this->_mod_session_info($session_id);
                 }
-                else if( empty($data['USER_AGENT']) )
-                {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT empty');
-                }
-                else if( $data['USER_AGENT']!=$user_agent )
-                {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT');
-                }
-                // 更新 session
-                $data = $this->_mod_session_info($session_id);
             }
-        }
-        if( $post )
-        {
-            echo json_encode($data);
-        }
-        else
-        {
-            return $data;
+
+            if( !empty($post['session_id']) && !empty($post['ip_address']) && !empty($post['user_agent']) )
+            {
+                echo json_encode($data);
+            }
+            else if( $data['status']!=100 )
+            {
+                echo json_encode($data);
+            }
         }
     }
 
     private function _add_session_info($session_id='',$input=array())
     {
-        $data = array();
         if( empty($session_id) )
         {
             $status = 201;
+            $date   = 'empty session_id';
         }
         else if( empty($input) || !is_array($input) )
         {
             $status = 202;
+            $date   = 'empty input';
         }
         else
         {
@@ -1303,6 +1319,7 @@ class Php_test extends CI_Controller {
             if( intval($add['status'])!=100 )
             {
                 $status = intval($add['status']);
+                $data   = $add['data'];
             }
             else
             {

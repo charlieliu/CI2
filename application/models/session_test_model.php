@@ -17,7 +17,8 @@ class Session_test_model extends CI_Model {
     {
         if( !empty($session_id) )
         {
-            $sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."';";
+            //$sql = "SELECT * FROM `SESSION_LOGS`  WHERE `SESSION_ID`='".$session_id."';";
+            $sql = "SELECT * FROM `session_logs`  WHERE `SESSION_ID`='".$session_id."';";
             $query = $this->db->query($sql);
             return array('data'=>$query->result_array(),'total'=>$query->num_rows());
         }
@@ -34,6 +35,7 @@ class Session_test_model extends CI_Model {
         if( empty($session_id) )
         {
             $status = 200;
+            $data   = 'empty session_id';
         }
         else
         {
@@ -47,7 +49,8 @@ class Session_test_model extends CI_Model {
                 'UPDATETIME'=>'',
                 'IS_ALIVE'  =>1,
             );
-            $result = $this->db->insert('SESSION_LOGS', $data);
+            //$result = $this->db->insert('SESSION_LOGS', $data);
+            $result = $this->db->insert('session_logs', $data);
             if( $result )
             {
                 $status = 100;
@@ -76,7 +79,8 @@ class Session_test_model extends CI_Model {
                 'IS_ALIVE'  =>1,
             );
             $this->db->where('SESSION_ID', $session_id);
-            $result = $this->db->update('SESSION_LOGS',$data);// CI 更新用法
+            //$result = $this->db->update('SESSION_LOGS',$data);// CI 更新用法
+            $result = $this->db->update('session_logs',$data);
             if( $result )
             {
                 $status = 100;
@@ -93,7 +97,8 @@ class Session_test_model extends CI_Model {
     {
         $dt = new DateTime();
         $dt = $dt->format('U');
-        $sql = 'UPDATE `SESSION_LOGS` SET `IS_ALIVE`=0 WHERE `UPDATETIME`<'.($dt-120).' AND `IS_ALIVE`=1;';
+        //$sql = 'UPDATE `SESSION_LOGS` SET `IS_ALIVE`=0 WHERE `UPDATETIME`<'.($dt-120).' AND `IS_ALIVE`=1;';
+        $sql = 'UPDATE `session_logs` SET `IS_ALIVE`=0 WHERE `UPDATETIME`<'.($dt-120).' AND `IS_ALIVE`=1;';
         $query = $this->db->query($sql);
         if( $query )
         {
