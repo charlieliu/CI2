@@ -1220,77 +1220,71 @@ class Php_test extends CI_Controller {
         {
             exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/REMOTE_ADDR');// ip address
         }
-
-        $this->load->model('session_test_model','',TRUE);
-
-        // 2分鐘內 session 失效
-        $del = $this->session_test_model->del_session_info();
-        if( $del['status']!=100 )
-        {
-            exit('del_session_info :'.$del['status']);
-        }
-
-        // 取得 session 資訊
-        $SESSION_LOGS = $this->get_session_info($session_id);
-        $total = intval($SESSION_LOGS['total']);
-        $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : '' ;
-
-        if( $total>1 )
-        {
-            exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/get_session_info :'.$SESSION_LOGS['total']);
-        }
-        else if( $total<1 )
-        {
-            // 新增 session
-            $data = $this->_add_session_info($session_id,$post);
-        }
         else
         {
-            if( empty($data) )
+            $this->load->model('session_test_model','',TRUE);
+
+            // 2分鐘內 session 失效
+            $del = $this->session_test_model->del_session_info();
+            if( $del['status']!=100 )
             {
-                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
+                exit('del_session_info :'.$del['status']);
+            }
+
+            // 取得 session 資訊
+            $SESSION_LOGS = $this->get_session_info($session_id);
+            $total = intval($SESSION_LOGS['total']);
+            $data = !empty($SESSION_LOGS['data']) ? $SESSION_LOGS['data'] : '' ;
+
+            if( $total>1 )
+            {
+                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/get_session_info :'.$SESSION_LOGS['total']);
+            }
+            else if( $total<1 )
+            {
+                // 新增 session
+                $data = $this->_add_session_info($session_id,$post);
             }
             else
             {
-                if( empty($data['IP_ADDRESS']) )
+                if( empty($data) )
                 {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS empty');
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
                 }
-                else if( $data['IP_ADDRESS']!=$ip_address )
+                else
                 {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS');
+                    if( empty($data['IP_ADDRESS']) )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS empty');
+                    }
+                    else if( $data['IP_ADDRESS']!=$ip_address )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/IP_ADDRESS');
+                    }
+                    else if( empty($data['USER_AGENT']) )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT empty');
+                    }
+                    else if( $data['USER_AGENT']!=$user_agent )
+                    {
+                        $this->session->sess_destroy();// 銷毀Session
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT');
+                    }
+                    // 更新 session
+                    $data = $this->_mod_session_info($session_id);
                 }
-                else if( empty($data['USER_AGENT']) )
-                {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT empty');
-                }
-                else if( $data['USER_AGENT']!=$user_agent )
-                {
-                    $this->session->sess_destroy();// 銷毀Session
-                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT');
-                }
-                // 更新 session
-                $data = $this->_mod_session_info($session_id);
             }
-        }
 
-        if( $post )
-        {
-            echo json_encode($data);
-        }
-        else
-        {
-            if( empty($data) )
+            if( !empty($post['session_id']) && !empty($post['ip_address']) && !empty($post['user_agent']) )
             {
-                exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data empty');
+                echo json_encode($data);
             }
             else if( $data['status']!=100 )
             {
-                var_dump($data);
-                //echo $data;
+                echo json_encode($data);
             }
         }
     }
