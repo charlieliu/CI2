@@ -1,16 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+* @author Charlie Liu <liuchangli0107@gmail.com>
+*/
 class Js_test extends CI_Controller {
 
-    public $current_title = 'JS 測試';
+    private $current_title = 'JS 測試';
+    private $page_list = '';
 
-    public $page_list = '';
-
-    public function getPageList()
-    {
-        echo json_encode($this->page_list);
-    }
-
+    // 建構子
     public function __construct()
     {
         parent::__construct();
@@ -41,7 +38,7 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/get_filesize',
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery 測試 - 效果',
+            'content_title' => 'jQuery 測試 - 滑動效果',
             'content_url' => base_url().'js_test/jquery_test',
         ) ;
         $content[] = array(
@@ -53,7 +50,7 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/jqm',
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery UI',
+            'content_title' => 'jQuery UI 套件',
             'content_url' => base_url().'js_test/ui',
         ) ;
         $content[] = array(
@@ -65,16 +62,24 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/append',
         ) ;
         $content[] = array(
-            'content_title' => 'pwStrength',
+            'content_title' => '密碼強度判斷',
             'content_url' => base_url().'js_test/pwStrength',
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery call apply',
+            'content_url' => base_url().'js_test/call_apply',
         ) ;
 
         $this->page_list = $content ;
     }
 
-    /**
-     * @author Charlie Liu <liuchangli0107@gmail.com>
-     */
+    // 取得標題
+    public function getPageList()
+    {
+        echo json_encode($this->page_list);
+    }
+
+    // 測試分類畫面
     public function index()
     {
         $content = $this->page_list ;
@@ -349,6 +354,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // 滑動效果
     public function jquery_test($in='1')
     {
         // 標題 內容顯示
@@ -373,6 +379,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // jQuery mobile
     public function jqm()
     {
         // 取得列表資料
@@ -416,6 +423,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('jqm/jqm_outer_view', $data);
     }
 
+    // jQuery UI 套件
     public function ui()
     {
         // 標題 內容顯示
@@ -440,6 +448,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // jQuery on() bind()
     public function on_bind()
     {
         // 標題 內容顯示
@@ -461,6 +470,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // jQuery append() preppend()
     public function append()
     {
         // 標題 內容顯示
@@ -482,6 +492,7 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
+    // 密碼強度判斷
     public function pwStrength()
     {
         // 標題 內容顯示
@@ -502,6 +513,11 @@ class Js_test extends CI_Controller {
         $html_date['content_div'] = $content_div ;
         $html_date['js'][] = 'js/pwStrength.js';
         $this->parser->parse('index_view', $html_date ) ;
+    }
+
+    public function call_apply()
+    {
+
     }
 }
 ?>

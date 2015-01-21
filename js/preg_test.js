@@ -16,7 +16,8 @@ $(document).ready(function(){
 
     colorful();
 
-    $('#seach').off('click').on('click',function(){
+    $('#seach').off('click').on('click',function(event){
+        event.preventDefault();
         $.post(
             "",
             {'str':$('#str').val()},
