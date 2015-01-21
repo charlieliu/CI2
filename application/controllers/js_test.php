@@ -38,14 +38,6 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/get_filesize',
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery 測試 - 滑動效果',
-            'content_url' => base_url().'js_test/jquery_test',
-        ) ;
-        $content[] = array(
-            'content_title' => 'jQuery 測試 - attr()/prop()',
-            'content_url' => base_url().'js_test/jquery_test/2',
-        ) ;
-        $content[] = array(
             'content_title' => 'jQuery mobile 測試',
             'content_url' => base_url().'js_test/jqm',
         ) ;
@@ -54,20 +46,28 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/ui',
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery on() bind()',
-            'content_url' => base_url().'js_test/on_bind',
-        ) ;
-        $content[] = array(
-            'content_title' => 'jQuery append() preppend()',
-            'content_url' => base_url().'js_test/append',
-        ) ;
-        $content[] = array(
             'content_title' => '密碼強度判斷',
             'content_url' => base_url().'js_test/pwStrength',
         ) ;
         $content[] = array(
-            'content_title' => 'jQuery call apply',
-            'content_url' => base_url().'js_test/call_apply',
+            'content_title' => 'jQuery 測試 -- 滑動效果',
+            'content_url' => base_url().'js_test/jquery_test',
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- attr()/prop()',
+            'content_url' => base_url().'js_test/jquery_test/2',
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- on() bind()',
+            'content_url' => base_url().'js_test/jquery_test/3',
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- append() preppend() ...',
+            'content_url' => base_url().'js_test/jquery_test/4',
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- call apply',
+            'content_url' => base_url().'js_test/jquery_test/5',
         ) ;
 
         $this->page_list = $content ;
@@ -355,7 +355,11 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
-    // 滑動效果
+    // 1. 滑動效果
+    // 2. attr() / prop()
+    // 3. on() / bind()
+    // 4. append() preppend() ...
+    // 5. call / apply
     public function jquery_test($in='1')
     {
         // 標題 內容顯示
@@ -369,10 +373,30 @@ class Js_test extends CI_Controller {
             'base_url'=>base_url(),
         );
 
-        $in = intval($in)==2 ? $in : 1 ;
+        switch ($in) {
+            case '1':
+                $data['title'] .= ' -- 滑動效果' ;
+                break;
+            case '2':
+                $data['title'] .= ' -- attr() / prop()' ;
+                break;
+            case '3':
+                $data['title'] .= ' -- on() / bind()' ;
+                break;
+            case '4':
+                $data['title'] .= ' -- append() preppend() ...' ;
+                break;
+            case '5':
+                $data['title'] .= ' -- call / apply' ;
+                break;
+            default:
+                $in = '' ;
+                break;
+        }
 
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('jquery_test/jquery_test_'.$in.'_view', $data, true);
+        $content_div = empty($in) ? '' : $this->parser->parse('jquery_test/jquery_test_'.$in.'_view', $data, true);
+
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
@@ -449,50 +473,6 @@ class Js_test extends CI_Controller {
         $this->parser->parse('index_view', $html_date ) ;
     }
 
-    // jQuery on() bind()
-    public function on_bind()
-    {
-        // 標題 內容顯示
-        $data = array(
-            'title' => 'jQuery on() bind()',
-            'current_title' => $this->current_title,
-            'current_page' => strtolower(__CLASS__), // 當下類別
-            'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'content' => '',
-            '_FILES'=>$_FILES,
-            'base_url'=>base_url(),
-        );
-
-        // 中間挖掉的部分
-        $content_div = $this->parser->parse('jquery_test/jquery_on_bind_view', $data, true);
-        // 中間部分塞入外框
-        $html_date = $data ;
-        $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
-    }
-
-    // jQuery append() preppend()
-    public function append()
-    {
-        // 標題 內容顯示
-        $data = array(
-            'title' => 'jQuery append() prepend()',
-            'current_title' => $this->current_title,
-            'current_page' => strtolower(__CLASS__), // 當下類別
-            'current_fun' => strtolower(__FUNCTION__), // 當下function
-            'content' => '',
-            '_FILES'=>$_FILES,
-            'base_url'=>base_url(),
-        );
-
-        // 中間挖掉的部分
-        $content_div = $this->parser->parse('jquery_test/jquery_append_view', $data, true);
-        // 中間部分塞入外框
-        $html_date = $data ;
-        $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
-    }
-
     // 密碼強度判斷
     public function pwStrength()
     {
@@ -514,11 +494,6 @@ class Js_test extends CI_Controller {
         $html_date['content_div'] = $content_div ;
         $html_date['js'][] = 'js/pwStrength.js';
         $this->parser->parse('index_view', $html_date ) ;
-    }
-
-    public function call_apply()
-    {
-        exit('建構中');
     }
 }
 ?>
