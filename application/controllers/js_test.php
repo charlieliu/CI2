@@ -317,7 +317,8 @@ class Js_test extends CI_Controller {
     }
 
     // 刪除檔案
-    public function deleteImage($file) {//gets the job done but you might want to add error checking and security
+    public function deleteImage($file) {
+        //gets the job done but you might want to add error checking and security
         $success = unlink(FCPATH . 'uploads/' . $file);
         if( file_exists(FCPATH . 'uploads/thumbs/' . $file) )
         {
@@ -517,7 +518,7 @@ class Js_test extends CI_Controller {
 
     public function call_apply()
     {
-
+        exit('建構中');
     }
 }
 ?>
