@@ -69,6 +69,14 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery 測試 -- call apply',
             'content_url' => base_url().'js_test/jquery_test/5',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- parent() parents() closest()',
+            'content_url' => base_url().'js_test/jquery_test/6',
+        ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- next() prev()',
+            'content_url' => base_url().'js_test/jquery_test/7',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -388,6 +396,12 @@ class Js_test extends CI_Controller {
                 break;
             case '5':
                 $data['title'] .= ' -- call / apply' ;
+                break;
+            case '6':
+                $data['title'] .= ' -- parent() parents() closest()' ;
+                break;
+            case '7':
+                $data['title'] .= ' -- next() prev()' ;
                 break;
             default:
                 $in = '' ;
