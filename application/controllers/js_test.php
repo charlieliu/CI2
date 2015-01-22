@@ -22,7 +22,7 @@ class Js_test extends CI_Controller {
             'content_url' => base_url().'js_test/abgne_tab',
         ) ;
         $content[] = array(
-            'content_title' => 'JS object 測試',
+            'content_title' => 'JS object 測試 -- 繼承(prototype)',
             'content_url' => base_url().'js_test/js_object_test',
         ) ;
         $content[] = array(
@@ -171,7 +171,7 @@ class Js_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title' => 'JS Object 測試',
+            'title' => 'JS Object 測試 -- 繼承(prototype)',
             'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
