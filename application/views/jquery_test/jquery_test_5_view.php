@@ -47,7 +47,7 @@
         <script type="text/javascript">
             //定義一個全域變數pig
             var pig = "我是豬";
-            $(function () {
+            $(function(){
                 //範例1:丟進去一個jQuery物件，因此funciton裡面的this就代表jQuery物件。
                 // 接著就可用jQuery.attr()叫出物件屬性
                 function TestApply1(){
@@ -130,16 +130,21 @@
             <button id="G" style="margin:1em;">AlertValue.call({value:'0'});</button>
         </div>
         <script type="text/javascript">
-            $(function () {
+            $(function(){
                 //彈出按鈕的value，並判斷如果有參數的話彈出參數值。
-                function AlertValue() {
-                    alert(this.value);
+                function AlertValue(){
+                    var str = '';
+                    //str += 'this.value('+typeof(this.value)+')'+this.value+'\n';
+                    for(var n in this){
+                        str += 'this.'+n+'('+typeof(this.n)+')'+this.n+'\n';
+                    }
                     if( arguments.length>0 )
                     {
-                        for (var i = 0; i < arguments.length; i++) {
-                            if (typeof (arguments[i]) != "object") alert(arguments[i]);
+                        for (var i = 0; i < arguments.length; i++){
+                            str += 'arguments['+i+']('+typeof(arguments[i])+')'+arguments[i]+'\n' ;
                         }
                     }
+                    alert(str);
                 };
 
                 //當A按鈕click時，執行AlertValue這個function，跳出按鈕的value
@@ -147,22 +152,22 @@
 
                 //當B按鈕click時，一樣執行AlertValue，執行時function內部的this
                 //會變成B按鈕，並且可用一個陣列傳入參數。
-                $("#B").click(function (){
+                $("#B").click(function(){
                     AlertValue.apply(this, ["1", "2", "3"]);
                 });
-                $("#C").click(function (){
+                $("#C").click(function(){
                     AlertValue.call(this, ["1", "2", "3"]);
                 });
-                $("#D").click(function (){
+                $("#D").click(function(){
                     AlertValue.apply(this);
                 });
-                $("#E").click(function (){
+                $("#E").click(function(){
                     AlertValue.call(this);
                 });
-                $("#F").click(function (){
+                $("#F").click(function(){
                     AlertValue.apply({value:'0'});
                 });
-                $("#G").click(function (){
+                $("#G").click(function(){
                     AlertValue.call({value:'0'});
                 });
             });
