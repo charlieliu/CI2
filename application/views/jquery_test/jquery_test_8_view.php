@@ -78,7 +78,7 @@
                 str += '// 無法自動型態轉換至數字的值，都會讓 isNaN 的結果為 true，像是非數字格式且非空的字串、undefined 等。<br>';
                 str += 'isNaN NaN === '+isNaN(NaN)+'<br>';
                 str += 'isNaN 1/\'two\' === '+isNaN(1/'two')+'<br>';
-                str += 'isNaN caterpillar === '+isNaN('caterpillar')+'<br>';
+                str += 'isNaN \'caterpillar\' === '+isNaN('caterpillar')+'<br>';
                 str += 'isNaN undefined === '+isNaN(undefined)+'<br>';
                 str += 'isNaN 0 === '+isNaN(0)+'<br>';
 
