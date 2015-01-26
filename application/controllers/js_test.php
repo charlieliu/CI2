@@ -81,6 +81,10 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery 測試 -- typeof',
             'content_url' => base_url().'js_test/jquery_test/8',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- push',
+            'content_url' => base_url().'js_test/jquery_test/9',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -409,6 +413,9 @@ class Js_test extends CI_Controller {
                 break;
             case '8':
                 $data['title'] .= ' -- typeof' ;
+                break;
+            case '9':
+                $data['title'] .= ' -- push' ;
                 break;
             default:
                 $in = '' ;
