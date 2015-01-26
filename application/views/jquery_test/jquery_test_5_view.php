@@ -178,8 +178,16 @@
     <div style="margin:1em;">
         <h3>object call / apply</h3>
         <div><button id="Animal" style="margin:1em;">Animal</button></div>
-        <div><button id="Cat_call" style="margin:1em;">Cat_call</button><button id="Cat_apply" style="margin:1em;">Cat_apply</button></div>
-        <div><button id="Dog_call" style="margin:1em;">Dog_call</button><button id="Dog_apply" style="margin:1em;">Dog_apply</button></div>
+        <div>
+            <button id="Cat_call" style="margin:1em;">animal.showName.call(cat);</button>
+            <button id="Cat_apply" style="margin:1em;">animal.showName.apply(cat);</button>
+            (不繼承Animal)
+        </div>
+        <div>
+            <button id="Dog_call" style="margin:1em;">dog_call.showName();</button>
+            <button id="Dog_apply" style="margin:1em;">dog_apply.showName();</button>
+            (繼承Animal)
+        </div>
         <div id="showobj_info"></div>
         <script type="text/javascript">
             $(function () {
@@ -229,15 +237,12 @@
                 // 繼承
                 function Dog_call(){
                     Animal.call(this);
-                    //this.name = 'Dog';
-                    //this.setName(this.name);
                     this.setName('Dog');
                 }
                 Dog_call.prototype = { prototype_parent : 'Animal' };
                 var dog_call = new Dog_call();
 
                 function Dog_apply(){
-                    //this.name = 'Dog';
                     Animal.apply(this);
                     this.setName('Dog');
                 }
