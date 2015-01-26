@@ -77,6 +77,10 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery 測試 -- next() prev()',
             'content_url' => base_url().'js_test/jquery_test/7',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- typeof',
+            'content_url' => base_url().'js_test/jquery_test/8',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -402,6 +406,9 @@ class Js_test extends CI_Controller {
                 break;
             case '7':
                 $data['title'] .= ' -- next() prev()' ;
+                break;
+            case '8':
+                $data['title'] .= ' -- typeof' ;
                 break;
             default:
                 $in = '' ;
