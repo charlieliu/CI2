@@ -5,7 +5,7 @@
         <div id="show_info"></div>
         <script type="text/javascript">
             $(document).ready(function(){
-                var arr = [undefined,0,'1','2',3,null], str = '', res = '';
+                var arr = [undefined,0,'1','2',3,null,function(){}], str = '', res = '';
 
                 function show_arr(){
                     str += 'var arr = [ ';
