@@ -177,18 +177,151 @@
 
     <div style="margin:1em;">
         <h3>object call / apply</h3>
-        <div><button id="Animal" style="margin:1em;">Animal</button></div>
+        <div class="showobj_info" style="color:green;"></div>
         <div>
+            <div>
+                function Animal(){
+                    this.name = 'Animal';
+                    this.showName = function(){showobj(this)};
+                    this.setName = function(str){this.name=str;};
+                };<br>
+                var animal = new Animal();
+            </div>
+            <button id="Animal" style="margin:1em;">animal.showName();</button>
+            <button id="showobj" style="margin:1em;">showobj('');</button>
+        </div>
+        <div>
+            <div>
+                // Cat不繼承Animal<br>
+                function Cat(){
+                    this.name = 'Cat';
+                };<br>
+            </div>
             <button id="Cat_call" style="margin:1em;">animal.showName.call(cat);</button>
             <button id="Cat_apply" style="margin:1em;">animal.showName.apply(cat);</button>
-            (不繼承Animal)
         </div>
         <div>
+            <div>
+                // Dog繼承Animal<br>
+                function Dog_call(){
+                    Animal.call(this);
+                    <span style="color:blue;">this.setName('Dog');</span>
+                };<br>
+                Dog_call.prototype = { <span style="color:blue;">prototype_parent : 'Animal'</span> };<br>
+                var dog_call = new Dog_call();<br>
+                <br>
+                function Dog_apply(){
+                    Animal.apply(this);
+                    <span style="color:blue;">this.setName('Dog');</span>
+                };<br>
+                Dog_apply.prototype = { <span style="color:blue;">prototype_parent : 'Animal'</span> };<br>
+                var dog_apply = new Dog_apply();<br>
+            </div>
             <button id="Dog_call" style="margin:1em;">dog_call.showName();</button>
             <button id="Dog_apply" style="margin:1em;">dog_apply.showName();</button>
-            (繼承Animal)
         </div>
-        <div id="showobj_info"></div>
+        <h3>繼承延伸測試</h3>
+        <div style="overflow:auto;" >
+            <table border='1' style="min-width:1420px;width:100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>animal</th>
+                        <th>birds</th>
+                        <th>duck</th>
+                        <th>ostrich</th>
+                        <th>chicken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>繼承</td>
+                        <td>無</td>
+                        <td>Birds繼承Animal</td>
+                        <td>Duck繼承Birds</td>
+                        <td>Ostrich繼承Birds</td>
+                        <td>Chicken繼承Birds</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>
+                            function Animal(){<br>
+                            &nbsp;&nbsp;this.name = 'Animal';<br>
+                            &nbsp;&nbsp;this.showName = function(){showobj(this)};<br>
+                            &nbsp;&nbsp;this.setName = function(str){this.name=str;};<br>
+                            };<br>
+                            <br>
+                            var animal = new Animal();<br>
+                        </td>
+                        <td>
+                            function Birds(){<br>
+                            &nbsp;&nbsp;Animal.call(this);<br>
+                            };<br>
+                            <br>
+                            Birds.prototype = {<br>
+                            &nbsp;&nbsp;<span style="color:red;">name : 'Birds',</span><br>
+                            &nbsp;&nbsp;<span style="color:blue;">skills : 'fly'</span><br>
+                            };<br>
+                            <br>
+                            var birds = new Birds;<br>
+                        </td>
+                        <td>
+                            function Duck(){<br>
+                            &nbsp;&nbsp;Birds.call(this);<br>
+                            &nbsp;&nbsp;this.setName('Duck');<br>
+                            };<br>
+                            <br>
+                            var duck = new Duck;<br>
+                        </td>
+                        <td>
+                            function Ostrich(){<br>
+                            &nbsp;&nbsp;Birds.call(this);<br>
+                            &nbsp;&nbsp;<span style="color:blue;">this.setName('Ostrich');</span><br>
+                            &nbsp;&nbsp;<span style="color:blue;">this.skills = 'run';</span><br>
+                            };<br>
+                            <br>
+                            var ostrich = new Ostrich;<br>
+                        </td>
+                        <td>
+                            function Chicken(){<br>
+                            &nbsp;&nbsp;Birds.call(this);<br>
+                            &nbsp;&nbsp;<span style="color:blue;">this.name = 'Chicken';</span><br>
+                            };<br>
+                            <br>
+                            Chicken.prototype = {<br>
+                            &nbsp;&nbsp;<span style="color:blue;">skills : 'run',</span><br>
+                            };<br>
+                            <br>
+                            var chicken = new Chicken;<br>
+                        </td>
+                    </tr>
+                    <tr style="color:red;">
+                        <td>錯誤</td>
+                        <td></td>
+                        <td>Birds.prototype.name 未覆蓋</td>
+                        <td>Birds.prototype.skills 未繼承到 Duck</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="color:blue;">
+                        <td>注意</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Chicken.prototype.skills 需再綁定一次</td>
+                    </tr>
+                    <tr style="color:green;">
+                        <td>output</td>
+                        <td id="animal"></td>
+                        <td id="birds"></td>
+                        <td id="duck"></td>
+                        <td id="ostrich"></td>
+                        <td id="chicken"></td>
+                    </tr>
+                </tbody>
+            </table>
+        <div>
         <script type="text/javascript">
             $(function () {
 
@@ -198,32 +331,30 @@
                     str += '{ showName : ' + obj.showName + ' }<br>' ;
                     str += '{ setName : ' + obj.setName + ' }<br>' ;
                     str += '{ prototype_parent : ' + obj.prototype_parent + ' }<br>' ;
-                    $('#showobj_info').html(str);
-                }
+                    str += '{ skills : ' + obj.skills + ' }<br>' ;
+                    $('.showobj_info').html(str);
+                };
+                $('#showobj').click(function(){
+                    showobj('');
+                });
                 showobj('');
+
 
                 function Animal(){
                     this.name = 'Animal';
-                    this.showName = function(){ showobj(this) };
-                    this.setName = function(str){ this.name = str ; };
-                }
-                //Animal.prototype.name = 'Animal';
-                //Animal.prototype.setName = function(str){ this.name = str ; };
-                /*Animal.prototype = {
-                    name : 'Animal',
-                    setName : function(str){ this.name = str ; }
-                };*/
+                    this.showName = function(){showobj(this)};
+                    this.setName = function(str){this.name=str;};
+                };
                 var animal = new Animal();
 
                 $('#Animal').click(function(){
-                    showobj(animal);
                     animal.showName();
                 });
 
                 // 不繼承
                 function Cat(){
                     this.name = 'Cat';
-                }
+                };
                 var cat = new Cat();
                 $('#Cat_call').click(function(){
                     showobj(cat);
@@ -238,18 +369,17 @@
                 function Dog_call(){
                     Animal.call(this);
                     this.setName('Dog');
-                }
+                };
                 Dog_call.prototype = { prototype_parent : 'Animal' };
                 var dog_call = new Dog_call();
 
                 function Dog_apply(){
                     Animal.apply(this);
                     this.setName('Dog');
-                }
+                };
                 Dog_apply.prototype = { prototype_parent : 'Animal' };
                 var dog_apply = new Dog_apply();
-                //dog_apply.prototype = { name : 'Dog' };
-                //dog_apply.name = 'Dog';
+                dog_apply.name = 'Dog';
 
                 $('#Dog_call').click(function(){
                     dog_call.showName();
@@ -257,6 +387,57 @@
                 $('#Dog_apply').click(function(){
                     dog_apply.showName();
                 });
+
+                function return_info(obj){
+                    var str = '';
+                    str += 'name : ' + obj.name + '<br>' ;
+                    str += 'showName : ' + obj.showName + '<br>' ;
+                    str += 'setName : ' + obj.setName + '<br>' ;
+                    str += 'skills : ' + obj.skills + '<br>' ;
+                    return str;
+                };
+
+                // 繼承
+                function Birds(){
+                    Animal.call(this);
+                };
+                Birds.prototype = {
+                    name : 'Birds',
+                    skills : 'fly'
+                };
+                var birds = new Birds;
+
+                function Duck(){
+                    Birds.call(this);
+                    this.setName('Duck');
+                };
+                var duck = new Duck;
+
+
+                function Ostrich(){
+                    Birds.call(this);
+                    this.setName('Ostrich');
+                    this.skills = 'run';
+                };
+                var ostrich = new Ostrich;
+
+                function Chicken(){
+                    Birds.call(this);
+                    this.name = 'Chicken';
+                };
+                Chicken.prototype = {
+                    skills : 'run',
+                };
+                var chicken = new Chicken;
+
+                function show_return_info(){
+                    $('#animal').html(return_info(animal));
+                    $('#birds').html(return_info(birds));
+                    $('#duck').html(return_info(duck));
+                    $('#ostrich').html(return_info(ostrich));
+                    $('#chicken').html(return_info(chicken));
+                }
+                show_return_info();
 
             });
         </script>
