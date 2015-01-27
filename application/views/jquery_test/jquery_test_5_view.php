@@ -204,14 +204,14 @@
             <div>
                 // Dog繼承Animal<br>
                 function Dog_call(){
-                    Animal.call(this);
+                    <span style="color:green;">Animal.call(this);</span>
                     <span style="color:blue;">this.setName('Dog');</span>
                 };<br>
                 Dog_call.prototype = { <span style="color:blue;">prototype_parent : 'Animal'</span> };<br>
                 var dog_call = new Dog_call();<br>
                 <br>
                 function Dog_apply(){
-                    Animal.apply(this);
+                    <span style="color:green;">Animal.apply(this);</span>
                     <span style="color:blue;">this.setName('Dog');</span>
                 };<br>
                 Dog_apply.prototype = { <span style="color:blue;">prototype_parent : 'Animal'</span> };<br>
@@ -357,11 +357,11 @@
                 };
                 var cat = new Cat();
                 $('#Cat_call').click(function(){
-                    showobj(cat);
+                    //showobj(cat);
                     animal.showName.call(cat);
                 });
                 $('#Cat_apply').click(function(){
-                    showobj(cat);
+                    //showobj(cat);
                     animal.showName.apply(cat);
                 });
 
