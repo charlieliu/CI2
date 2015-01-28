@@ -404,6 +404,7 @@ class Js_test extends CI_Controller {
                 break;
             case '5':
                 $data['title'] .= ' -- call / apply' ;
+                $data['space_4'] = $this->pub->n2nbsp(4);
                 break;
             case '6':
                 $data['title'] .= ' -- parent() parents() closest()' ;

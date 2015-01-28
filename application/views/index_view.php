@@ -135,5 +135,36 @@
     <?PHP else: ?>
         <a href="http://www.youtube.com/v/P2QrLuMq2Ow" target="_blank">bgsound</a>
     <?PHP endif; ?>
+
+    <div id="gotop">˄</div>
+    <style type="text/css">
+        #gotop {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            padding: 10px 15px;
+            font-size: 20px;
+            background: #777;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            $("#gotop").click(function(){
+                jQuery("html,body").animate({
+                    scrollTop:0
+                },500);
+            });
+            $(window).scroll(function() {
+                if ( $(this).scrollTop() > 300){
+                    $('#gotop').fadeIn("fast");
+                } else {
+                    $('#gotop').stop().fadeOut("fast");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

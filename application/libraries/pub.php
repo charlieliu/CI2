@@ -140,5 +140,14 @@ class Pub{
             return $input;
         }
     }
+
+    public function n2nbsp($intv){
+        $str = '';
+        $num = intval($intv)>0 ? intval($intv) : 1 ;
+        for( $i=0; $i < $num; $i++ ){
+            $str .= '&nbsp;';
+        }
+        return $str;
+    }
 }
 ?>

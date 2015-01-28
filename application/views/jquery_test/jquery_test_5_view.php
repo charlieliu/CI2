@@ -114,7 +114,7 @@
                 alert(this.value);
                 if( arguments.length>0 )
                 {
-                    for (var i = 0; i < arguments.length; i++) {
+                    for (var i = 0; i &lt; arguments.length; i++) {
                         if (typeof (arguments[i]) != "object") alert(arguments[i]);
                     }
                 }
@@ -252,52 +252,52 @@
                         <td>code</td>
                         <td>
                             function Animal(){<br>
-                            &nbsp;&nbsp;this.name = 'Animal';<br>
-                            &nbsp;&nbsp;this.category = 'Creature';<br>
-                            &nbsp;&nbsp;this.showName = function(){showobj(this)};<br>
-                            &nbsp;&nbsp;this.setName = function(str){this.name=str;};<br>
+                            {space_4}this.name = 'Animal';<br>
+                            {space_4}this.category = 'Creature';<br>
+                            {space_4}this.showName = function(){showobj(this)};<br>
+                            {space_4}this.setName = function(str){this.name=str;};<br>
                             };<br>
                             <br>
                             var animal = new Animal();<br>
                         </td>
                         <td>
                             function Birds(){<br>
-                            &nbsp;&nbsp;<span style="color:red;">this.name = 'Birds';</span><br>
-                            &nbsp;&nbsp;Animal.call(this);<br>
+                            {space_4}<span style="color:red;">this.name = 'Birds';</span><br>
+                            {space_4}Animal.call(this);<br>
                             };<br>
                             <br>
                             Birds.prototype = {<br>
-                            &nbsp;&nbsp;<span style="color:red;">name : 'Birds',</span><br>
-                            &nbsp;&nbsp;<span style="color:blue;">skills : 'fly'</span><br>
+                            {space_4}<span style="color:red;">name : 'Birds',</span><br>
+                            {space_4}<span style="color:blue;">skills : 'fly'</span><br>
                             };<br>
                             <br>
                             var birds = new Birds;<br>
                         </td>
                         <td>
                             function Duck(){<br>
-                            &nbsp;&nbsp;Birds.call(this);<br>
-                            &nbsp;&nbsp;this.setName('Duck');<br>
+                            {space_4}Birds.call(this);<br>
+                            {space_4}this.setName('Duck');<br>
                             };<br>
                             <br>
                             var duck = new Duck;<br>
                         </td>
                         <td>
                             function Ostrich(){<br>
-                            &nbsp;&nbsp;Birds.call(this);<br>
-                            &nbsp;&nbsp;<span style="color:blue;">this.setName('Ostrich');</span><br>
-                            &nbsp;&nbsp;<span style="color:blue;">this.skills = 'run';</span><br>
+                            {space_4}Birds.call(this);<br>
+                            {space_4}<span style="color:blue;">this.setName('Ostrich');</span><br>
+                            {space_4}<span style="color:blue;">this.skills = 'run';</span><br>
                             };<br>
                             <br>
                             var ostrich = new Ostrich;<br>
                         </td>
                         <td>
                             function Chicken(){<br>
-                            &nbsp;&nbsp;Birds.call(this);<br>
-                            &nbsp;&nbsp;<span style="color:blue;">this.name = 'Chicken';</span><br>
+                            {space_4}Birds.call(this);<br>
+                            {space_4}<span style="color:blue;">this.name = 'Chicken';</span><br>
                             };<br>
                             <br>
                             Chicken.prototype = {<br>
-                            &nbsp;&nbsp;<span style="color:blue;">skills : 'run',</span><br>
+                            {space_4}<span style="color:blue;">skills : 'run',</span><br>
                             };<br>
                             <br>
                             var chicken = new Chicken;<br>
@@ -464,30 +464,33 @@
     <div class="content_block">
         <h3>Array.prototype.slice.call(arguments)</h3>
         <div>
-            arguments : 可用來取得function傳入的實際變數Array。這個變數特別適合用在撰寫”多形”(Polymorphism)函式上，即可以根據不同的傳入參數做不同的處理。<br>
-            P.S. arguments, caller, callee, this都是用在函式(function)內的特殊內定物件。而apply()及call()則是用來呼叫函式的不同作法。<br>
+            <ul style="color:blue;">
+                <li>array.slice(begin[, end]) : The slice() method returns a shallow copy of a portion of an array into a new array object.</li>
+                <li>arguments : 可用來取得function傳入的實際變數Array。這個變數特別適合用在撰寫”多形”(Polymorphism)函式上，即可以根據不同的傳入參數做不同的處理。</li>
+                <li>P.S. arguments, caller, callee, this都是用在函式(function)內的特殊內定物件。而apply()及call()則是用來呼叫函式的不同作法。</li>
+            </ul>
             <br>
             function list(){<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;var show_str = '';<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;show_str += ......<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;$('#list_info').css("background", "#C8C8C8").html(show_str);<br>
+            {space_4}var table = $('&lt;table border="1"&gt;&lt;/table&gt;').css('margin','1em').append(row);......<br>
+            {space_4}$('#list_info').append(table);<br>
             }<br>
             <br>
             var list1 = list(1, 2, 3);<br>
             var leadingZeroList = list.bind(undefined, 37);<br>
             var list2 = leadingZeroList();<br>
             var list3 = leadingZeroList('X', 'Y', 'Z');<br>
+            var list4 = list.apply(undefined, ['X', 'Y', 'Z']);
         </div>
         <div id="list_info"></div>
     </div>
     <script type="text/javascript">
+        var list_count = 1;
         function list(){
-            var row = $('<tr></tr>').append($('<td></td>').html(''))
-                                    .append($('<td></td>').html('typeof'))
-                                    .append($('<td></td>').html('length'))
-                                    .append($('<td></td>').html('object'));
-            var table = $('<table border="1"></table>').css('margin','1em').append(row) ;
+            var row = $('<tr></tr>').append($('<th></th>').html('list'+list_count))
+                                    .append($('<th></th>').html('typeof'))
+                                    .append($('<th></th>').html('length'))
+                                    .append($('<th></th>').html('object'));
+            var table = $('<table border="1"></table>').css({'margin':'1em','background':'#'+list_count+list_count+list_count,'color':'white'}).append(row) ;
             function str_maker(tag,title){
                 row = $('<tr></tr>').append($('<td></td>').html(title))
                                     .append($('<td></td>').html(typeof(tag)))
@@ -497,13 +500,17 @@
             }
             str_maker(arguments,'arguments');
             str_maker(Array.prototype.slice.call(arguments),'Array.prototype.slice.call(arguments)');
+            str_maker(Array.prototype.slice.apply(arguments),'Array.prototype.slice.apply(arguments)');
             str_maker(Array.prototype.slice.call(arguments, 0, 2),'Array.prototype.slice.call(arguments, 0, 2)');
+            str_maker(Array.prototype.slice.apply(arguments, [0, 2]),'Array.prototype.slice.apply(arguments, [0, 2])');
             str_maker(Array.prototype.slice.call(arguments, 1),'Array.prototype.slice.call(arguments, 1)');
+            str_maker(Array.prototype.slice.apply(arguments, [1]),'Array.prototype.slice.apply(arguments, [1])');
             str_maker(Array.prototype.slice.call(arguments, 2),'Array.prototype.slice.call(arguments, 2)');
             $('#list_info').append(table);
+            list_count++;
         }
 
-        var list1 = list(1, 2, 3);
+        var list1 = list('a', 'b', 'c', 'd');
 
         //  Create a function with a preset leading argument
         var leadingZeroList = list.bind(undefined, 37);
