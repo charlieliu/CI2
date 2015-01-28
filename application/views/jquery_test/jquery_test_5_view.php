@@ -463,10 +463,23 @@
 
     <div class="content_block">
         <h3>Array.prototype.slice.call(arguments)</h3>
+        <div>
+            arguments : 可用來取得function傳入的實際變數Array。這個變數特別適合用在撰寫”多形”(Polymorphism)函式上，即可以根據不同的傳入參數做不同的處理。<br>
+            P.S. arguments, caller, callee, this都是用在函式(function)內的特殊內定物件。而apply()及call()則是用來呼叫函式的不同作法。<br>
+            <br>
+            function list(){<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;var show_str = '';<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;show_str += ......<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;$('#list_info').css("background", "#C8C8C8").html(show_str);<br>
+            }<br>
+            <br>
+            var list1 = list(1, 2, 3);<br>
+        </div>
         <div id="list_info"></div>
     </div>
     <script type="text/javascript">
-        function list() {
+        function list(){
             var show_str = '';
             show_str += 'arguments : ('+typeof(arguments)+') '+arguments+'<br>';
             show_str += 'Array.prototype.slice.call(arguments) : ('+typeof(Array.prototype.slice.call(arguments))+') '+Array.prototype.slice.call(arguments)+'<br>';
