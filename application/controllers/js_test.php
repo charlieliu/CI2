@@ -405,6 +405,7 @@ class Js_test extends CI_Controller {
             case '5':
                 $data['title'] .= ' -- call / apply' ;
                 $data['space_4'] = $this->pub->n2nbsp(4);
+                $data['js'][] = 'js/jquery_test_5.js';
                 break;
             case '6':
                 $data['title'] .= ' -- parent() parents() closest()' ;

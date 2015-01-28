@@ -70,6 +70,7 @@
     $js_link = array();
     $js_link[] = 'js/jquery-1.11.js';
     $js_link[] = 'css/bootstrap-3.2.0-dist/js/bootstrap.min.js';
+    $js_link[] = 'js/welcome.js';
     $js_link = (!empty($js)&&is_array($js)&&count($js)) ? array_merge($js_link,$js) : $js_link ;
 
     foreach( $js_link as $val )
@@ -137,34 +138,5 @@
     <?PHP endif; ?>
 
     <div id="gotop">˄</div>
-    <style type="text/css">
-        #gotop {
-            display: none;
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            padding: 10px 15px;
-            font-size: 20px;
-            background: #777;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
-    <script type="text/javascript">
-        $(function(){
-            $("#gotop").click(function(){
-                jQuery("html,body").animate({
-                    scrollTop:0
-                },500);
-            });
-            $(window).scroll(function() {
-                if ( $(this).scrollTop() > 300){
-                    $('#gotop').fadeIn("fast");
-                } else {
-                    $('#gotop').stop().fadeOut("fast");
-                }
-            });
-        });
-    </script>
 </body>
 </html>
