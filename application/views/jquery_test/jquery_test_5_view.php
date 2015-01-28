@@ -475,22 +475,41 @@
             }<br>
             <br>
             var list1 = list(1, 2, 3);<br>
+            var leadingZeroList = list.bind(undefined, 37);<br>
+            var list2 = leadingZeroList();<br>
+            var list3 = leadingZeroList('X', 'Y', 'Z');<br>
         </div>
         <div id="list_info"></div>
     </div>
     <script type="text/javascript">
         function list(){
-            var show_str = '';
-            show_str += 'arguments : ('+typeof(arguments)+') '+arguments+'<br>';
-            show_str += 'Array.prototype.slice.call(arguments) : ('+typeof(Array.prototype.slice.call(arguments))+') '+Array.prototype.slice.call(arguments)+'<br>';
-            show_str += 'Array.prototype.slice.call(arguments, 0) : ('+typeof(Array.prototype.slice.call(arguments, 0))+') '+Array.prototype.slice.call(arguments, 0)+'<br>';
-            show_str += 'Array.prototype.slice.call(arguments, 1) : ('+typeof(Array.prototype.slice.call(arguments, 1))+') '+Array.prototype.slice.call(arguments, 1)+'<br>';
-            show_str += 'Array.prototype.slice.call(arguments, 2) : ('+typeof(Array.prototype.slice.call(arguments, 2))+') '+Array.prototype.slice.call(arguments, 2)+'<br>';
-
-            $('#list_info').css("background", "#C8C8C8").html(show_str);
+            var row = $('<tr></tr>').append($('<td></td>').html(''))
+                                    .append($('<td></td>').html('typeof'))
+                                    .append($('<td></td>').html('length'))
+                                    .append($('<td></td>').html('object'));
+            var table = $('<table border="1"></table>').css('margin','1em').append(row) ;
+            function str_maker(tag,title){
+                row = $('<tr></tr>').append($('<td></td>').html(title))
+                                    .append($('<td></td>').html(typeof(tag)))
+                                    .append($('<td></td>').html(tag.length))
+                                    .append('<td>'+tag+'</td>');// $('<td></td>').html(tag)會有問題tag是object;
+                table.append(row);
+            }
+            str_maker(arguments,'arguments');
+            str_maker(Array.prototype.slice.call(arguments),'Array.prototype.slice.call(arguments)');
+            str_maker(Array.prototype.slice.call(arguments, 0, 2),'Array.prototype.slice.call(arguments, 0, 2)');
+            str_maker(Array.prototype.slice.call(arguments, 1),'Array.prototype.slice.call(arguments, 1)');
+            str_maker(Array.prototype.slice.call(arguments, 2),'Array.prototype.slice.call(arguments, 2)');
+            $('#list_info').append(table);
         }
 
-        var list1 = list(1, 2, 3); // [1, 2, 3]
+        var list1 = list(1, 2, 3);
+
+        //  Create a function with a preset leading argument
+        var leadingZeroList = list.bind(undefined, 37);
+
+        var list2 = leadingZeroList();
+        var list3 = leadingZeroList('X', 'Y', 'Z');
     </script>
 
 </div>
