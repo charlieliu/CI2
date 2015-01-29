@@ -149,5 +149,26 @@ class Pub{
         }
         return $str;
     }
+
+    public function remove_view_space($view){
+        while( stripos($view,'  ') )
+        {
+            $view = str_replace('  ', ' ', $view);
+        }
+        $order = array("\r\n", "\n", "\r", "￼",'
+');
+        $view = str_replace($order, '', $view);
+        $view = str_replace('> <', '><', $view);
+        $view = str_replace('" />', '"/>', $view);
+        $view = str_replace('> ', '>', $view);
+        $view = str_replace(' <', '<', $view);
+        echo $view;
+    }
+
+    public function str_replace($str){
+        $order = array("\r\n", "\n", "\r", "￼", "<br />", "<br/>");
+        $str = str_replace($order,"<br>",$str);// HTML5 寫法
+        return $str;
+    }
 }
 ?>

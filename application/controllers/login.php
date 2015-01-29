@@ -50,7 +50,9 @@ class Login extends CI_Controller {
         $html_date['content_div'] = $content_div ;
         //$html_date['css'][] = 'css/bootstrap-3.2.0-dist/css/bootstrap.min.css';
         $html_date['js'][] = 'css/bootstrap-3.2.0-dist/js/bootstrap.min.js';
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function check_login()
@@ -105,7 +107,9 @@ class Login extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
         $html_date['js'][] = 'js/jquery.form.js';
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function do_register()

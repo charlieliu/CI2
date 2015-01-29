@@ -85,7 +85,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function float_test()
@@ -193,7 +195,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function bcadd_test()
@@ -299,7 +303,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function date_test()
@@ -350,7 +356,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     private function _date_test()
@@ -511,7 +519,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     private function _get_UserAgent(){
@@ -727,7 +737,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function hash_test()
@@ -838,7 +850,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function preg_test()
@@ -1049,7 +1063,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function switch_test()
@@ -1106,7 +1122,9 @@ class Php_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     private function _switch_loop_test($test_array)

@@ -70,7 +70,9 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function css_test_1()
@@ -89,7 +91,9 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function css_test_2()
@@ -119,7 +123,9 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function css_test_3()
@@ -138,7 +144,9 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function css_test_4()
@@ -157,7 +165,9 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     public function css_test_5()
@@ -176,7 +186,9 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 }
 ?>

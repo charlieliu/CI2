@@ -114,7 +114,9 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // VIEW
@@ -170,7 +172,9 @@ class Js_test extends CI_Controller {
         $html_date['content_div'] = $content_div ;
         $html_date['css'][] = 'css/abgne_tab.css';
         $html_date['js'][] = 'js/abgne_tab.js';
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // VIEW js_object_test
@@ -192,7 +196,9 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // VIEW js_object_test2
@@ -214,7 +220,9 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // VIEW file_upload
@@ -264,7 +272,8 @@ class Js_test extends CI_Controller {
         $html_date['js_ie'] = array() ;
         $html_date['js_ie'][] = 'js/jQuery-File-Upload-9.7.2/js/cors/jquery.xdr-transport.js';
 
-        $this->parser->parse('index_view', $html_date ) ;
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // 上傳檔案
@@ -368,7 +377,8 @@ class Js_test extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
 
-        $this->parser->parse('index_view', $html_date ) ;
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // 1. 滑動效果
@@ -431,7 +441,8 @@ class Js_test extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
 
-        $this->parser->parse('index_view', $html_date ) ;
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // jQuery mobile
@@ -475,7 +486,8 @@ class Js_test extends CI_Controller {
 
         $data['content'] = $this->parser->parse('jqm/jqm_index_view', $data, true);
 
-        $this->parser->parse('jqm/jqm_outer_view', $data);
+        $view = $this->parser->parse('jqm/jqm_outer_view', $data, true);
+        $this->pub->remove_view_space($view);
     }
 
     // jQuery UI 套件
@@ -500,7 +512,9 @@ class Js_test extends CI_Controller {
         $html_date['css'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.css';
         $html_date['js'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.js';
         $html_date['js'][] = 'js/ui.js';
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 
     // 密碼強度判斷
@@ -523,7 +537,9 @@ class Js_test extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
         $html_date['js'][] = 'js/pwStrength.js';
-        $this->parser->parse('index_view', $html_date ) ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
     }
 }
 ?>
