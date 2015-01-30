@@ -425,6 +425,7 @@ class Js_test extends CI_Controller {
                 break;
             case '8':
                 $data['title'] .= ' -- typeof' ;
+                $data['js'][] = 'js/jquery_test_8.js';
                 break;
             case '9':
                 $data['title'] .= ' -- push' ;
