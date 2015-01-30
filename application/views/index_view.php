@@ -126,7 +126,9 @@
 
         <h1>{title}</h1>
         {content_div}
+        <!--
         <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
+        -->
 
         <?PHP if( $current_page=='session_test'): ?><div>COOKIE :<?PHP print_r($_COOKIE); ?></div><?PHP endif; ?>
     </div>

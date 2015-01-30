@@ -3,8 +3,8 @@
 
     <!-- Variable Pairs -->
     <form name="form1" action="" >
-        <p><label>Username: <input id="usr" name="u" required type="text"></label>
-        <p><label>Password: <input id="pwd" name="p" required type="password"></label>
+        <p><label>Username&nbsp;:&nbsp;<input id="usr" name="u" required type="text"></label>
+        <p><label>Password&nbsp;:&nbsp;<input id="pwd" name="p" required type="password"></label>
         <div>
             <dd id="result">
                 <dl>

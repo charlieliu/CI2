@@ -166,7 +166,7 @@ class Js_test extends CI_Controller {
 
         // Template parser class
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('abgne_tab_view', $data, true);
+        $content_div = $this->parser->parse('jquery_test/abgne_tab_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
@@ -192,10 +192,11 @@ class Js_test extends CI_Controller {
 
         // Template parser class
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('js_object_test_view', $data, true);
+        $content_div = $this->parser->parse('jquery_test/js_object_test_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
+        $html_date['js'][] = 'js/js_object_test.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -216,10 +217,11 @@ class Js_test extends CI_Controller {
 
         // Template parser class
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('js_object_test2_view', $data, true);
+        $content_div = $this->parser->parse('jquery_test/js_object_test2_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
+        $html_date['js'][] = 'js/js_object_test2.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -240,7 +242,7 @@ class Js_test extends CI_Controller {
         );
 
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('file_upload_view', $data, true);
+        $content_div = $this->parser->parse('jquery_test/file_upload_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
@@ -268,12 +270,14 @@ class Js_test extends CI_Controller {
         $html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/jquery.fileupload-validate.js';
         $html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/jquery.fileupload-ui.js';
         $html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/main_charlie.js';
+        //$html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/main.js';
 
         $html_date['js_ie'] = array() ;
         $html_date['js_ie'][] = 'js/jQuery-File-Upload-9.7.2/js/cors/jquery.xdr-transport.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
+        //echo $view;
     }
 
     // 上傳檔案
@@ -372,10 +376,11 @@ class Js_test extends CI_Controller {
         );
 
         // 中間挖掉的部分
-        $content_div = $this->parser->parse('get_filesize_view', $data, true);
+        $content_div = $this->parser->parse('jquery_test/get_filesize_view', $data, true);
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
+        $html_date['js'][] = 'js/get_filesize.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -397,31 +402,37 @@ class Js_test extends CI_Controller {
             'content' => '',
             '_FILES'=>$_FILES,
             'base_url'=>base_url(),
+            'space_4'=>$this->pub->n2nbsp(4),
         );
 
         switch ($in) {
             case '1':
                 $data['title'] .= ' -- 滑動效果' ;
+                $data['js'][] = 'js/jquery_test_1.js';
                 break;
             case '2':
                 $data['title'] .= ' -- attr() / prop()' ;
+                $data['js'][] = 'js/jquery_test_2.js';
                 break;
             case '3':
                 $data['title'] .= ' -- on() / bind()' ;
+                $data['js'][] = 'js/jquery_test_3.js';
                 break;
             case '4':
                 $data['title'] .= ' -- append() preppend() ...' ;
+                $data['js'][] = 'js/jquery_test_4.js';
                 break;
             case '5':
                 $data['title'] .= ' -- call / apply' ;
-                $data['space_4'] = $this->pub->n2nbsp(4);
                 $data['js'][] = 'js/jquery_test_5.js';
                 break;
             case '6':
                 $data['title'] .= ' -- parent() parents() closest()' ;
+                $data['js'][] = 'js/jquery_test_6.js';
                 break;
             case '7':
                 $data['title'] .= ' -- next() prev()' ;
+                $data['js'][] = 'js/jquery_test_7.js';
                 break;
             case '8':
                 $data['title'] .= ' -- typeof' ;
@@ -429,6 +440,7 @@ class Js_test extends CI_Controller {
                 break;
             case '9':
                 $data['title'] .= ' -- push' ;
+                $data['js'][] = 'js/jquery_test_9.js';
                 break;
             default:
                 $in = '' ;
