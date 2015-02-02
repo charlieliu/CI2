@@ -85,6 +85,10 @@ class Js_test extends CI_Controller {
             'content_title' => 'jQuery 測試 -- push',
             'content_url' => base_url().'js_test/jquery_test/9',
         ) ;
+        $content[] = array(
+            'content_title' => 'jQuery 測試 -- document ready/window.onload',
+            'content_url' => base_url().'js_test/jquery_test/10',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -441,6 +445,10 @@ class Js_test extends CI_Controller {
             case '9':
                 $data['title'] .= ' -- push' ;
                 $data['js'][] = 'js/jquery_test_9.js';
+                break;
+            case '10':
+                $data['title'] .= ' -- document ready/window.onload' ;
+                $data['js'][] = 'js/jquery_test_10.js';
                 break;
             default:
                 $in = '' ;
