@@ -151,17 +151,21 @@ class Pub{
     }
 
     public function remove_view_space($view){
+        // 先將多個空白縮成一個
         while( stripos($view,'  ') )
         {
             $view = str_replace('  ', ' ', $view);
         }
+        // 處理換行
         $order = array("\r\n", "\n", "\r", "￼",'
 ');
         $view = str_replace($order, '', $view);
+        // 其他符號
         $view = str_replace('> <', '><', $view);
         $view = str_replace('" />', '"/>', $view);
         $view = str_replace('> ', '>', $view);
         $view = str_replace(' <', '<', $view);
+        $view = str_replace(') {', '){', $view);
         echo $view;
     }
 
