@@ -21,6 +21,10 @@ class Html5_test extends CI_Controller {
             'content_title' => '控制 HTML5 視訊播放程式',
             'content_url' => base_url().'html5_test/test/1',
         ) ;
+        $content[] = array(
+            'content_title' => 'Form',
+            'content_url' => base_url().'html5_test/test/2',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -72,6 +76,9 @@ class Html5_test extends CI_Controller {
         switch ($in) {
             case '1':
                 $data['title'] .= ' -- 控制 HTML5 視訊播放程式' ;
+                break;
+            case '2':
+                $data['title'] .= ' -- Form' ;
                 break;
             default:
                 $in = '' ;
