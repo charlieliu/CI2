@@ -51,6 +51,11 @@ class Welcome extends CI_Controller {
             'c'=>'js_test',
         ) ;
         $content[] = array(
+            'content_title' => 'HTML5 測試',
+            'content_url' => base_url().'html5_test',
+            'c'=>'',
+        ) ;
+        $content[] = array(
             'content_title' => 'Login 測試',
             'content_url' => base_url().'login',
             'c'=>'',
@@ -74,7 +79,7 @@ class Welcome extends CI_Controller {
         $content = $this->page_list;
         // 標題 內容顯示
         $data = array(
-            'title' => 'Welcome to CodeIgniter',
+            'title' => 'Home',
             'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function

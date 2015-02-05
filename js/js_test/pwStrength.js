@@ -1,5 +1,14 @@
 $(document).ready(function(){
 
+    var result  = '危險！',
+        def_css = {
+            'background':'#ddd',
+            'width':'50px',
+            'height':'24px',
+            'display':'inline-block',
+            'margin':'0'
+        };
+
     //CharMode函數
     //測試某個字符是屬於哪一類.
     function CharMode(iN)
@@ -55,8 +64,7 @@ $(document).ready(function(){
     //當用戶放開鍵盤或密碼輸入框失去焦點時,根據不同的級別顯示不同的級別
     function pwStrength(pwd,usna)
     {
-        var result  = '危險！',
-            S_level = 0,
+        var S_level = 0,
             O_color = '#ddd',
             L_color = T_color = '#f00',
             M_color = '#f90',
@@ -69,6 +77,7 @@ $(document).ready(function(){
         }
         switch(S_level) {
             case 0:
+                result='危險！';
                 break;
             case 1:
                 T_color = '#fff' ;
@@ -95,28 +104,24 @@ $(document).ready(function(){
         return S_level;
     }
 
-    var def_css = {
-        'background':'#ddd',
-        'width':'50px',
-        'height':'20px',
-        'display':'inline-block',
-        'margin':'0'
-    };
+    $("#strongth_L").css(def_css);
+    $("#strongth_M").css(def_css);
+    $("#strongth_H").css(def_css);
     $("#strongth_status").css({
         'position':'absolute',
         'z-index':'1',
         'width':'150px',
         'height':'20px',
         'margin':'0',
-        'left':$('#strongth_L').offset().left
+        'left':$('#strongth_L').offset().left,
+        'top':$('#strongth_L').offset().top
     });
-    $("#strongth_L").css(def_css);
-    $("#strongth_M").css(def_css);
-    $("#strongth_H").css(def_css);
 
     $('#pwd').keyup(function(){
         pwStrength($(this).val(),$('#usr').val());
     }).blur(function(){
+        pwStrength($(this).val(),$('#usr').val());
+    }).change(function(){
         pwStrength($(this).val(),$('#usr').val());
     });
 
@@ -124,6 +129,7 @@ $(document).ready(function(){
         if( pwStrength($('#pwd').val(),$('#usr').val())<2 )
         {
             if( event.preventDefault ) event.preventDefault(); else event.returnValue = false;
+            alert('密碼強度 : '+result);
         }
     });
 });

@@ -175,7 +175,7 @@ class Js_test extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
         $html_date['css'][] = 'css/abgne_tab.css';
-        $html_date['js'][] = 'js/abgne_tab.js';
+        $html_date['js'][] = 'js/js_test/abgne_tab.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -200,7 +200,7 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $html_date['js'][] = 'js/js_object_test.js';
+        $html_date['js'][] = 'js/js_test/js_object_test.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -225,7 +225,7 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $html_date['js'][] = 'js/js_object_test2.js';
+        $html_date['js'][] = 'js/js_test/js_object_test2.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -384,7 +384,7 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $html_date['js'][] = 'js/get_filesize.js';
+        $html_date['js'][] = 'js/js_test/get_filesize.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -412,47 +412,41 @@ class Js_test extends CI_Controller {
         switch ($in) {
             case '1':
                 $data['title'] .= ' -- 滑動效果' ;
-                $data['js'][] = 'js/jquery_test_1.js';
                 break;
             case '2':
                 $data['title'] .= ' -- attr() / prop()' ;
-                $data['js'][] = 'js/jquery_test_2.js';
                 break;
             case '3':
                 $data['title'] .= ' -- on() / bind()' ;
-                $data['js'][] = 'js/jquery_test_3.js';
                 break;
             case '4':
                 $data['title'] .= ' -- append() preppend() ...' ;
-                $data['js'][] = 'js/jquery_test_4.js';
                 break;
             case '5':
                 $data['title'] .= ' -- call / apply' ;
-                $data['js'][] = 'js/jquery_test_5.js';
                 break;
             case '6':
                 $data['title'] .= ' -- parent() parents() closest()' ;
-                $data['js'][] = 'js/jquery_test_6.js';
                 break;
             case '7':
                 $data['title'] .= ' -- next() prev()' ;
-                $data['js'][] = 'js/jquery_test_7.js';
                 break;
             case '8':
                 $data['title'] .= ' -- typeof' ;
-                $data['js'][] = 'js/jquery_test_8.js';
                 break;
             case '9':
                 $data['title'] .= ' -- push' ;
-                $data['js'][] = 'js/jquery_test_9.js';
                 break;
             case '10':
                 $data['title'] .= ' -- document ready/window.onload' ;
-                $data['js'][] = 'js/jquery_test_10.js';
                 break;
             default:
                 $in = '' ;
                 break;
+        }
+        if( !empty($in) )
+        {
+            $data['js'][] = 'js/js_test/jquery_test_'.$in.'.js';
         }
 
         // 中間挖掉的部分
@@ -532,7 +526,7 @@ class Js_test extends CI_Controller {
         $html_date['content_div'] = $content_div ;
         $html_date['css'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.css';
         $html_date['js'][] = 'js/jquery-ui-1.11.2.custom/jquery-ui.min.js';
-        $html_date['js'][] = 'js/ui.js';
+        $html_date['js'][] = 'js/js_test/ui.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
@@ -557,7 +551,7 @@ class Js_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
-        $html_date['js'][] = 'js/pwStrength.js';
+        $html_date['js'][] = 'js/js_test/pwStrength.js';
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
