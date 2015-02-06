@@ -2,7 +2,7 @@ $(document).ready(function(){
     $("#contact1").submit(function() {
         $.ajax({
             type: "POST",
-            url: 'contact.php',
+            url: '',
             data:$("#contact1").serialize(),
             success: function (data) {
                 // Inserting html into the result div on success

@@ -3,7 +3,7 @@
 
     <div class="mg1em">
         測試日期&nbsp;:&nbsp;{test_date}
-        <form method="POST" id="contact1">
+        <form method="POST" id="contact1" action="html5_test/test/2">
 
             {grid_view}
 
@@ -26,4 +26,7 @@
             </div>
         </form>
     </div>
+
+    <div class="mg1em" id="results"></div>
+
 </div>
