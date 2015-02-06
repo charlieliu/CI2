@@ -133,12 +133,6 @@
         <?PHP if( $current_page=='session_test'): ?><div>COOKIE :<?PHP print_r($_COOKIE); ?></div><?PHP endif; ?>
     </div>
 
-    <?PHP if( $current_page=='welcome' || $current_page=='index'): ?>
-        <embed width="1" height="1" src="http://www.youtube.com/v/P2QrLuMq2Ow?autoplay=0&loop=1">
-    <?PHP else: ?>
-        <a href="http://www.youtube.com/v/P2QrLuMq2Ow" target="_blank">bgsound</a>
-    <?PHP endif; ?>
-
     <div id="gotop">˄</div>
 </body>
 </html>
