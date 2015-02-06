@@ -79,6 +79,50 @@ class Html5_test extends CI_Controller {
                 break;
             case '2':
                 $data['title'] .= ' -- Form' ;
+                $type_arr = array();
+                $type_arr[] = array(
+                    'type'=>'text',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>0, 'IE11'=>1, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'email',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>0, 'IE11'=>1, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'color',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>0, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'number',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'date',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'month',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'week',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'time',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'datetime-local',
+                    'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1),
+                );
+                $type_arr[] = array(
+                    'type'=>'datetime',
+                    'browser_support'=>array( 'Chrome'=>0, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>0),
+                );
+                $grid_data['type_arr'] = $type_arr ;
+                $data['test_date'] = '06Feb2015' ;
+                $data['grid_view'] = $this->parser->parse('html5_test/test_'.$in.'_grid_view', $grid_data, true);
                 break;
             default:
                 $in = '' ;

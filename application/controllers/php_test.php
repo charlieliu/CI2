@@ -1301,7 +1301,7 @@ class Php_test extends CI_Controller {
                     else if( $data['USER_AGENT']!=$user_agent )
                     {
                         $this->session->sess_destroy();// 銷毀Session
-                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/USER_AGENT');
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'<br>/USER_AGENT : '.$data['USER_AGENT'].'<br>/POST user_agent : '.$user_agent);
                     }
                     // 更新 session
                     $data = $this->_mod_session_info($session_id);
