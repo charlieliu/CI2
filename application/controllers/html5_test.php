@@ -120,9 +120,8 @@ class Html5_test extends CI_Controller {
                     'type'=>'datetime',
                     'browser_support'=>array( 'Chrome'=>0, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>0),
                 );
-                $grid_data['type_arr'] = $type_arr ;
                 $data['test_date'] = '06Feb2015' ;
-                $data['grid_view'] = $this->parser->parse('html5_test/test_'.$in.'_grid_view', $grid_data, true);
+                $data['grid_view'] = $this->parser->parse('html5_test/test_'.$in.'_grid_view', array('type_arr'=>$type_arr), true);
                 break;
             default:
                 $in = '' ;
