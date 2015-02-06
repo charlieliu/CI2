@@ -84,10 +84,10 @@ class Html5_test extends CI_Controller {
 
             switch ($in) {
                 case '1':
-                    $data['title'] .= ' -- 控制 HTML5 視訊播放程式' ;
+                    $data['title'] .= ' -- HTML Media' ;
                     break;
                 case '2':
-                    $data['title'] .= ' -- Form' ;
+                    $data['title'] .= ' -- Form / Input' ;
                     $type_arr = array();
                     $type_arr[] = array(
                         'type'=>'text',

@@ -43,4 +43,31 @@
             Your browser does not support the video tag.
         </video>
     </div>
+
+    <div class="content_block mg1em padding1em">
+        &lt;iframe src="http://www.youtube.com/embed/P2QrLuMq2Ow?autoplay=1&loop=1"&gt;&lt;/iframe&gt;<br>
+        <iframe src="http://www.youtube.com/v/P2QrLuMq2Ow?autoplay=1&loop=1"></iframe>
+    </div>
+
+    <div class="content_block mg1em padding1em">
+        <h3>The&nbsp;&lt;object&gt;&nbsp;Element</h3>
+        <ul>
+            <li>The&nbsp;&lt;object&gt;&nbsp;element is supported by all browsers.</li>
+            <li>The&nbsp;&lt;object&gt;&nbsp;element defines an embedded object within an HTML document.</li>
+            <li>It is used to embed plug-ins (like Java applets, PDF readers, Flash Players) in web pages.</li>
+        </ul>
+        &lt;object data="http://www.youtube.com/v/K_xTet06SUo"&gt;&lt;/object&gt;<br>
+        <object data="http://www.youtube.com/v/K_xTet06SUo"></object>
+    </div>
+
+    <div class="content_block mg1em padding1em">
+        <h3>The&nbsp;&lt;embed&gt;&nbsp;Element</h3>
+        <ul>
+            <li>The&nbsp;&lt;embed&gt;&nbsp;element is supported in all major browsers.</li>
+            <li>The&nbsp;&lt;embed&gt;&nbsp;element also defines an embedded object within an HTML document.</li>
+            <li>Web browsers have supported the&nbsp;&lt;embed&gt;&nbsp;element for a long time. However, it has not been a part of the HTML specification before HTML5. The element will validate in an HTML5 page, but not in an HTML 4 page.</li>
+        </ul>
+        &lt;embed src="http://www.youtube.com/embed/Y5zj3dwNxJw"&gt;<br>
+        <embed src="http://www.youtube.com/embed/Y5zj3dwNxJw">
+    </div>
 </div>
