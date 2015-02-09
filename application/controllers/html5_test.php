@@ -25,6 +25,10 @@ class Html5_test extends CI_Controller {
             'content_title' => 'Form',
             'content_url' => base_url().'html5_test/test/2',
         ) ;
+        $content[] = array(
+            'content_title' => 'datalist',
+            'content_url' => base_url().'html5_test/test/3',
+        ) ;
 
         $this->page_list = $content ;
     }
@@ -131,6 +135,9 @@ class Html5_test extends CI_Controller {
                     );
                     $data['test_date'] = '06Feb2015' ;
                     $data['grid_view'] = $this->parser->parse('html5_test/test_'.$in.'_grid_view', array('type_arr'=>$type_arr), true);
+                    break;
+                case '3':
+                    $data['title'] .= ' -- &lt;datalist&gt;' ;
                     break;
                 default:
                     $in = '' ;
