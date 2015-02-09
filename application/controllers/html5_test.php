@@ -29,7 +29,10 @@ class Html5_test extends CI_Controller {
             'content_title' => 'datalist',
             'content_url' => base_url().'html5_test/test/3',
         ) ;
-
+        $content[] = array(
+            'content_title' => 'output',
+            'content_url' => base_url().'html5_test/test/4',
+        ) ;
         $this->page_list = $content ;
     }
 
@@ -138,6 +141,9 @@ class Html5_test extends CI_Controller {
                     break;
                 case '3':
                     $data['title'] .= ' -- &lt;datalist&gt;' ;
+                    break;
+                case '4':
+                    $data['title'] .= ' -- &lt;output&gt;' ;
                     break;
                 default:
                     $in = '' ;

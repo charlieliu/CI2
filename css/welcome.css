@@ -166,3 +166,18 @@ table td, table th {padding:.5em;}
 .padding1em{padding: 1em}
 .float_left{float:left}
 .float_right{float:right}
+/*
+input{
+    margin: 0em;
+    font: normal normal normal 13.3333330154419px/normal Arial;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+}
+*/
