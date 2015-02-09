@@ -145,6 +145,9 @@ class Html5_test extends CI_Controller {
                 case '4':
                     $data['title'] .= ' -- &lt;output&gt;' ;
                     break;
+                case '5':
+                    $data['title'] .= ' -- data-* Attributes' ;
+                    break;
                 default:
                     $in = '' ;
                     break;
