@@ -33,6 +33,10 @@ class Html5_test extends CI_Controller {
             'content_title' => 'output',
             'content_url' => base_url().'html5_test/test/4',
         ) ;
+        $content[] = array(
+            'content_title' => 'data-* Attributes',
+            'content_url' => base_url().'html5_test/test/5',
+        ) ;
         $this->page_list = $content ;
     }
 
