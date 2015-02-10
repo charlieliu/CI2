@@ -117,6 +117,10 @@ class Html5_test extends CI_Controller {
                         'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
                     );
                     $type_arr[] = array(
+                        'type'=>'tel',
+                        'browser_support'=>array( 'Chrome'=>0, 'Firefox'=>0, 'Safari'=>0, 'IE11'=>0, 'Opera'=>0,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                    );
+                    $type_arr[] = array(
                         'type'=>'date',
                         'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
                     );
