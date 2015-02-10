@@ -1,22 +1,19 @@
 $(document).ready(function(){
-    $("#contact1").submit(function() {
+    $(".contact1").submit(function() {
+        var this_results = $(this).find('.results');
         $.ajax({
             type: "POST",
             url: '',
-            data:$("#contact1").serialize(),
+            data:$(this).serialize(),
             success: function (data) {
                 // Inserting html into the result div on success
-                $('#results').html(data);
+                this_results.html(data);
             },
             error: function(jqXHR, text, error){
                 // Displaying if there are any errors
-                $('#result').html(error);
+                this_results.html(error);
             }
         });
         return false;
     });
-
-    $('#range_value').html($('#range').val());
-
-    $('#range').change(function(){$('#range_value').html($(this).val())});
 });

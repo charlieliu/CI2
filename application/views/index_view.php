@@ -97,9 +97,9 @@
         }
     }
 
+    echo '<!--[if (gte IE 8)&(lt IE 10)]>';
     if( !empty($js_ie) && is_array($js_ie) && count($js_ie) )
     {
-        echo '<!--[if (gte IE 8)&(lt IE 10)]>';
         foreach($js_ie as $val)
         {
             $link = array(
@@ -110,8 +110,15 @@
             );
             echo load_html_file($link);
         }
-        echo '<![endif]-->';
     }
+    $link = array(
+        'type'  => "text/javascript",
+        'rel'   => "stylesheet",
+        'href'  => 'http://html5shiv.googlecode.com/svn/trunk/html5.js',
+        'ver'   => ''
+    );
+    echo load_html_file($link);
+    echo '<![endif]-->';
     ?>
 </head>
 <body>

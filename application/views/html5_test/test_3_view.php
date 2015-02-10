@@ -2,8 +2,8 @@
     <p>{current_page}/{current_fun}</p>
 
     <div class="content_block mg1em padding1em">
-        &lt;input list="browsers" name="browser"&gt;<br>
-        &lt;datalist id="browsers"&gt;<br>
+        &lt;input&nbsp;<span style="color:red;">list="browsers"</span>&nbsp;name="browser"&gt;<br>
+        &lt;datalist&nbsp;<span style="color:red;">id="browsers"</span>&gt;<br>
         {space_4}&lt;option value="Internet Explorer"&gt;<br>
         {space_4}&lt;option value="Firefox"&gt;<br>
         {space_4}&lt;option value="Chrome"&gt;<br>
