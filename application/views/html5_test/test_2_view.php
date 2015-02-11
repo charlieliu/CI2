@@ -37,7 +37,7 @@
             </form>
         </li>
         <li>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="content_block mg1em padding1em">
                     &lt;keygen name="security"&gt;\
                 </div>

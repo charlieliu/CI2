@@ -812,6 +812,16 @@ class Php_test extends CI_Controller {
         ) ;
 
         $content[] = array(
+            'content_title' => 'rawurlencode()',
+            'content_value' => rawurlencode($test_str),
+        ) ;
+
+        $content[] = array(
+            'content_title' => 'utf8_encode()',
+            'content_value' => utf8_encode($test_str),
+        ) ;
+
+        $content[] = array(
             'content_title' => 'serialize()',
             'content_value' => serialize($test_str),
         ) ;
@@ -877,6 +887,16 @@ class Php_test extends CI_Controller {
         $content[] = array(
             'content_title' => 'urldecode()',
             'content_value' => urldecode($test_str),
+        ) ;
+
+        $content[] = array(
+            'content_title' => 'rawurldecode()',
+            'content_value' => rawurldecode($test_str),
+        ) ;
+
+        $content[] = array(
+            'content_title' => 'utf8_decode()',
+            'content_value' => utf8_decode($test_str),
         ) ;
 
         // 標題 內容顯示

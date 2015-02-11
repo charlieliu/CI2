@@ -78,10 +78,14 @@ class Html5_test extends CI_Controller {
         $post = $this->pub->trim_val($post);
         if( !empty($post) )
         {
-            foreach ($post as $key => $value) {
-                echo $key.' : '.$value.'<br>';
+            if( isset($_FILES) )
+            {
+                foreach ($_FILES as $key => $value)
+                {
+                    $post['FILES'][$key] = $value;
+                }
             }
-            //echo json_encode($post);
+            echo json_encode($post);
         }
         else
         {
