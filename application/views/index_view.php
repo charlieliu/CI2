@@ -122,6 +122,7 @@
     ?>
 </head>
 <body>
+    <noscript>Your browser does not support JavaScript!</noscript>
     <div id="container">
         <?PHP if( $current_page!='welcome' && $current_page!='index'): ?>
             <div class="breadcrumb">
