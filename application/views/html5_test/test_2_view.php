@@ -8,7 +8,7 @@
     <ul>
         {grid_view}
         <li>
-            <form method="POST" class="contact1">
+            <form class="contact1">
                 <div class="content_block mg1em padding1em">
                     &lt;input&nbsp;<span style="color:red;">type="range"</span>&nbsp;name="range" id="range" min="0" max="100" step="5" required&gt;<br>
                 </div>
@@ -24,7 +24,7 @@
             </form>
         </li>
         <li>
-            <form method="POST" class="contact1">
+            <form class="contact1">
                 <div class="content_block mg1em padding1em">
                     &lt;input type="text" name="country_code"&nbsp;<span style="color:red;">pattern="[A-Za-z]{3}"</span>&nbsp;title="Three letter country code" placeholder="Three letter country code" required&gt;<br>
                     &lt;input&nbsp;<span style="color:red;">type="submit"</span>&nbsp;name="submit" value="Submit"&gt;

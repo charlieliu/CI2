@@ -1,6 +1,6 @@
 <?php foreach ($type_arr as $data): ?>
     <li>
-        <form method="POST" class="contact1">
+        <form class="contact1">
             <div class="content_block mg1em padding1em">
                 <?php if($data['type']=='text'): ?>
                     &lt;input type="<?=$data['type']?>"&nbsp;name="<?=$data['type']?>" id="<?=$data['type']?>"&nbsp;<span style="color:red;">required</span>&gt;
