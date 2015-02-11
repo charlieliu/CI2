@@ -36,5 +36,18 @@
                 <div class="mg1em results"></div>
             </form>
         </li>
+        <li>
+            <form method="POST">
+                <div class="content_block mg1em padding1em">
+                    &lt;keygen name="security"&gt;\
+                </div>
+                <div class="mg1em">
+                    Username: <input type="text" name="usr_name" />
+                    Encryption: <keygen name="security" />
+                    <input type="submit" name="submit" value="Submit">
+                </div>
+                <div class="mg1em results"></div>
+            </form>
+        </li>
     </ul>
 </div>
