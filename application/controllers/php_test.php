@@ -42,7 +42,7 @@ class Php_test extends CI_Controller {
             'content_url' => 'php_test/count_sizeof'
         ) ;
         $content[] = array(
-            'content_title' => 'Hash 測試',
+            'content_title' => 'Hash encode 測試',
             'content_url' => 'php_test/hash_test',
         ) ;
         $content[] = array(
@@ -822,6 +822,11 @@ class Php_test extends CI_Controller {
         ) ;
 
         $content[] = array(
+            'content_title' => 'ASCII',
+            'content_value' => $this->pub->str_to_ascii($test_str),
+        ) ;
+
+        $content[] = array(
             'content_title' => 'serialize()',
             'content_value' => serialize($test_str),
         ) ;
@@ -850,7 +855,7 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title' => 'Hash 測試',
+            'title' => 'Hash encode 測試',
             'current_title' => $this->current_title,
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function

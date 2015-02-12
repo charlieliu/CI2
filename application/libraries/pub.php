@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pub{
-    function CurlPost($postURL, $postdata='')
+    public function CurlPost($postURL, $postdata='')
     {
         $ch = curl_init();// create a new cURL resource
         curl_setopt($ch, CURLOPT_URL, $postURL);// set URL and other appropriate options
@@ -49,7 +49,7 @@ class Pub{
         }
     }
 
-    function trim_val($in_data)
+    public function trim_val($in_data)
     {
         if( !empty($in_data) )
         {
@@ -71,7 +71,7 @@ class Pub{
         }
     }
 
-    function urldecode_val($in_data)
+    public function urldecode_val($in_data)
     {
         if( !empty($in_data) )
         {
@@ -93,7 +93,7 @@ class Pub{
         }
     }
 
-    function utf8_decode_val($in_data)
+    public function utf8_decode_val($in_data)
     {
         if( !empty($in_data) )
         {
@@ -115,7 +115,7 @@ class Pub{
         }
     }
 
-    function o2a($input)
+    public function o2a($input)
     {
         if( is_array($input) )
         {
@@ -173,6 +173,40 @@ class Pub{
         $order = array("\r\n", "\n", "\r", "￼", "<br />", "<br/>");
         $str = str_replace($order,"<br>",$str);// HTML5 寫法
         return $str;
+    }
+
+    public function str_to_ascii($str)
+    {
+        $encoded = '';
+        $str = (string)$str ;
+        if( mb_strlen($str,'utf-8')==1 )
+        {
+            // char change to ASCII code
+            $encoded = ord($str) ;
+        }
+        else if( mb_strlen($str,'utf-8')>1 )
+        {
+            // string to array
+            $str = $this->utf8Split($str);
+            foreach ($str as $key => $value)
+            {
+                $encoded .= ', {'.$value.':'.ord($value).'}';
+            }
+            $encoded = substr($encoded,2);
+        }
+
+        return $encoded;
+    }
+
+    public function utf8Split($str, $len=1)
+    {
+        $arr = array();
+        $strLen = mb_strlen($str, 'UTF-8');
+        for( $i=0; $i<$strLen; $i++ )
+        {
+            $arr[] = mb_substr($str, $i, $len, 'UTF-8');
+        }
+        return $arr;
     }
 }
 ?>
