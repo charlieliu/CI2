@@ -4,6 +4,7 @@ function colorful()
         if( $(this).html()=='1' )
         {
             $(this).css('color','blue');
+            $(this).parents('tr').css('background-color','#DDDDDD');
         }
         else if( $(this).html()=='0' )
         {

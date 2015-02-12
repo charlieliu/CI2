@@ -10,7 +10,7 @@
     <table id="table-transform" data-toolbar="#transform-buttons" border="1" style="margin:1em;">
         <thead>
             <tr>
-                <th>加密方式</th>
+                <th>方式</th>
                 <th>編碼</th>
             </tr>
         </thead>

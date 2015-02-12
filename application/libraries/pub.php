@@ -182,7 +182,8 @@ class Pub{
         if( mb_strlen($str,'utf-8')==1 )
         {
             // char change to ASCII code
-            $encoded = ord($str) ;
+            $ord = ord($str) ;
+            $encoded .= '{'.$str.':'.$ord.'/'.str_pad(base_convert($ord,10,16),4,'0',STR_PAD_LEFT).'}';
         }
         else if( mb_strlen($str,'utf-8')>1 )
         {
@@ -190,7 +191,8 @@ class Pub{
             $str = $this->utf8Split($str);
             foreach ($str as $key => $value)
             {
-                $encoded .= ', {'.$value.':'.ord($value).'}';
+                $ord = ord($value) ;
+                $encoded .= ', {'.$value.':'.$ord.'/'.str_pad(base_convert($ord,10,16),4,'0',STR_PAD_LEFT).'}';
             }
             $encoded = substr($encoded,2);
         }
