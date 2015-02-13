@@ -39,7 +39,7 @@ code {
 }
 
 #body{
-    margin: 0 15px 0 15px;
+    margin: 0 15px 0 15px;min-height: 500px;
 }
 
 p.footer{
