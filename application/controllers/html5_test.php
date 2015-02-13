@@ -37,6 +37,11 @@ class Html5_test extends CI_Controller {
             'content_title' => 'data-* Attributes',
             'content_url' => base_url().'html5_test/test/5',
         ) ;
+        $content[] = array(
+            'content_title' => 'drap / drop',
+            'content_url' => base_url().'html5_test/test/6',
+        ) ;
+
         $this->page_list = $content ;
     }
 
@@ -162,6 +167,9 @@ class Html5_test extends CI_Controller {
                     break;
                 case '5':
                     $data['title'] .= ' -- data-* Attributes' ;
+                    break;
+                case '6':
+                    $data['title'] .= ' -- drap / drop' ;
                     break;
                 default:
                     $in = '' ;
