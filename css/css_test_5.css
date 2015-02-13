@@ -12,6 +12,7 @@
 #abgne-block-20140616 li, #scale li, #skew li, #rotate li, #translate li
 {
     position: absolute;
+    z-index: 0;
     -webkit-transition: -webkit-transform 0.4s linear;
     -moz-transition: -moz-transform 0.4s linear;
     -o-transition: -o-transform 0.4s linear;
