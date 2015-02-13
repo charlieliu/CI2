@@ -186,6 +186,7 @@ class Css_test extends CI_Controller {
         // 中間部分塞入外框
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
+        $html_date['css'][] = 'css/css_test_5.css' ;
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
