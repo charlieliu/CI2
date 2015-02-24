@@ -681,49 +681,67 @@ class Php_test extends CI_Controller {
         $this->output->set_profiler_sections($sections);
 
         // 測試用Array
+        $array_size = 50000 ;
         $this->benchmark->mark('code_start');
         $test_array = array();
-        for($test_i=0;$test_i<50000;$test_i++)
+        for($test_i=0;$test_i<$array_size;$test_i++)
         {
             $test_array[] = $test_i ;
         }
         $this->benchmark->mark('code_end');
         $time_mark = $this->benchmark->elapsed_time('code_start','code_end');
         $content[] = array(
-            'content_title' => 'Array()',
+            'content_title' => 'Array('.$array_size.')',
+            'content_value' => $time_mark,
+        ) ;
+
+        // 測試次數
+        $try_num = 1000000 ;
+
+        // for 迴圈
+        $this->benchmark->mark('code1_start');
+        for($test_i=0;$test_i<$try_num;$test_i++)
+        {
+
+        }
+        $this->benchmark->mark('code1_end');
+        $time_mark = $this->benchmark->elapsed_time('code1_start','code1_end');
+        $content[] = array(
+            'content_title' => 'for() '.$try_num.' times',
             'content_value' => $time_mark,
         ) ;
 
         // count()
         $this->benchmark->mark('code2_start');
-
-        for($test_i=0;$test_i<100000;$test_i++)
+        for($test_i=0;$test_i<$try_num;$test_i++)
         {
             $count_num = count($test_array) ;
         }
-
         $this->benchmark->mark('code2_end');
         $time_mark = $this->benchmark->elapsed_time('code2_start','code2_end');
         $content[] = array(
-            'content_title' => 'count()='.$count_num.' 100000 times',
+            'content_title' => 'count()='.$count_num.' '.$try_num.' times',
             'content_value' => $time_mark,
         ) ;
 
         // sizeof()
         $this->benchmark->mark('code3_start');
-
-        for($test_i=0;$test_i<100000;$test_i++)
+        for($test_i=0;$test_i<$try_num;$test_i++)
         {
             $sizeof_num = sizeof($test_array) ;
         }
-
-        $this->output->enable_profiler(FALSE);//關閉效能分析器
-
         $this->benchmark->mark('code3_end');
         $time_mark = $this->benchmark->elapsed_time('code3_start','code3_end');
         $content[] = array(
-            'content_title' => 'sizeof()='.$sizeof_num.' 100000 times',
+            'content_title' => 'sizeof()='.$sizeof_num.' '.$try_num.' times',
             'content_value' => $time_mark,
+        ) ;
+
+        $this->output->enable_profiler(FALSE);//關閉效能分析器
+
+        $content[] = array(
+            'content_title' => 'Difference between sizeof() and count() in php',
+            'content_value' => 'The sizeof() function is an alias for count().',
         ) ;
 
         // 標題 內容顯示
