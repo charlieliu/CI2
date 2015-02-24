@@ -42,6 +42,10 @@ class Css_test extends CI_Controller {
             'content_title' => 'CSS3 2D Transforms',
             'content_url' => 'css_test/css_test_5'
         );
+        $content[] = array(
+            'content_title' => 'CSS+JQuery 翻轉',
+            'content_url' => 'css_test/css_test_6'
+        );
 
         $this->page_list = $content ;
     }
@@ -79,7 +83,7 @@ class Css_test extends CI_Controller {
     {
         // 標題 內容顯示
         $data = array(
-            'title' => 'CSS效果測試',
+            'title' => '轉圈圈',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'current_title' => $this->current_title,
@@ -110,7 +114,7 @@ class Css_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title' => 'CSS效果測試',
+            'title' => '用CSS反轉',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'current_title' => $this->current_title,
@@ -132,7 +136,7 @@ class Css_test extends CI_Controller {
     {
         // 標題 內容顯示
         $data = array(
-            'title' => 'CSS效果測試',
+            'title' => '用 CSS3 做表單',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'current_title' => $this->current_title,
@@ -153,7 +157,7 @@ class Css_test extends CI_Controller {
     {
         // 標題 內容顯示
         $data = array(
-            'title' => 'CSS效果測試',
+            'title' => '用 CSS3 做畫廊',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'current_title' => $this->current_title,
@@ -174,7 +178,7 @@ class Css_test extends CI_Controller {
     {
         // 標題 內容顯示
         $data = array(
-            'title' => 'CSS效果測試',
+            'title' => 'CSS3 2D Transforms',
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'current_title' => $this->current_title,
@@ -187,6 +191,28 @@ class Css_test extends CI_Controller {
         $html_date = $data ;
         $html_date['content_div'] = $content_div ;
         $html_date['css'][] = 'css/css_test_5.css' ;
+
+        $view = $this->parser->parse('index_view', $html_date, true);
+        $this->pub->remove_view_space($view);
+    }
+
+    public function css_test_6()
+    {
+        // 標題 內容顯示
+        $data = array(
+            'title' => 'CSS+JQuery 翻轉',
+            'current_page' => strtolower(__CLASS__), // 當下類別
+            'current_fun' => strtolower(__FUNCTION__), // 當下function
+            'current_title' => $this->current_title,
+        );
+
+        // Template parser class
+        // 中間挖掉的部分
+        $content_div = $this->parser->parse('css_test/css_test_6_view', $data, true);
+        // 中間部分塞入外框
+        $html_date = $data ;
+        $html_date['content_div'] = $content_div ;
+        $html_date['css'][] = 'css/css_test_6.css' ;
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
