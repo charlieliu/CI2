@@ -63,6 +63,8 @@
                 {
                     tag_front.fadeToggle();
                     tag_behind.fadeToggle();
+                    tag_front = null;
+                    tag_behind = null;
                 }
             });
             console.log(navigator.userAgent.toLowerCase());
