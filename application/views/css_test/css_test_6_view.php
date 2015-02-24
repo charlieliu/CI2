@@ -67,7 +67,6 @@
                     tag_behind = null;
                 }
             });
-            console.log(navigator.userAgent.toLowerCase());
         });
     </script>
 

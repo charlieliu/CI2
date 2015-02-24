@@ -11,4 +11,5 @@ $(function(){
             $('#gotop').stop().fadeOut("fast");
         }
     });
+    console.log(navigator.userAgent.toLowerCase());
 });
