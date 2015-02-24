@@ -5,51 +5,39 @@
         <table>
             <tr>
                 <td>
-                    <div class="description">
-                        <div class="demo">
-                            <span class="front"><img title="翻轉" alt="图片" src="images/j.jpg" ></span>
-                            <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
-                        </div>
+                    <div class="demo">
+                        <span class="front"><img title="翻轉" alt="图片" src="images/j.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
-                    <div class="description">
-                        <div class="demo">
-                            <span class="front"><img title="翻轉" alt="图片" src="images/q.jpg" ></span>
-                            <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
-                        </div>
+                    <div class="demo">
+                        <span class="front"><img title="翻轉" alt="图片" src="images/q.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
-                    <div class="description">
-                        <div class="demo">
-                            <span class="front"><img title="翻轉" alt="图片" src="images/u.jpg" ></span>
-                            <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
-                        </div>
+                    <div class="demo">
+                        <span class="front"><img title="翻轉" alt="图片" src="images/u.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
-                    <div class="description">
-                        <div class="demo">
-                            <span class="front"><img title="翻轉" alt="图片" src="images/e.jpg" ></span>
-                            <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
-                        </div>
+                    <div class="demo">
+                        <span class="front"><img title="翻轉" alt="图片" src="images/e.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
-                    <div class="description">
-                        <div class="demo">
-                            <span class="front"><img title="翻轉" alt="图片" src="images/r.jpg" ></span>
-                            <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
-                        </div>
+                    <div class="demo">
+                        <span class="front"><img title="翻轉" alt="图片" src="images/r.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
-                    <div class="description">
-                        <div class="demo">
-                            <span class="front"><img title="翻轉" alt="图片" src="images/y.jpg" ></span>
-                            <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
-                        </div>
+                    <div class="demo">
+                        <span class="front"><img title="翻轉" alt="图片" src="images/y.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
                     </div>
                 </td>
             </tr>
@@ -58,17 +46,17 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".description").click(function(){
+            $(".demo").click(function(){
                 var tag_front = $(this).find('.front'), tag_behind = $(this).find('.behind');
-                if( !tag_front.hasClass('hover') )
-                {
-                    tag_front.addClass('hover');
-                    tag_behind.addClass('hover');
-                }
-                else
+                if( tag_front.hasClass('hover') )
                 {
                     tag_front.removeClass('hover');
                     tag_behind.removeClass('hover');
+                }
+                else
+                {
+                    tag_front.addClass('hover');
+                    tag_behind.addClass('hover');
                 }
                 /* for old IE */
                 if( /msie/.test(navigator.userAgent.toLowerCase()) )
