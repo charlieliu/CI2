@@ -1447,8 +1447,28 @@ class Php_test extends CI_Controller {
             }
             else if( $total<1 )
             {
+                if( empty($post) )
+                {
+                    $post = array(
+                        'session_id'=>'',
+                        'ip_address'=>'',
+                        'user_agent'=>'',
+                    );
+                    echo(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$post = '.json_encode($post));
+                    echo '<br>';
+                }
+                if( empty($session_id) )
+                {
+                    echo(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$session_id = '.json_encode($session_id));
+                    echo '<br>';
+                }
                 // 新增 session
                 $data = $this->_add_session_info($session_id,$post);
+                if( $data['status']!=100 )
+                {
+                    echo(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$data = '.json_encode($data));
+                    echo '<br>';
+                }
             }
             else
             {
@@ -1480,6 +1500,11 @@ class Php_test extends CI_Controller {
                     }
                     // 更新 session
                     $data = $this->_mod_session_info($session_id);
+
+                    if( $data['status']!=100 )
+                    {
+                        exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/data = '.json_encode($data));
+                    }
                 }
             }
 

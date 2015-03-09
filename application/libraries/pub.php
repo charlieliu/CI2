@@ -31,12 +31,14 @@ class Pub{
         }
         else
         {
-            $url = base_url().'index.php?/php_test/check_session';
+            //$url = base_url().'index.php?/php_test/check_session';
+            $url = base_url().'php_test/check_session';
             $data = array(
                 'session_id'=>$session_id,
                 'ip_address'=>$_SERVER["REMOTE_ADDR"],
                 'user_agent'=>$_SERVER["HTTP_USER_AGENT"],
             );
+            //var_dump($_SERVER);
             $data = json_decode($this->CurlPost($url,$data));
             $data = $this->o2a($data);
 

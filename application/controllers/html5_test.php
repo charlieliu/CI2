@@ -15,7 +15,7 @@ class Html5_test extends CI_Controller {
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
-        $this->pub->check_session($this->session->userdata('session_id'));
+        //$this->pub->check_session($this->session->userdata('session_id'));
 
         $content[] = array(
             'content_title' => '控制 HTML5 視訊播放程式',
