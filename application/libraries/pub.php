@@ -1,17 +1,29 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pub{
-    public function CurlPost($postURL, $postdata='')
+    public function CurlPost($postURL='', $postdata='')
     {
-        $ch = curl_init();// create a new cURL resource
-        curl_setopt($ch, CURLOPT_URL, $postURL);// set URL and other appropriate options
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        if( empty($postURL) )
+        {
+            $result = 'empty postURL';
+        }
+        else if( empty($postdata) )
+        {
+            $result = 'empty postdata';
+        }
+        else
+        {
+            $ch = curl_init();// create a new cURL resource
+            curl_setopt($ch, CURLOPT_URL, $postURL);// set URL and other appropriate options
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
-        $result = curl_exec($ch);// grab URL and pass it to the browser
-        curl_close($ch);// close cURL resource, and free up system resources
+            $result = curl_exec($ch);// grab URL and pass it to the browser
+            curl_close($ch);// close cURL resource, and free up system resources
+        }
         return $result;
     }
 
@@ -31,15 +43,14 @@ class Pub{
         }
         else
         {
-            //$url = base_url().'index.php?/php_test/check_session';
-            $url = base_url().'php_test/check_session';
+            $url = base_url().'index.php?/php_test/check_session';
+            //$url = base_url().'php_test/check_session';
             $data = array(
                 'session_id'=>$session_id,
                 'ip_address'=>$_SERVER["REMOTE_ADDR"],
                 'user_agent'=>$_SERVER["HTTP_USER_AGENT"],
             );
-            //var_dump($_SERVER);
-            $data = json_decode($this->CurlPost($url,$data));
+            $data = json_decode($this->CurlPost($url,json_encode($data)));
             $data = $this->o2a($data);
 
             if( $data['status']!=100 )

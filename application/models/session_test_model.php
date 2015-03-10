@@ -32,23 +32,25 @@ class Session_test_model extends CI_Model {
     {
         $dt = new DateTime();
         $dt = $dt->format('U');
-        if( empty($session_id) )
+
+        $ip_address = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : $input['ip_address'] ;
+        $user_agent = !empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : $input['user_agent'] ;
+        $data = array(
+            'SESSION_ID'=>$session_id,
+            'IP_ADDRESS'=>$ip_address,
+            'USER_AGENT'=>$user_agent,
+            'ADDTIME'   =>$dt,
+            'UPDATETIME'=>'',
+            'IS_ALIVE'  =>1,
+        );
+
+        if( empty($session_id) || empty($ip_address) || empty($user_agent) )
         {
             $status = 200;
-            $data   = 'empty session_id';
+            $data   = json_encode($data);
         }
         else
         {
-            $ip_address = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : $input['ip_address'] ;
-            $user_agent = !empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : $input['user_agent'] ;
-            $data = array(
-                'SESSION_ID'=>$session_id,
-                'IP_ADDRESS'=>$ip_address,
-                'USER_AGENT'=>$user_agent,
-                'ADDTIME'   =>$dt,
-                'UPDATETIME'=>'',
-                'IS_ALIVE'  =>1,
-            );
             //$result = $this->db->insert('SESSION_LOGS', $data);
             $result = $this->db->insert('session_logs', $data);
             if( $result )

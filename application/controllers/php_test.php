@@ -70,7 +70,7 @@ class Php_test extends CI_Controller {
      */
     public function index()
     {
-        $this->check_session();
+        //$this->check_session();
 
         $content = $this->page_list ;
 
@@ -96,7 +96,7 @@ class Php_test extends CI_Controller {
 
     public function float_test()
     {
-        $this->check_session();
+        //$this->check_session();
 
         // 顯示資料
         $content = array();
@@ -206,7 +206,7 @@ class Php_test extends CI_Controller {
 
     public function bcadd_test()
     {
-        $this->check_session();
+        //$this->check_session();
 
         // 顯示資料
         $content = array();
@@ -314,7 +314,7 @@ class Php_test extends CI_Controller {
 
     public function date_test()
     {
-        $this->check_session();
+        //$this->check_session();
         // 時間顯示測試
         $date_test = $this->_date_test() ;
 
@@ -432,7 +432,7 @@ class Php_test extends CI_Controller {
 
     public function session_test()
     {
-        $this->check_session();
+        //$this->check_session();
         /*
         // 增加自訂Session資料
         $newdata = array(
@@ -452,7 +452,7 @@ class Php_test extends CI_Controller {
         //$user_data = $this->_str_replace(print_r($user_data,true)) ;
         //$user_data = $this->session->all_userdata() ;
         $UserAgent = $this->_get_UserAgent() ;
-        $UserAgent_str = $UserAgent['A'].' : '.$UserAgent['AN'] ;
+        $UserAgent_str = '('.$UserAgent['M'].'/'.$UserAgent['S'].')'.$UserAgent['A'].' : '.$UserAgent['AN'] ;
 
         // ci_sessions
         $ci_sessions = array(
@@ -499,10 +499,12 @@ class Php_test extends CI_Controller {
             'content_title' => 'ci_sessions',
             'content_value' => $this->_str_replace(print_r($ci_sessions,true))
         ) ;
+        /*
         $content[] = array(
             'content_title' => 'SESSION_LOGS',
             'content_value' => $this->_str_replace(print_r($SESSION_LOGS,true))
         ) ;
+        */
         $content[] = array(
             'content_title' => '_SERVER',
             'content_value' => $this->_str_replace(print_r($_SERVER,true))
@@ -584,7 +586,6 @@ class Php_test extends CI_Controller {
         {
             $output['M'] = 'Desktop';
             $output['S'] = 'Windows';
-
         }
 
         // 瀏覽器
@@ -608,6 +609,18 @@ class Php_test extends CI_Controller {
         {
             $output['A'] = "Chrome";
         }
+        else if( strpos($str,"Arora")!== false )
+        {
+            $output['A'] = "Arora";
+        }
+        else if( strpos($str,"Midori")!== false )
+        {
+            $output['A'] = "Midori";
+        }
+        else if( strpos($str,"QupZilla")!== false )
+        {
+            $output['A'] = "QupZilla";
+        }
         else if( strpos($str,"Safari")!== false )
         {
             $output['A'] = "Safari";
@@ -624,29 +637,61 @@ class Php_test extends CI_Controller {
             $sit_1 = stripos($str,')') ;
             $output['AN'] = substr($str,0,$sit_1) ;
         }
+        else if( strpos($str,"Links")!== false )
+        {
+            $output['A'] = "ELinks";
+            $sit_0 = stripos($str,'ELinks/') + 7;
+            $str = substr($str,$sit_0) ;
+            $sit_1 = stripos($str,' (') ;
+            $output['AN'] = substr($str,0,$sit_1) ;
+        }
+        else if( strpos($str,"Links")!== false )
+        {
+            $output['A'] = "Links";
+            $sit_0 = stripos($str,'Links (') + 7;
+            $str = substr($str,$sit_0) ;
+            $sit_1 = stripos($str,'; Linux') ;
+            $output['AN'] = substr($str,0,$sit_1) ;
+        }
+        else
+        {
+            echo 'LINE:'.__LINE__;
+        }
 
         // 版本判斷
         if( $output['AN']=='' )
         {
             switch($output['A']){
-                case 'Firefox':
-                    $sit_0 = stripos($str,'Firefox/') + 8;
-                    break;
-                case 'Chrome':
-                    $sit_0 = stripos($str,'Chrome/') + 7; ;
-                    break;
-                case 'Safari':
-                    $sit_0 = stripos($str,'Version/') + 8;
-                    break;
                 case 'Opera':
                     $sit_0 = stripos($str,'OPR/') + 4;
                     break;
                 case 'Internet Explorer':
                     $sit_0 = stripos($str,'MSIE ') + 5;
                     break;
+                case 'Arora':
+                    $sit_0 = stripos($str,'Arora/') + 6;
+                    break;
+                case 'Chrome':
+                    $sit_0 = stripos($str,'Chrome/') + 7;
+                    break;
+                case 'Midori':
+                    $sit_0 = stripos($str,'Midori/') + 7;
+                    break;
+                case 'Firefox':
+                    $sit_0 = stripos($str,'Firefox/') + 8;
+                    break;
+                case 'Safari':
+                    $sit_0 = stripos($str,'Version/') + 8;
+                    break;
+                case 'QupZilla':
+                    $sit_0 = stripos($str,'QupZilla/') + 9;
+                    break;
+                default:
+                    $sit_0 = 0;
+                    break;
             }
             $str = substr($str,$sit_0) ;
-            if($output['A']=='Internet Explorer')
+            if( $output['A']=='Internet Explorer' )
             {
                 $sit_1 = stripos($str,';') ;
             }
@@ -668,7 +713,7 @@ class Php_test extends CI_Controller {
 
     public function count_sizeof()
     {
-        $this->check_session();
+        //$this->check_session();
         // 顯示資料
         $content = array();
 
@@ -766,7 +811,7 @@ class Php_test extends CI_Controller {
 
     public function hash_test()
     {
-        $this->check_session();
+        //$this->check_session();
         $post = $this->input->post();
 
         $hash_array = array(
@@ -894,7 +939,7 @@ class Php_test extends CI_Controller {
 
     public function decode_test()
     {
-        $this->check_session();
+        //$this->check_session();
         $post = $this->input->post();
 
         $test_str = isset($post['hash_str']) ? $post['hash_str'] : '' ;
@@ -966,7 +1011,7 @@ class Php_test extends CI_Controller {
 
     public function preg_test()
     {
-        $this->check_session();
+        //$this->check_session();
         $post = $this->input->post();
 
         $str = isset($post['str']) ? $post['str'] : '' ;
@@ -1245,7 +1290,7 @@ class Php_test extends CI_Controller {
 
     public function switch_test()
     {
-        $this->check_session();
+        //$this->check_session();
         // 顯示資料
         $content = array();
 
@@ -1435,6 +1480,10 @@ class Php_test extends CI_Controller {
             {
                 exit('del_session_info :'.$del['status']);
             }
+            else
+            {
+                //echo "LINE : ".__LINE__." del session error<br>";
+            }
 
             // 取得 session 資訊
             $SESSION_LOGS = $this->get_session_info($session_id);
@@ -1447,28 +1496,12 @@ class Php_test extends CI_Controller {
             }
             else if( $total<1 )
             {
-                if( empty($post) )
-                {
-                    $post = array(
-                        'session_id'=>'',
-                        'ip_address'=>'',
-                        'user_agent'=>'',
-                    );
-                    echo(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$post = '.json_encode($post));
-                    echo '<br>';
-                }
                 if( empty($session_id) )
                 {
-                    echo(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$session_id = '.json_encode($session_id));
-                    echo '<br>';
+                    exit(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$session_id = '.json_encode($session_id));
                 }
                 // 新增 session
                 $data = $this->_add_session_info($session_id,$post);
-                if( $data['status']!=100 )
-                {
-                    echo(__CLASS__.'/'.__FUNCTION__.'/LINE'.__LINE__.'/$data = '.json_encode($data));
-                    echo '<br>';
-                }
             }
             else
             {
@@ -1508,7 +1541,7 @@ class Php_test extends CI_Controller {
                 }
             }
 
-            if( !empty($post['session_id']) && !empty($post['ip_address']) && !empty($post['user_agent']) )
+            if( !empty($post['session_id']) || !empty($post['ip_address']) || !empty($post['user_agent']) )
             {
                 echo json_encode($data);
             }
@@ -1516,6 +1549,10 @@ class Php_test extends CI_Controller {
             {
                 $data['data'] = __FUNCTION__.'/LINE'.__LINE__.' '.$data['data'] ;
                 echo json_encode($data);
+            }
+            else
+            {
+                //echo json_encode($data);
             }
         }
     }
