@@ -598,10 +598,7 @@ class Php_test extends CI_Controller {
             $output['A'] = "Firefox";
         }
         else if
-        (
-            strpos($str,"Opera")!== false ||
-            strpos($str,"OPR")!== false
-        )
+        ( strpos($str,"Opera")!== false || strpos($str,"OPR")!== false )
         {
             $output['A'] = "Opera";
         }
@@ -621,15 +618,15 @@ class Php_test extends CI_Controller {
         {
             $output['A'] = "QupZilla";
         }
+        else if( strpos($str,"Epiphany")!== false )
+        {
+            $output['A'] = "Epiphany";
+        }
         else if( strpos($str,"Safari")!== false )
         {
             $output['A'] = "Safari";
         }
-        else if
-        (
-            strpos($str,"rv:")!== false &&
-            strpos($str,"Trident/")!== false
-        )
+        else if( strpos($str,"rv:")!== false &&  strpos($str,"Trident/")!== false )
         {
             $output['A'] = "Internet Explorer";
             $sit_0 = stripos($str,'rv:') + 3;
@@ -653,9 +650,15 @@ class Php_test extends CI_Controller {
             $sit_1 = stripos($str,'; Linux') ;
             $output['AN'] = substr($str,0,$sit_1) ;
         }
+        else if( strpos($str,"Dillo")!== false )
+        {
+            $output['A'] = 'Dillo';
+            $output['S'] = 'Linux';
+            $output['M'] = 'Desktop';
+        }
         else
         {
-            echo 'LINE:'.__LINE__;
+            $output['A'] = 'LINE:'.__LINE__;
         }
 
         // 版本判斷
@@ -671,6 +674,9 @@ class Php_test extends CI_Controller {
                 case 'Arora':
                     $sit_0 = stripos($str,'Arora/') + 6;
                     break;
+                case 'Dillo':
+                    $sit_0 = stripos($str,'Dillo/') + 6;
+                    break;
                 case 'Chrome':
                     $sit_0 = stripos($str,'Chrome/') + 7;
                     break;
@@ -682,6 +688,9 @@ class Php_test extends CI_Controller {
                     break;
                 case 'Safari':
                     $sit_0 = stripos($str,'Version/') + 8;
+                    break;
+                case 'Epiphany':
+                    $sit_0 = stripos($str,'Epiphany/') + 9;
                     break;
                 case 'QupZilla':
                     $sit_0 = stripos($str,'QupZilla/') + 9;
