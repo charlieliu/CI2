@@ -13,8 +13,22 @@
                     &lt;input&nbsp;<span style="color:red;">type="range"</span>&nbsp;name="range" id="range" min="0" max="100" step="5" required&gt;<br>
                 </div>
                 <table class="mg1em" border="1" style="text-align:center;">
-                    <tr><th>Chrome</th><th>Firefox</th><th>Safari</th><th>IE11</th><th>Opera</th></tr>
-                    <tr><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+                    <tr>
+                        <th>Arora</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>IE11</th>
+                        <th>Opera</th>
+                        <th>Safari</th>
+                    </tr>
+                    <tr>
+                        <td>O</td>
+                        <td>O</td>
+                        <td>O</td>
+                        <td>O</td>
+                        <td>O</td>
+                        <td>O</td>
+                    </tr>
                 </table>
                 <div class="mg1em">
                     <input type="range" name="range" id="range" min="0" max="100" step="5" required>

@@ -114,49 +114,170 @@ class Html5_test extends CI_Controller {
                     $type_arr = array();
                     $type_arr[] = array(
                         'type'=>'text',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>0, 'IE11'=>1, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>1,
+                            'IE11'=>1,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>0,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'email',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>0, 'IE11'=>1, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>1,
+                            'IE11'=>1,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>0,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'color',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>0, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>1,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>1,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>1,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>1,
+                            'Safari'=>0,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'number',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>1, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>1,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'tel',
-                        'browser_support'=>array( 'Chrome'=>0, 'Firefox'=>0, 'Safari'=>0, 'IE11'=>0, 'Opera'=>0,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>0,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>0,
+                            'QupZilla'=>0,
+                            'Safari'=>0,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'date',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'month',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'week',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'time',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'datetime-local',
-                        'browser_support'=>array( 'Chrome'=>1, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>1,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>1,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>1,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
                     $type_arr[] = array(
                         'type'=>'datetime',
-                        'browser_support'=>array( 'Chrome'=>0, 'Firefox'=>0, 'Safari'=>1, 'IE11'=>0, 'Opera'=>0,'Midori'=>0,'QupZilla'=>0,'Elinks'=>0),
+                        'browser_support'=>array(
+                            'Arora'=>0,
+                            'Chrome'=>0,
+                            'Dillo'=>0,
+                            'Elinks'=>0,
+                            'Firefox'=>0,
+                            'IE11'=>0,
+                            'Midori'=>0,
+                            'Opera'=>0,
+                            'QupZilla'=>0,
+                            'Safari'=>1,
+                        ),
                     );
-                    $data['test_date'] = '06Feb2015' ;
+                    $data['test_date'] = '18Mar2015' ;
                     $data['grid_view'] = $this->parser->parse('html5_test/test_'.$in.'_grid_view', array('type_arr'=>$type_arr), true);
                     break;
                 case '3':
