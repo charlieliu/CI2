@@ -16,12 +16,20 @@
                     <tr>
                         <th>Arora</th>
                         <th>Chrome</th>
+                        <th>Dillo</th>
+                        <th>Elinks</th>
                         <th>Firefox</th>
                         <th>IE11</th>
+                        <th>Midori</th>
                         <th>Opera</th>
+                        <th>QupZilla</th>
                         <th>Safari</th>
                     </tr>
                     <tr>
+                        <td>O</td>
+                        <td>O</td>
+                        <td>X</td>
+                        <td>X</td>
                         <td>O</td>
                         <td>O</td>
                         <td>O</td>
