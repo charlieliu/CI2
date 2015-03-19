@@ -73,11 +73,11 @@
                         <td>X</td>
                         <td>X</td>
                         <td>O</td>
-                        <td></td>
+                        <td>O</td>
                         <td>X</td>
                         <td>O</td>
                         <td>X</td>
-                        <td></td>
+                        <td>X</td>
                     </tr>
                 </table>
                 <div class="mg1em">
