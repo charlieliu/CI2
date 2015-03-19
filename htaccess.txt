@@ -1,17 +1,17 @@
-<IfModule mod_rewrite.c>   # if tag 裡面放的是mod_rewrite 有啟動時要做的事情
+<IfModule mod_rewrite.c>
 		# index file can be index.php, home.php, default.php etc.
 		DirectoryIndex index.php
    
-		RewriteEngine Off  #打開改寫引擎
-		#RewriteBase /  #這裡要說明說明.htaccess的擺放路徑，/ 代表擺放在apache的根目錄下
-	#改寫規則一
+		RewriteEngine On
+		#RewriteBase /
+	#Rule1
 		RewriteCond %{REQUEST_URI} ^system.*
 		RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
-	#改寫規則二
+	#Rule2
 		RewriteCond %{REQUEST_URI} ^application.*
 		RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
-	#改寫規則三
-		RewriteCond $1 !^(index\.php|images|swf|uploads|js|css|assets|robots\.txt|$)
+	#Rule3
+		RewriteCond $1 !^(index\.php|images|swf|uploads|\.js|\.css|assets|robots\.txt|$)
 		RewriteCond %{REQUEST_FILENAME} !-f
 		RewriteCond %{REQUEST_FILENAME} !-d
 		RewriteRule ^(.*)$ http://127.0.0.1/index.php?/$1 [L,QSA]
