@@ -18,6 +18,7 @@
                         <th>Chrome</th>
                         <th>Dillo</th>
                         <th>Elinks</th>
+                        <th>Epiphany</th>
                         <th>Firefox</th>
                         <th>IE11</th>
                         <th>Midori</th>
@@ -30,6 +31,7 @@
                         <td>O</td>
                         <td>X</td>
                         <td>X</td>
+                        <td>O</td>
                         <td>O</td>
                         <td>O</td>
                         <td>O</td>
@@ -50,7 +52,34 @@
                 <div class="content_block mg1em padding1em">
                     &lt;input type="text" name="country_code"&nbsp;<span style="color:red;">pattern="[A-Za-z]{3}"</span>&nbsp;title="Three letter country code" placeholder="Three letter country code" required&gt;<br>
                     &lt;input&nbsp;<span style="color:red;">type="submit"</span>&nbsp;name="submit" value="Submit"&gt;
-                </div>
+                </div><table class="mg1em" border="1" style="text-align:center;">
+                    <tr>
+                        <th>Arora</th>
+                        <th>Chrome</th>
+                        <th>Dillo</th>
+                        <th>Elinks</th>
+                        <th>Epiphany</th>
+                        <th>Firefox</th>
+                        <th>IE11</th>
+                        <th>Midori</th>
+                        <th>Opera</th>
+                        <th>QupZilla</th>
+                        <th>Safari</th>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>O</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>O</td>
+                        <td></td>
+                        <td>X</td>
+                        <td>O</td>
+                        <td>X</td>
+                        <td></td>
+                    </tr>
+                </table>
                 <div class="mg1em">
                     <input type="text" name="country_code" pattern="[A-Za-z]{3}" title="Three letter country code" placeholder="Three letter country code" required>
                     <input type="submit" name="submit" value="Submit">
