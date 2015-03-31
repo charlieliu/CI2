@@ -449,6 +449,9 @@ class Php_test extends CI_Controller {
         $user_agent = $this->session->userdata('user_agent') ; // 使用者瀏覽器類型
         $last_activity = $this->session->userdata('last_activity') ; // 最後變動時間
         $user_data = $this->session->userdata('user_data') ;// 自訂資料
+        $ip_address_1 = $this->session->userdata('HTTP_CLIENT_IP') ;// 自訂資料
+        $ip_address_2 = $this->session->userdata('HTTP_X_FORWARDED_FOR') ;// 自訂資料
+        $ip_address_3 = $this->session->userdata('REMOTE_ADDR') ;// 自訂資料
         //$user_data = $this->_str_replace(print_r($user_data,true)) ;
         //$user_data = $this->session->all_userdata() ;
         $UserAgent = $this->_get_UserAgent() ;
@@ -462,6 +465,9 @@ class Php_test extends CI_Controller {
             'last_activity' => $last_activity,
             'user_data' => $user_data,
             'UserAgent' => $UserAgent_str,
+            'HTTP_CLIENT_IP'=>$ip_address_1,
+            'HTTP_X_FORWARDED_FOR'=>$ip_address_2,
+            'REMOTE_ADDR'=>$ip_address_3,
         );
 
 

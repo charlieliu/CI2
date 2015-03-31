@@ -42,6 +42,9 @@ class Session_test_model extends CI_Model {
             'ADDTIME'   =>$dt,
             'UPDATETIME'=>'',
             'IS_ALIVE'  =>1,
+            'HTTP_CLIENT_IP'=>(!empty($_SERVER['HTTP_CLIENT_IP'])?$_SERVER['HTTP_CLIENT_IP']:''),
+            'HTTP_X_FORWARDED_FOR'=>(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:''),
+            'REMOTE_ADDR'=>(!empty($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:''),
         );
 
         if( empty($session_id) || empty($ip_address) || empty($user_agent) )
