@@ -450,7 +450,9 @@ class Php_test extends CI_Controller {
         $last_activity = $this->session->userdata('last_activity') ; // 最後變動時間
         $user_data = $this->session->userdata('user_data') ;// 自訂資料
         $ip_address_1 = $this->session->userdata('HTTP_CLIENT_IP') ;// 自訂資料
-        $ip_address_2 = $this->session->userdata('HTTP_X_FORWARDED_FOR') ;// 自訂資料
+        $ip_address_2_1 = $this->session->userdata('HTTP_X_FORWARDED_FOR') ;// 自訂資料
+        $ip_address_2_2 = $this->session->userdata('HTTP_X_CLIENT_IP') ;// 自訂資料
+        $ip_address_2_3 = $this->session->userdata('HTTP_X_CLUSTER_CLIENT_IP') ;// 自訂資料
         $ip_address_3 = $this->session->userdata('REMOTE_ADDR') ;// 自訂資料
         //$user_data = $this->_str_replace(print_r($user_data,true)) ;
         //$user_data = $this->session->all_userdata() ;
@@ -466,7 +468,9 @@ class Php_test extends CI_Controller {
             'user_data' => $user_data,
             'UserAgent' => $UserAgent_str,
             'HTTP_CLIENT_IP'=>$ip_address_1,
-            'HTTP_X_FORWARDED_FOR'=>$ip_address_2,
+            'HTTP_X_FORWARDED_FOR'=>$ip_address_2_1,
+            'HTTP_X_CLIENT_IP'=>$ip_address_2_2,
+            'HTTP_X_CLUSTER_CLIENT_IP'=>$ip_address_2_3,
             'REMOTE_ADDR'=>$ip_address_3,
         );
 
@@ -514,6 +518,8 @@ class Php_test extends CI_Controller {
        $server_copy = $_SERVER ;
        $server_copy['ip_check']['HTTP_CLIENT_IP'] = !empty($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : 'error : empty' ;
        $server_copy['ip_check']['HTTP_X_FORWARDED_FOR'] = !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : 'error : empty' ;
+       $server_copy['ip_check']['HTTP_X_CLIENT_IP'] = !empty($_SERVER['HTTP_X_CLIENT_IP']) ? $_SERVER['HTTP_X_CLIENT_IP'] : 'error : empty' ;
+       $server_copy['ip_check']['HTTP_X_CLUSTER_CLIENT_IP'] = !empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']) ? $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'] : 'error : empty' ;
        $server_copy['ip_check']['REMOTE_ADDR'] = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'error : empty' ;
         $content[] = array(
             'content_title' => '_SERVER',

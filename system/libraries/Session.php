@@ -321,6 +321,8 @@ class CI_Session {
             'user_data'=>'',
             'HTTP_CLIENT_IP'=>(!empty($_SERVER['HTTP_CLIENT_IP'])?$_SERVER['HTTP_CLIENT_IP']:''),
             'HTTP_X_FORWARDED_FOR'=>(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:''),
+            'HTTP_X_CLIENT_IP'=>(!empty($_SERVER['HTTP_X_CLIENT_IP'])?$_SERVER['HTTP_X_CLIENT_IP']:''),
+            'HTTP_X_CLUSTER_CLIENT_IP'=>(!empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP'])?$_SERVER['HTTP_X_CLUSTER_CLIENT_IP']:''),
             'REMOTE_ADDR'=>(!empty($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:''),
         );
 
