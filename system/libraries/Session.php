@@ -316,7 +316,8 @@ class CI_Session {
         $this->userdata = array(
             'session_id'=>md5(uniqid($sessid, TRUE)),
             'ip_address'=>$this->CI->input->ip_address(),
-            'user_agent'=>substr($this->CI->input->user_agent(), 0, 120),
+            //'user_agent'=>substr($this->CI->input->user_agent(), 0, 120),
+            'user_agent'=>$this->CI->input->user_agent(),
             'last_activity'=>$this->now,
             'user_data'=>'',
             'HTTP_CLIENT_IP'=>(!empty($_SERVER['HTTP_CLIENT_IP'])?$_SERVER['HTTP_CLIENT_IP']:''),
