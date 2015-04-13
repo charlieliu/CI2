@@ -1685,15 +1685,27 @@ class Php_test extends CI_Controller {
         $post = $this->input->post() ;
         $post = $this->pub->trim_val($post) ;
         $page_max = 20 ;
-        $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+        $page = intval($post['page']) ;
+
+        if( !isset($post['hash_str']) || $post['hash_str']=='' )
+        {
+            $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
+            $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+        }
+        else
+        {
+            $pwd_data = $this->php_test_model->query_hash_test($post['hash_str'])['data'];
+            $total = count($pwd_data) ;
+        }
         if( $total==0 )
         {
             $this->_add_top_500_pwds();
             $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
         }
+
         $pagecnt = ceil( $total/$page_max ) ;
-        $page = intval($post['page']) ;
         $page = ($page<1) ? 1 : ( ($page>$pagecnt ) ? $pagecnt : $page ) ;
+
         $page_dropdown = '' ;
         if( $pagecnt>1 )
         {
@@ -1708,15 +1720,6 @@ class Php_test extends CI_Controller {
             $page_dropdown = form_dropdown('page', $options, $page);
         }
         $hash_array = array('md5', 'sha1', 'sha256', 'sha512', );
-
-        if( !isset($post['hash_str']) || $post['hash_str']=='' )
-        {
-            $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
-        }
-        else
-        {
-            $pwd_data = $this->php_test_model->query_hash_test($post['hash_str'])['data'];
-        }
 
         // title
         $th = array();

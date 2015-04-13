@@ -17,6 +17,7 @@ class Php_test_model extends CI_Model {
     {
         $limit = intval($limit);
         $offset = (intval($page)-1)*$limit ;
+        $offset = ($offset <0) ? 0 : $offset ;
         if( $hash_key!='' )
         {
             $sql = "SELECT * FROM `hash_test`  WHERE `hash_key`=?";
@@ -36,7 +37,10 @@ class Php_test_model extends CI_Model {
         {
             $this->add_hash_test($hash_key);
         }
-        return array('data'=>$query->result_array());
+        else
+        {
+            return array('data'=>$query->result_array());
+        }
     }
 
     public function get_hash_test_num()

@@ -4,4 +4,9 @@ $(document).ready(function(){
         event.preventDefault();
         pagenav(1);
     });
+    $("#frm1_reset").click(function(event){
+        event.preventDefault();
+        $('#frm1')[0].reset();
+        pagenav(1);
+    });
 });
