@@ -1,12 +1,6 @@
 function pagenav(pg){
-    if( $("finder").val()!=''  ) var str = $("#"+$("finder").val()).serialize();
-    console.log(str);
-    if( str===undefined || str=='' )
-        str = '' ;
-    else
-        str = '&' + str ;
-    var postdata = 'page='+pg+str;
-    //console.log(postdata);
+    if( $("#finder").val()!=''  ) var str = $("#"+$("#finder").val()).serialize();
+    var postdata = 'page='+pg+( ( str===undefined) ? '' : ('&' + str) );
     $.ajax({
         type: "POST",
         data: postdata,

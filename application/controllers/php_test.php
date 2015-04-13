@@ -1708,7 +1708,15 @@ class Php_test extends CI_Controller {
             $page_dropdown = form_dropdown('page', $options, $page);
         }
         $hash_array = array('md5', 'sha1', 'sha256', 'sha512', );
-        $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
+
+        if( !isset($post['hash_str']) || $post['hash_str']=='' )
+        {
+            $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
+        }
+        else
+        {
+            $pwd_data = $this->php_test_model->query_hash_test($post['hash_str'])['data'];
+        }
 
         // title
         $th = array();

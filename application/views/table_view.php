@@ -1,6 +1,13 @@
 <div id="body">
     <p>{current_page}/{current_fun}</p>
 
+    <div class="content_block">
+        <form id="frm1" method="post">
+            <input type="text" id="hash_str" name="hash_str" value="">
+            <input type="submit" id="frm1_submit" value="查詢">
+        </form>
+    </div>
+
     <div class="content_block" style="overflow-x:scroll;width:100%;">
         <table class="mg1em" border="1" style="text-align:center;">
             <tr>
@@ -16,6 +23,4 @@
         <a class="next-page btn disable" href="javascript:next();" >next</a>
         <span id="pageDropdown" name="pageDropdown">{page_dropdown}</span>
     </div>
-
-    <form id="frm1" method="post"></form>
 </div>
