@@ -18,22 +18,27 @@ class Php_test_model extends CI_Model {
         $limit = intval($limit);
         $offset = (intval($page)-1)*$limit ;
         $offset = ($offset <0) ? 0 : $offset ;
+        $total = 0 ;
         if( $hash_key!='' )
         {
             $sql = "SELECT * FROM `hash_test`  WHERE `hash_key`=?";
             $query = $this->db->query($sql,array($hash_key));
+            $total = $query->num_rows() ;
         }
         else if( !empty($offset) && $limit>=0 )
         {
             $sql = "SELECT * FROM `hash_test` LIMIT ".$offset.",".$limit." ;";
             $query = $this->db->query($sql);
+            $total = $this->get_hash_test_num() ;
         }
         else
         {
             $sql = "SELECT * FROM `hash_test` LIMIT 20 ;";
             $query = $this->db->query($sql);
+            $total = $this->get_hash_test_num() ;
         }
-        if( $hash_key!='' && $query->num_rows()==0 )
+        $total = is_array($total) ? $total[0]['total'] : $total ;
+        if( $hash_key!='' && $total==0 )
         {
             if( $is_add )
             {
@@ -46,7 +51,7 @@ class Php_test_model extends CI_Model {
         }
         else
         {
-            return array('status'=>'100','data'=>$query->result_array(),'total'=>$query->num_rows(),'act'=>'query_hash_test',);
+            return array('status'=>'100','data'=>$query->result_array(),'total'=>$total,'act'=>'query_hash_test',);
         }
     }
 

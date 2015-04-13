@@ -1688,47 +1688,57 @@ class Php_test extends CI_Controller {
         $page_max = 20 ;
         $page = intval($post['page']) ;
         $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+        //echo 'LINE : '.__LINE__.'total='.$total.'<br>' ;
+        if( $total<500 )
+        {
+            /* add lib */
+            $this->_add_top_500_pwds();
+        }
         $pagecnt = ceil( $total/$page_max ) ;
         $page = ($page<1) ? 1 : ( ($page>$pagecnt ) ? $pagecnt : $page ) ;
 
         if( !isset($post['hash_str']) || $post['hash_str']=='' )
         {
-            $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
-            $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
-            /* add lib */
-            if( $total<500 )
-            {
-                $this->_add_top_500_pwds();
-                $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
-                $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
-            }
+            $reports = $this->php_test_model->query_hash_test('',$page,$page_max) ;
+            $pwd_data = $reports['data'];
+            $total = intval($reports['total']) ;
+            //echo 'LINE : '.__LINE__.'total='.$total.'<br>' ;
+            //$reports['data'] = '';
+            //var_dump($reports);
+            //echo '<br>' ;
             /*
             if( $total<(62*62*62*62) )
             {
                 $this->_add_hash_lib(4);
-                $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
-                $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+                $reports = $this->php_test_model->query_hash_test('',$page,$page_max) ;
+                $pwd_data = $reports['data'];
+                $total = intval($reports['total']) ;
             }
             */
         }
         else
         {
-            $pwd_data = $this->php_test_model->query_hash_test($post['hash_str'],$page,$page_max,false)['data'];
-            $total = count($pwd_data) ;
+            $reports = $this->php_test_model->query_hash_test($post['hash_str'],$page,$page_max,false);
+            $pwd_data = $reports['data'];
+            $total = intval($reports['total']) ;
             /* query hash value */
             if( $total==0 )
             {
-                $pwd_data = $this->php_test_model->query_hash_val($post['hash_str'])['data'];
-                $total = intval($this->php_test_model->query_hash_val($post['hash_str'])['total']) ;
+                $reports = $this->php_test_model->query_hash_val($post['hash_str']) ;
+                $pwd_data = $reports['data'];
+                $total = intval($reports['total']) ;
             }
             /* add value */
             if( $total==0 )
             {
-                $pwd_data = $this->php_test_model->add_hash_test($post['hash_str'])['data'];
-                $total = intval($this->php_test_model->query_hash_val($post['hash_str'])['total']) ;
+                $reports = $this->php_test_model->add_hash_test($post['hash_str']);
+                $pwd_data = $reports['data'];
+                $total = intval($reports['total']) ;
             }
+            //var_dump($reports);
         }
 
+        //echo 'LINE : '.__LINE__.'total='.$total.'<br>' ;
         $pagecnt = ceil( $total/$page_max ) ;
 
         $page_dropdown = '' ;
@@ -1775,19 +1785,27 @@ class Php_test extends CI_Controller {
         }
 
         // content
-        $pwd_row = ($page-1)*$page_max;
+        //$pwd_row = ($page-1)*$page_max;
         $td = array();
         foreach ( $pwd_data as $row )
         {
             $td_row = array() ;
-            $pwd_row++ ;
-            $td_row['index'] = $pwd_row ;
-            $td_row['passwords'] = $row['hash_key'] ;
-            foreach ( $hash_array as $hash_type )
+            if( !empty($row['hash_key']) )
             {
-                $td_row[$hash_type.'_var'] = $row[$hash_type.'_var'] ;
+                //$pwd_row++ ;
+                //$td_row['index'] = $pwd_row ;
+                $td_row['index'] = $row['hash_id'] ;
+                $td_row['passwords'] = $row['hash_key'] ;
+                foreach ( $hash_array as $hash_type )
+                {
+                    $td_row[$hash_type.'_var'] = $row[$hash_type.'_var'] ;
+                }
+                $td[] = $td_row ;
             }
-            $td[] = $td_row ;
+            else
+            {
+                var_dump($row);
+            }
         }
 
         $table_grid_view = $this->parser->parse('table_grid_view', array('td'=>$td,'th'=>$th,), true);
