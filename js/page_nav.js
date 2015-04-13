@@ -10,7 +10,7 @@ function pagenav(pg){
             $('tbody').html( response.output ) ;
             $('#pageCnt').html( response.pageCnt ) ;
             $('#pageDropdown').html( response.dropdown ) ;
-            $('#pageNow').html( response.pg ) ;
+            $('#pageNow').val( response.pg ) ;
             $('#page').html( response.pg ) ;
         }else{
             alert( response );
@@ -30,14 +30,14 @@ function pgSelect(){
 };
 
 function prev(){
-    var pg = ( parseInt( $('#pageNow').html() )-1 );
+    var pg = ( parseInt( $('#pageNow').val() )-1 );
     console.log(pg);
     if( pg<=1 ) pg=1;
     pagenav(pg);
 };
 
 function next(){
-    var pg = ( parseInt( $('#pageNow').html() )+1 ), pgcnt = parseInt( $('#pageCnt').html() );
+    var pg = ( parseInt( $('#pageNow').val() )+1 ), pgcnt = parseInt( $('#pageCnt').html() );
     if( pg>pgcnt ) pg=pgcnt ;
     pagenav(pg);
 };
@@ -63,7 +63,7 @@ function pageinit(pg,pgcnt){
 $(document).ready(function(){
     $("<input>",{id:'finder',type:'hidden',val:''}).appendTo("body");
     pgSelect();
-    pageinit(parseInt( $('#pageNow').html() ), parseInt( $('#pageCnt').html() ));
+    pageinit(parseInt( $('#pageNow').val() ), parseInt( $('#pageCnt').html() ));
 }).ajaxComplete(function(){
     pgSelect();
 });

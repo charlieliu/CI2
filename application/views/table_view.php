@@ -17,7 +17,7 @@
 
     <div class="content_block">
         <a class="prev-page btn disable" href="javascript:prev();" >prev</a>
-        <span class="current-page" id="pageNow" name="pageNow">{page}</span>/<span class="current-page" id="pageCnt" name="pageCnt">{pagecnt}</span>
+        <input class="current-page" id="pageNow" name="pageNow" value="{page}" style="width:50px;" >/<span class="current-page" id="pageCnt" name="pageCnt">{pagecnt}</span>
         <a class="next-page btn disable" href="javascript:next();" >next</a>
         <span id="pageDropdown" name="pageDropdown">{page_dropdown}</span>
     </div>

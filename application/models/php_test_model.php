@@ -41,12 +41,12 @@ class Php_test_model extends CI_Model {
             }
             else
             {
-                return array('data'=>array());
+                return array('status'=>'101','data'=>array(),'total'=>0,'act'=>'query_hash_test',);
             }
         }
         else
         {
-            return array('data'=>$query->result_array());
+            return array('status'=>'100','data'=>$query->result_array(),'total'=>$query->num_rows(),'act'=>'query_hash_test',);
         }
     }
 
@@ -76,11 +76,11 @@ class Php_test_model extends CI_Model {
                     $query = $this->db->query($sql,array($hash_val,$hash_val,$hash_val,$hash_val));
                     break;
             }
-            return array('data'=>$query->result_array());
+            return array('status'=>'100','data'=>$query->result_array(),'total'=>$query->num_rows(),'act'=>'query_hash_val',);
         }
         else
         {
-            return array('data'=>array());
+            return array('status'=>'200','data'=>array(),'total'=>0,'act'=>'query_hash_val',);
         }
     }
 
@@ -94,6 +94,7 @@ class Php_test_model extends CI_Model {
     public function add_hash_test($hash_key='')
     {
         $data = array();
+        $total = 0;
         if( $hash_key!='' )
         {
             $input = array(
@@ -108,6 +109,7 @@ class Php_test_model extends CI_Model {
             {
                 $status = 100 ;
                 $data = $input;
+                $total = 1;
             }
             else
             {
@@ -118,7 +120,7 @@ class Php_test_model extends CI_Model {
         {
             $status = 200;
         }
-        return array('status'=>$status,'data'=>$data);
+        return array('status'=>$status,'data'=>$data,'total'=>$total,'act'=>'add_hash_test',);
     }
 }
 ?>
