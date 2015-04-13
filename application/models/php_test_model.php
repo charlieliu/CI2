@@ -13,7 +13,7 @@ class Php_test_model extends CI_Model {
         $this->load->database();
     }
 
-    public function query_hash_test($hash_key='',$page=1,$limit=20)
+    public function query_hash_test($hash_key='',$page=1,$limit=20,$is_add=true)
     {
         $limit = intval($limit);
         $offset = (intval($page)-1)*$limit ;
@@ -35,11 +35,52 @@ class Php_test_model extends CI_Model {
         }
         if( $hash_key!='' && $query->num_rows()==0 )
         {
-            $this->add_hash_test($hash_key);
+            if( $is_add )
+            {
+                $this->add_hash_test($hash_key);
+            }
+            else
+            {
+                return array('data'=>array());
+            }
         }
         else
         {
             return array('data'=>$query->result_array());
+        }
+    }
+
+    public function query_hash_val($hash_val='',$hash_type='')
+    {
+        if( $hash_val!='' )
+        {
+            switch ($hash_type) {
+                case 'md5r':
+                    $sql = "SELECT * FROM `hash_test`  WHERE `md5_var`=?";
+                    $query = $this->db->query($sql,array($hash_val));
+                    break;
+                case 'sha1':
+                    $sql = "SELECT * FROM `hash_test`  WHERE `sha1_var`=?";
+                    $query = $this->db->query($sql,array($hash_val));
+                    break;
+                case 'sha256':
+                    $sql = "SELECT * FROM `hash_test`  WHERE `sha256_var`=?";
+                    $query = $this->db->query($sql,array($hash_val));
+                    break;
+                case 'sha512':
+                    $sql = "SELECT * FROM `hash_test`  WHERE `sha512_var`=?";
+                    $query = $this->db->query($sql,array($hash_val));
+                    break;
+                default:
+                    $sql = "SELECT * FROM `hash_test`  WHERE `md5_var`=? OR `sha1_var`=? OR `sha256_var`=? OR `sha512_var`=? ";
+                    $query = $this->db->query($sql,array($hash_val,$hash_val,$hash_val,$hash_val));
+                    break;
+            }
+            return array('data'=>$query->result_array());
+        }
+        else
+        {
+            return array('data'=>array());
         }
     }
 

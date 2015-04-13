@@ -1691,16 +1691,30 @@ class Php_test extends CI_Controller {
         {
             $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
             $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+            /* add lib */
+            if( $total<500 )
+            {
+                $this->_add_top_500_pwds();
+                $pwd_data = $this->php_test_model->query_hash_test('',$page,$page_max)['data'];
+                $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+            }
         }
         else
         {
-            $pwd_data = $this->php_test_model->query_hash_test($post['hash_str'])['data'];
+            $pwd_data = $this->php_test_model->query_hash_test($post['hash_str'],$page,$page_max,false)['data'];
             $total = count($pwd_data) ;
-        }
-        if( $total==0 )
-        {
-            $this->_add_top_500_pwds();
-            $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+            /* query hash value */
+            if( $total==0 )
+            {
+                $pwd_data = $this->php_test_model->query_hash_val($post['hash_str'])['data'];
+                $total = count($pwd_data) ;
+            }
+            /* add value */
+            if( $total==0 )
+            {
+                $pwd_data = $this->php_test_model->add_hash_test($post['hash_str'])['data'];
+                $total = count($pwd_data) ;
+            }
         }
 
         $pagecnt = ceil( $total/$page_max ) ;
@@ -1712,7 +1726,7 @@ class Php_test extends CI_Controller {
             $options = array() ;
             for( $i=1; $i<=$pagecnt; $i++ )
             {
-                if( $i<=15 || ($i+15)>=$pagecnt )
+                if( $i<=5 || ($i+5)>=$pagecnt )
                 {
                     $options[$i] = 'page '.$i ;
                 }
@@ -1746,7 +1760,7 @@ class Php_test extends CI_Controller {
             $td[] = $td_row ;
         }
 
-        $table_grid_view = $this->parser->parse('table_grid_view', array('td'=>$td), true);
+        $table_grid_view = $this->parser->parse('table_grid_view', array('td'=>$td,'th'=>$th,), true);
 
         if( !empty($post) )
         {
@@ -1767,7 +1781,6 @@ class Php_test extends CI_Controller {
                 'current_title' => $this->current_title,
                 'current_page' => strtolower(__CLASS__), // 當下類別
                 'current_fun' => strtolower(__FUNCTION__), // 當下function
-                'th'=>$th,
                 'table_grid_view'=>$table_grid_view,
                 'page'=>$page,
                 'pagecnt'=>$pagecnt,
