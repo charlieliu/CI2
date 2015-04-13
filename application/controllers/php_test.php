@@ -1719,13 +1719,13 @@ class Php_test extends CI_Controller {
             if( $total==0 )
             {
                 $pwd_data = $this->php_test_model->query_hash_val($post['hash_str'])['data'];
-                $total = count($pwd_data) ;
+                $total = intval($this->php_test_model->query_hash_val($post['hash_str'])['total']) ;
             }
             /* add value */
             if( $total==0 )
             {
                 $pwd_data = $this->php_test_model->add_hash_test($post['hash_str'])['data'];
-                $total = count($pwd_data) ;
+                $total = intval($this->php_test_model->query_hash_val($post['hash_str'])['total']) ;
             }
         }
 
