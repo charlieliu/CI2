@@ -5,6 +5,7 @@
         <form id="frm1" method="post">
             <input type="text" id="hash_str" name="hash_str" value="">
             <input type="submit" id="frm1_submit" value="查詢">
+            <input type="reset" value="清除表單">
         </form>
     </div>
 
