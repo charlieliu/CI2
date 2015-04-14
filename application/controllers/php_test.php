@@ -18,6 +18,13 @@ class Php_test extends CI_Controller {
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
+        $this->load->model('php_test_model','',TRUE) ;
+
+        $UserAgent = $this->pub->get_UserAgent() ;
+        if( isset($UserAgent['O']) )
+        {
+            $this->php_test_model->query_user_agent($UserAgent) ;
+        }
 
         // 顯示資料
         $content = array();
@@ -460,8 +467,15 @@ class Php_test extends CI_Controller {
         $ip_address_3 = $this->session->userdata('REMOTE_ADDR') ;// 自訂資料
         //$user_data = $this->_str_replace(print_r($user_data,true)) ;
         //$user_data = $this->session->all_userdata() ;
-        $UserAgent = $this->_get_UserAgent() ;
-        $UserAgent_str = '('.$UserAgent['M'].'/'.$UserAgent['S'].')'.$UserAgent['A'].' : '.$UserAgent['AN'] ;
+        $UserAgent = $this->pub->get_UserAgent() ;
+        if( !empty($UserAgent['M']) || !empty($UserAgent['S']) || !empty($UserAgent['A']) || !empty($UserAgent['AN']) )
+        {
+            $UserAgent_str = '('.$UserAgent['M'].'/'.$UserAgent['S'].')'.$UserAgent['A'].' : '.$UserAgent['AN'] ;
+        }
+        else
+        {
+            $UserAgent_str = '' ;
+        }
 
         // ci_sessions
         $ci_sessions = array(
@@ -548,208 +562,6 @@ class Php_test extends CI_Controller {
 
         $view = $this->parser->parse('index_view', $html_date, true);
         $this->pub->remove_view_space($view);
-    }
-
-    private function _get_UserAgent(){
-        // IE請參考
-        // http://msdn.microsoft.com/en-us/library/ie/hh869301(v=vs.85).aspx
-
-        $str = $_SERVER["HTTP_USER_AGENT"] ;
-        $output = array(
-            "O" => $str,// 原始 HTTP_USER_AGENT
-            "A" => '',  // 瀏覽器 種類 IE/Firefox/Chrome/Safari/Opera
-            "AN" => '', // 瀏覽器 版本
-            "M" => '',  // 作業系統 Mobile/Desktop
-            "S" => '',  // 作業系統
-        );
-        // 作業系統
-        if( strpos($str,'Android') ){
-            $output['M'] = 'Mobile';
-            $output['S'] = 'Android';
-        }
-        else if( strpos($str,'BlackBerry')!==false )
-        {
-            $output['M'] = 'Mobile';
-            $output['S'] = 'BlackBerry';
-        }
-        else if( strpos($str,'iPhone')!==false )
-        {
-            $output['M'] = 'Mobile';
-            $output['S'] = 'iPhone';
-        }
-        else if( strpos($str,'ipod')!==false )
-        {
-            $output['M'] = 'Mobile';
-            $output['S'] = 'ipod';
-        }
-        else if( strpos($str,'ipad')!==false )
-        {
-            $output['M'] = 'Mobile';
-            $output['S'] = 'ipad';
-        }
-        else if( strpos($str,'Palm')!==false )
-        {
-            $output['M'] = 'Mobile';
-            $output['S'] = 'Palm';
-        }
-        else if( strpos($str,'Linux')!==false )
-        {
-            $output['M'] = 'Desktop';
-            $output['S'] = 'Linux';
-        }
-        else if( strpos($str,'Macintosh')!==false )
-        {
-            $output['M'] = 'Desktop';
-            $output['S'] = 'Macintosh';
-        }
-        else if( strpos($str,'Windows')!==false )
-        {
-            $output['M'] = 'Desktop';
-            $output['S'] = 'Windows';
-        }
-
-        // 瀏覽器
-        if( strpos($str,"MSIE")!== false )
-        {
-            $output['A'] = "Internet Explorer";
-        }
-        else if( strpos($str,"Firefox")!== false )
-        {
-            $output['A'] = "Firefox";
-        }
-        else if
-        ( strpos($str,"Opera")!== false || strpos($str,"OPR")!== false )
-        {
-            $output['A'] = "Opera";
-        }
-        else if( strpos($str,"Chrome")!== false )
-        {
-            $output['A'] = "Chrome";
-        }
-        else if( strpos($str,"Arora")!== false )
-        {
-            $output['A'] = "Arora";
-        }
-        else if( strpos($str,"Midori")!== false )
-        {
-            $output['A'] = "Midori";
-        }
-        else if( strpos($str,"QupZilla")!== false )
-        {
-            $output['A'] = "QupZilla";
-        }
-        else if( strpos($str,"Epiphany")!== false )
-        {
-            $output['A'] = "Epiphany";
-        }
-        else if( strpos($str,"Sony")!== false )
-        {
-            $output['A'] = "Sony";
-        }
-        else if( strpos($str,"Safari")!== false )
-        {
-            $output['A'] = "Safari";
-        }
-        else if( strpos($str,"rv:")!== false &&  strpos($str,"Trident/")!== false )
-        {
-            $output['A'] = "Internet Explorer";
-            $sit_0 = stripos($str,'rv:') + 3;
-            $str = substr($str,$sit_0) ;
-            $sit_1 = stripos($str,')') ;
-            $output['AN'] = substr($str,0,$sit_1) ;
-        }
-        else if( strpos($str,"Links")!== false )
-        {
-            $output['A'] = "ELinks";
-            $sit_0 = stripos($str,'ELinks/') + 7;
-            $str = substr($str,$sit_0) ;
-            $sit_1 = stripos($str,' (') ;
-            $output['AN'] = substr($str,0,$sit_1) ;
-        }
-        else if( strpos($str,"Links")!== false )
-        {
-            $output['A'] = "Links";
-            $sit_0 = stripos($str,'Links (') + 7;
-            $str = substr($str,$sit_0) ;
-            $sit_1 = stripos($str,'; Linux') ;
-            $output['AN'] = substr($str,0,$sit_1) ;
-        }
-        else if( strpos($str,"Dillo")!== false )
-        {
-            $output['A'] = 'Dillo';
-            $output['S'] = 'Linux';
-            $output['M'] = 'Desktop';
-        }
-        else
-        {
-            $output['A'] = 'LINE:'.__LINE__;
-        }
-
-        //Mozilla/5.0 (Linux; U; Android 4.1.2; zh-tw; SonyLT26w Build/6.2.B.1.96) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
-        //Mozilla/5.0 (Linux; Android 4.1.2; LT26w Build/6.2.B.1.96) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36
-        //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36
-        //WIN8 safari : Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
-
-        // 版本判斷
-        if( $output['AN']=='' )
-        {
-            switch($output['A']){
-                case 'Opera':
-                    $sit_0 = stripos($str,'OPR/') + 4;
-                    break;
-                case 'Internet Explorer':
-                    $sit_0 = stripos($str,'MSIE ') + 5;
-                    break;
-                case 'Arora':
-                    $sit_0 = stripos($str,'Arora/') + 6;
-                    break;
-                case 'Dillo':
-                    $sit_0 = stripos($str,'Dillo/') + 6;
-                    break;
-                case 'Chrome':
-                    $sit_0 = stripos($str,'Chrome/') + 7;
-                    break;
-                case 'Midori':
-                    $sit_0 = stripos($str,'Midori/') + 7;
-                    break;
-                case 'Firefox':
-                    $sit_0 = stripos($str,'Firefox/') + 8;
-                    break;
-                case 'Safari':
-                    $sit_0 = stripos($str,'Version/') + 8;
-                    break;
-                case 'Sony':
-                    $sit_0 = stripos($str,'Version/') + 8;
-                    break;
-                case 'Epiphany':
-                    $sit_0 = stripos($str,'Epiphany/') + 9;
-                    break;
-                case 'QupZilla':
-                    $sit_0 = stripos($str,'QupZilla/') + 9;
-                    break;
-                default:
-                    $sit_0 = 0;
-                    break;
-            }
-            $str = substr($str,$sit_0) ;
-            if( $output['A']=='Internet Explorer' )
-            {
-                $sit_1 = stripos($str,';') ;
-            }
-            else
-            {
-                $sit_1 = stripos($str,' ') ;
-            }
-            if($sit_1!==false)
-            {
-                $output['AN'] = substr($str,0,$sit_1) ;
-            }
-            else
-            {
-                $output['AN'] = $str ;
-            }
-        }
-        return $output;
     }
 
     public function count_sizeof()
@@ -1692,7 +1504,6 @@ class Php_test extends CI_Controller {
 
     public function get_top_500_pwd()
     {
-        $this->load->model('php_test_model','',TRUE) ;
         $hash_array = array('md5', 'sha1', 'sha256', 'sha512', );
 
         $post = $this->input->post() ;
