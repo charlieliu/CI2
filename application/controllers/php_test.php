@@ -190,11 +190,11 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title'         => 'Floating-point',
+            'title'      => 'Floating-point',
             'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
-            'current_fun'   => strtolower(__FUNCTION__), // 當下function
-            'content'       => $content,
+            'current_fun'=> strtolower(__FUNCTION__), // 當下function
+            'content'    => $content,
         );
 
         // Template parser class
@@ -298,11 +298,11 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title'         => 'bcadd()',
+            'title'      => 'bcadd()',
             'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
-            'current_fun'   => strtolower(__FUNCTION__), // 當下function
-            'content'       => $content,
+            'current_fun'=> strtolower(__FUNCTION__), // 當下function
+            'content'    => $content,
         );
 
         // Template parser class
@@ -441,7 +441,7 @@ class Php_test extends CI_Controller {
         // 增加自訂Session資料
         $newdata = array(
             'username'  => 'johndoe',
-            'email'     => 'johndoe@some-site.com',
+            'email'  => 'johndoe@some-site.com',
             'logged_in' => TRUE
         );
         $this->session->set_userdata($newdata);
@@ -488,9 +488,9 @@ class Php_test extends CI_Controller {
         $SESSION_LOGS = $this->get_session_info($this->session->userdata('session_id'));
         /*
         $SESSION_LOGS = array(
-           'SESSION_ID'     => $session_id ,
-           'IP_ADDRESS'     => $ip_address ,
-           'USER_AGENT'     => $user_agent,
+           'SESSION_ID'  => $session_id ,
+           'IP_ADDRESS'  => $ip_address ,
+           'USER_AGENT'  => $user_agent,
         );
 
         // 更新DB
@@ -642,6 +642,10 @@ class Php_test extends CI_Controller {
         {
             $output['A'] = "Epiphany";
         }
+        else if( strpos($str,"Sony")!== false )
+        {
+            $output['A'] = "Sony";
+        }
         else if( strpos($str,"Safari")!== false )
         {
             $output['A'] = "Safari";
@@ -681,6 +685,10 @@ class Php_test extends CI_Controller {
             $output['A'] = 'LINE:'.__LINE__;
         }
 
+        //Mozilla/5.0 (Linux; U; Android 4.1.2; zh-tw; SonyLT26w Build/6.2.B.1.96) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+        //Mozilla/5.0 (Linux; Android 4.1.2; LT26w Build/6.2.B.1.96) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36
+        //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36
+
         // 版本判斷
         if( $output['AN']=='' )
         {
@@ -707,6 +715,9 @@ class Php_test extends CI_Controller {
                     $sit_0 = stripos($str,'Firefox/') + 8;
                     break;
                 case 'Safari':
+                    $sit_0 = stripos($str,'Version/') + 8;
+                    break;
+                case 'Sony':
                     $sit_0 = stripos($str,'Version/') + 8;
                     break;
                 case 'Epiphany':
@@ -820,11 +831,11 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title'         => 'count() and sizeof()',
+            'title'      => 'count() and sizeof()',
             'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
-            'current_fun'   => strtolower(__FUNCTION__), // 當下function
-            'content'       => $content,
+            'current_fun'=> strtolower(__FUNCTION__), // 當下function
+            'content'    => $content,
         );
 
         // Template parser class
@@ -1054,144 +1065,144 @@ class Php_test extends CI_Controller {
         // 正規表達式
         $preg_array = array();
         $preg_array[] = array(
-            'fun'       => 'URL',
-            'remark'    => '/^(https?:\/\/+[\w\-]+\.[\w\-]+)/i',
-            'reg'       => preg_match('/^(https?:\/\/+[\w\-]+\.[\w\-]+)/i',$str),
-            'remark2'   => '/^(http?:\/\/+[\w\-]+\.[\w\-]+)/i',
-            'reg2'      => preg_match('/^(http?:\/\/+[\w\-]+\.[\w\-]+)/i',$str),
+            'fun'    => 'URL',
+            'remark' => '/^(https?:\/\/+[\w\-]+\.[\w\-]+)/i',
+            'reg'    => preg_match('/^(https?:\/\/+[\w\-]+\.[\w\-]+)/i',$str),
+            'remark2'=> '/^(http?:\/\/+[\w\-]+\.[\w\-]+)/i',
+            'reg2'   => preg_match('/^(http?:\/\/+[\w\-]+\.[\w\-]+)/i',$str),
         );
         $preg_array[] = array(
-            'fun'       => '手機號碼',
-            'remark'    => '/^09[0-9]{8}$/',
-            'reg'       => preg_match('/^09[0-9]{8}$/',$str),
-            'remark2'   => '',
-            'reg2'      => '',
+            'fun'    => '手機號碼',
+            'remark' => '/^09[0-9]{8}$/',
+            'reg'    => preg_match('/^09[0-9]{8}$/',$str),
+            'remark2'=> '',
+            'reg2'   => '',
         );
         $preg_array[] = array(
-            'fun'       => '身分證字號',
-            'remark'    => '/^[A-Z]{1}[0-9]{9}$/',
-            'reg'       => preg_match('/^[A-Z]{1}[0-9]{9}$/',$str),
-            'remark2'   => '',
-            'reg2'      => '',
+            'fun'    => '身分證字號',
+            'remark' => '/^[A-Z]{1}[0-9]{9}$/',
+            'reg'    => preg_match('/^[A-Z]{1}[0-9]{9}$/',$str),
+            'remark2'=> '',
+            'reg2'   => '',
         );
         $preg_array[] = array(
-            'fun'       => '正整數 或 空值',
-            'remark'    => '/^\d*$/',
-            'reg'       => preg_match('/^\d*$/',$str),
-            'remark2'   => '',
-            'reg2'      => '',
+            'fun'    => '正整數 或 空值',
+            'remark' => '/^\d*$/',
+            'reg'    => preg_match('/^\d*$/',$str),
+            'remark2'=> '',
+            'reg2'   => '',
         );
         $preg_array[] = array(
-            'fun'       => '全部是正整數',
-            'remark'    => '/^\d+$/',
-            'reg'       => preg_match('/^\d+$/',$str),
-            'remark2'   => '/^[0-9]+$/',
-            'reg2'      => preg_match('/^[0-9]+$/',$str),
+            'fun'    => '全部是正整數',
+            'remark' => '/^\d+$/',
+            'reg'    => preg_match('/^\d+$/',$str),
+            'remark2'=> '/^[0-9]+$/',
+            'reg2'   => preg_match('/^[0-9]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '含數字',
-            'remark'    => '/\d/',
-            'reg'       => preg_match('/\d/',$str),
-            'remark2'   => '/[0-9]/',
-            'reg2'      => preg_match('/[0-9]/',$str),
+            'fun'    => '含數字',
+            'remark' => '/\d/',
+            'reg'    => preg_match('/\d/',$str),
+            'remark2'=> '/[0-9]/',
+            'reg2'   => preg_match('/[0-9]/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部非數字',
-            'remark'    => '/^\D+$/',
-            'reg'       => preg_match('/^\D+$/',$str),
-            'remark2'   => '/^[^0-9]+$/',
-            'reg2'      => preg_match('/^[^0-9]+$/',$str),
+            'fun'    => '全部非數字',
+            'remark' => '/^\D+$/',
+            'reg'    => preg_match('/^\D+$/',$str),
+            'remark2'=> '/^[^0-9]+$/',
+            'reg2'   => preg_match('/^[^0-9]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部是英文字母(小寫 | 大寫)',
-            'remark'    => '/^[a-z]+$/',
-            'reg'       => preg_match('/^[a-z]+$/',$str),
-            'remark2'   => '/^[A-Z]+$/',
-            'reg2'      => preg_match('/^[A-Z]+$/',$str),
+            'fun'    => '全部是英文字母(小寫 | 大寫)',
+            'remark' => '/^[a-z]+$/',
+            'reg'    => preg_match('/^[a-z]+$/',$str),
+            'remark2'=> '/^[A-Z]+$/',
+            'reg2'   => preg_match('/^[A-Z]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '含英文字母(小寫 | 大寫)',
-            'remark'    => '/[a-z]/',
-            'reg'       => preg_match('/[a-z]/',$str),
-            'remark2'   => '/[A-Z]/',
-            'reg2'      => preg_match('/[A-Z]/',$str),
+            'fun'    => '含英文字母(小寫 | 大寫)',
+            'remark' => '/[a-z]/',
+            'reg'    => preg_match('/[a-z]/',$str),
+            'remark2'=> '/[A-Z]/',
+            'reg2'   => preg_match('/[A-Z]/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '含數字或英文字母或_',
-            'remark'    => '/^\w+$/',
-            'reg'       => preg_match('/^\w+$/',$str),
-            'remark2'   => '/^[A-Za-z0-9_]+$/',
-            'reg2'      => preg_match('/^[A-Za-z0-9_]+$/',$str),
+            'fun'    => '含數字或英文字母或_',
+            'remark' => '/^\w+$/',
+            'reg'    => preg_match('/^\w+$/',$str),
+            'remark2'=> '/^[A-Za-z0-9_]+$/',
+            'reg2'   => preg_match('/^[A-Za-z0-9_]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部非數字或英文字母或_',
-            'remark'    => '/^\W+$/',
-            'reg'       => preg_match('/^\W+$/',$str),
-            'remark2'   => '/^[^A-Za-z0-9_]+$/',
-            'reg2'      => preg_match('/^[^A-Za-z0-9_]+$/',$str),
+            'fun'    => '全部非數字或英文字母或_',
+            'remark' => '/^\W+$/',
+            'reg'    => preg_match('/^\W+$/',$str),
+            'remark2'=> '/^[^A-Za-z0-9_]+$/',
+            'reg2'   => preg_match('/^[^A-Za-z0-9_]+$/',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部是空白字元',
-            'remark'    => '/^\s+$/',
-            'reg'       => preg_match('/^\s+$/',$str),
-            'remark2'   => '/^[\x{0020}]+$/u',
-            'reg2'      => preg_match('/^[\x{0020}]+$/u',$str),
+            'fun'    => '全部是空白字元',
+            'remark' => '/^\s+$/',
+            'reg'    => preg_match('/^\s+$/',$str),
+            'remark2'=> '/^[\x{0020}]+$/u',
+            'reg2'   => preg_match('/^[\x{0020}]+$/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部非空白字元',
-            'remark'    => '/^\S+$/',
-            'reg'       => preg_match('/^\S+$/',$str),
-            'remark2'   => '/^[^\x{0020}]+$/u',
-            'reg2'      => preg_match('/^[^\x{0020}]+$/u',$str),
+            'fun'    => '全部非空白字元',
+            'remark' => '/^\S+$/',
+            'reg'    => preg_match('/^\S+$/',$str),
+            'remark2'=> '/^[^\x{0020}]+$/u',
+            'reg2'   => preg_match('/^[^\x{0020}]+$/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部中文 | 含中文',
-            'remark'    => '/^[\x{4e00}-\x{9fa5}]+$/u',
-            'reg'       => preg_match('/^[\x{4e00}-\x{9fa5}]+$/u',$str),
-            'remark2'   => '/^[\x{4e00}-\x{9fa5}]+$/u',
-            'reg2'      => preg_match('/[\x{4e00}-\x{9fa5}]/u',$str),
+            'fun'    => '全部中文 | 含中文',
+            'remark' => '/^[\x{4e00}-\x{9fa5}]+$/u',
+            'reg'    => preg_match('/^[\x{4e00}-\x{9fa5}]+$/u',$str),
+            'remark2'=> '/^[\x{4e00}-\x{9fa5}]+$/u',
+            'reg2'   => preg_match('/[\x{4e00}-\x{9fa5}]/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部文字 | 含文字',
-            'remark'    => '/^[\x{0080}-\x{FFFF}]+$/u',
-            'reg'       => preg_match('/^[\x{0080}-\x{FFFF}]+$/u',$str),
-            'remark2'   => '/^[\x{0080}-\x{FFFF}]+$/u',
-            'reg2'      => preg_match('/[\x{4e00}-\x{9fa5}]/u',$str),
+            'fun'    => '全部文字 | 含文字',
+            'remark' => '/^[\x{0080}-\x{FFFF}]+$/u',
+            'reg'    => preg_match('/^[\x{0080}-\x{FFFF}]+$/u',$str),
+            'remark2'=> '/^[\x{0080}-\x{FFFF}]+$/u',
+            'reg2'   => preg_match('/[\x{4e00}-\x{9fa5}]/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部符號 | 含符號',
-            'remark'    => '/^[\x{0021}-\x{002f}]+$/u',
-            'reg'       => preg_match('/^[\x{0021}-\x{002f}]+$/u',$str),
-            'remark2'   => '/[\x{0021}-\x{002f}]/u',
-            'reg2'      => preg_match('/[\x{0021}-\x{002f}]/u',$str),
+            'fun'    => '全部符號 | 含符號',
+            'remark' => '/^[\x{0021}-\x{002f}]+$/u',
+            'reg'    => preg_match('/^[\x{0021}-\x{002f}]+$/u',$str),
+            'remark2'=> '/[\x{0021}-\x{002f}]/u',
+            'reg2'   => preg_match('/[\x{0021}-\x{002f}]/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部數字 | 含數字',
-            'remark'    => '/^[\x{0030}-\x{0039}]+$/u',
-            'reg'       => preg_match('/^[\x{0030}-\x{0039}]+$/u',$str),
-            'remark2'   => '/[\x{0030}-\x{0039}]/u',
-            'reg2'      => preg_match('/[\x{0030}-\x{0039}]/u',$str),
+            'fun'    => '全部數字 | 含數字',
+            'remark' => '/^[\x{0030}-\x{0039}]+$/u',
+            'reg'    => preg_match('/^[\x{0030}-\x{0039}]+$/u',$str),
+            'remark2'=> '/[\x{0030}-\x{0039}]/u',
+            'reg2'   => preg_match('/[\x{0030}-\x{0039}]/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部符號 | 含符號',
-            'remark'    => '/^[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]+$/u',
-            'reg'       => preg_match('/^[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]+$/u',$str),
-            'remark2'   => '/[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]/u',
-            'reg2'      => preg_match('/[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]/u',$str),
+            'fun'    => '全部符號 | 含符號',
+            'remark' => '/^[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]+$/u',
+            'reg'    => preg_match('/^[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]+$/u',$str),
+            'remark2'=> '/[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]/u',
+            'reg2'   => preg_match('/[\x{003a}-\x{0040}\x{005b}-\x{0060}\x{007b}-\x{007f}]/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部大寫英文 | 含大寫英文',
-            'remark'    => '/^[\x{0041}-\x{005a}]+$/u',
-            'reg'       => preg_match('/^[\x{0041}-\x{005a}]+$/u',$str),
-            'remark2'   => '/[\x{0041}-\x{005a}]/u',
-            'reg2'      => preg_match('/[\x{0041}-\x{005a}]/u',$str),
+            'fun'    => '全部大寫英文 | 含大寫英文',
+            'remark' => '/^[\x{0041}-\x{005a}]+$/u',
+            'reg'    => preg_match('/^[\x{0041}-\x{005a}]+$/u',$str),
+            'remark2'=> '/[\x{0041}-\x{005a}]/u',
+            'reg2'   => preg_match('/[\x{0041}-\x{005a}]/u',$str),
         );
         $preg_array[] = array(
-            'fun'       => '全部小寫英文 | 含小寫英文',
-            'remark'    => '/^[\x{0061}-\x{007a}]+$/u',
-            'reg'       => preg_match('/^[\x{0061}-\x{007a}]+$/u',$str),
-            'remark2'   => '/[\x{0061}-\x{007a}]/u',
-            'reg2'      => preg_match('/[\x{0061}-\x{007a}]/u',$str),
+            'fun'    => '全部小寫英文 | 含小寫英文',
+            'remark' => '/^[\x{0061}-\x{007a}]+$/u',
+            'reg'    => preg_match('/^[\x{0061}-\x{007a}]+$/u',$str),
+            'remark2'=> '/[\x{0061}-\x{007a}]/u',
+            'reg2'   => preg_match('/[\x{0061}-\x{007a}]/u',$str),
         );
 
 
@@ -1305,11 +1316,11 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title'         => 'php chr()',
+            'title'      => 'php chr()',
             'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
-            'current_fun'   => strtolower(__FUNCTION__), // 當下function
-            'content'       => $content,
+            'current_fun'=> strtolower(__FUNCTION__), // 當下function
+            'content'    => $content,
         );
 
         // Template parser class
@@ -1364,11 +1375,11 @@ class Php_test extends CI_Controller {
 
         // 標題 內容顯示
         $data = array(
-            'title'         => 'if else and switch',
+            'title'      => 'if else and switch',
             'current_title' => $this->current_title,
             'current_page'  => strtolower(__CLASS__), // 當下類別
-            'current_fun'   => strtolower(__FUNCTION__), // 當下function
-            'content'       => $content,
+            'current_fun'=> strtolower(__FUNCTION__), // 當下function
+            'content'    => $content,
         );
 
         // Template parser class
@@ -1907,6 +1918,63 @@ class Php_test extends CI_Controller {
         {
             $this->php_test_model->query_hash_test($val);
         };
+
+        $top_500_ios = array(
+            'Password1','Destiny1','Pa$$w0rd','Vanessa1','August12','Fuckoff1','Password11',' Kennedy1','Jordan12','Princess15',
+            'Princess1','Brianna1','Forever1','Steelers1','z,iyd86I','Freddie1','Password1!',' Jesusis#1','Jordan01','Princess08',
+            'P@ssw0rd','Trustno1','iydgTvmujl6f','Slipknot1','l6fkiy9oN','Forever21','November15',' Jehovah1','Jesus143','PoohBear1',
+            'Passw0rd','1qazZAQ!','Zachary1','Princess13',' Sweetie1','Death666','Music123','Isabelle1','Jessica7','Peanut11',
+            'Michael1','Precious1','Yankees1','Princess12',' November1','Chopper1','Monkeys1','Hawaii50','Internet1','Peanut01',
+            'Blink182','Freedom1','Stephen1','Midnight1','Love4ever','Arianna1','Matthew2','Grandma1','Goddess1','Password7',
+            '!QAZ2wsx','Christian1',' Shannon1','Marines1','Ireland1','Allison1','Marie123','Godislove1',' Friends2','Password21',
+            'Charlie1','Brooklyn1','John3:16','M1chelle','Iloveme2','Yankees2','Madonna1','Giggles1','Falcons7','Passw0rd1',
+            'Anthony1','!QAZxsw2','Gerrard8','Lampard8','Christine1',' TrustNo1','Kristen1','Friday13','Derrick1','October22',
+            '1qaz!QAZ','Password2','Fuckyou2','Jesus123','Buttons1','Tiger123','Kimberly1','Formula1','December21',' October13',
+            'Brandon1','Football1','ZAQ!1qaz','Frankie1','Babyboy1','Summer05','Justin23','England1','Daisy123','November16',
+            'Jordan23','ABCabc123','Pebbles1','Elizabeth2',' Angel101','September1',' Justin11','Cutiepie1','Colombia1','Montana1',
+            '1qaz@WSX','Samantha1','Monster1','Douglas1','Vincent1','Sebastian1',' Jesus4me','Cricket1','Clayton1','Michael2',
+            'Jessica1','Charmed1','Chicken1','Devil666','Spartan117',' Sabrina1','Jeremiah1','Catherine1',' Cheyenne1','Michael07',
+            'Jasmine1','Trinity1','zaq1!QAZ','Christina1',' Soccer12','Princess07',' Jennifer2','Brownie1','Brittney1','Makayla1',
+            'Michelle1','Chocolate1',' Spencer1','Bradley1','Princess2','Popcorn1','Jazmine1','Boricua1','Blink-182','Madison01',
+            'Diamond1','America1','Savannah1','zaq1@WSX','Penguin1','Pokemon1','FuckYou2','Beckham7','August22','Lucky123',
+            'Babygirl1','Password01',' Jesusis1','Tigger01','Password5','Omarion1','Colorado1','Awesome1','Asshole1','Longhorns1',
+            'Iloveyou2','Natalie1','Jeffrey1','Summer08','Password3','Nursing1','Christmas1',' Annabelle1',' Ashley12','Kathryn1',
+            'Matthew1','Superman1','Houston1','Princess21',' Panthers1','Miranda1','Bella123','Anderson1','Arsenal12','Katelyn1',
+            'Rangers1','Scooter1','Florida1','Playboy1','Nirvana1','Melanie1','Bailey12','Alabama1','Addison1','Justin21',
+            'Pa55word','Mustang1','Crystal1','October1','Nicole12','Maxwell1','August20','1941.Salembbb.41','Abcd1234','Jesus1st',
+            'Iverson3','Brittany1','Tristan1','Katrina1','Nichole1','Lindsay1','3edc#EDC','123qweASD','@WSX2wsx','January29',
+            'Sunshine1','Angel123','Thunder1','Iloveme1','Molly123','Joshua01','2wsx@WSX','abcABC123','!Qaz2wsx','ILoveYou2',
+            'Madison1','Jonathan1','Thumper1','Chris123','Metallica1',' Hollywood1',' 12qw!@QW','Twilight1','zaq1ZAQ!','Hunter01',
+            'William1','Friends1','Special1','Chicago1','Mercedes1','Hershey1','#EDC4rfv','Thirteen13',' ZAQ!xsw2','Honey123',
+            'Elizabeth1',' Courtney1','Pr1ncess','Charlotte1',' Mackenzie1',' Hello123','Winter06','Taylor13','Whitney1','Holiday1',
+            'Password123',' Aaliyah1','Password12',' Broncos1','Kenneth1','Gordon24','Welcome123',' Superstar1',' Welcome2','Harry123',
+            'Liverpool1',' Rebecca1','Justice1','BabyGirl1','Jackson5','Gateway1','Unicorn1','Summer99','Vampire1','Falcons1',
+            'Cameron1','Timothy1','Cowboys1','Abigail1','Genesis1','Garrett1','Tigger12','Soccer14','Valerie1','December1',
+            'Butterfly1',' Scotland1','Charles1','Tinkerbell1',' Diamonds1','David123','Soccer13','Robert01','Titanic1','Dan1elle',
+            'Beautiful1',' Raymond1','Blondie1','Rockstar1','Buttercup1',' Daniela1','Senior06','Prototype1',' Tigger123','Dallas22',
+            '!QAZ1qaz','Inuyasha1','Softball1','RockYou1','Brandon7','Butterfly7',' Scrappy1','Princess5','Teddybear1',' College1',
+            'Patrick1','Tiffany1','Orlando1','Michelle2','Whatever1','Buddy123','Scorpio1','Princess24',' Tbfkiy9oN','Classof08',
+            'Welcome1','Pa55w0rd','Greenday1','Georgia1','TheSims2','Brandon2','Santana1','Pr1nc3ss','Sweetpea1','Chelsea123',
+            'Iloveyou1','Nicholas1','Dominic1','Computer1','Summer06','Bethany1','Rocky123','Phantom1','Start123','Chargers1',
+            'Bubbles1','Melissa1','!QAZzaq1','Breanna1','Starwars1','Austin316','Ricardo1','Patricia1','Soccer17','Cassandra1',
+            'Chelsea1','Isabella1','abc123ABC','Babygurl1','Spiderman1',' Atlanta1','Princess123',' Password13',' Smokey01','Carolina1',
+            'ZAQ!2wsx','Summer07','Snickers1','Trinity3','Soccer11','Angelina1','Password9','Passion1','Shopping1','Candy123',
+            'Blessed1','Rainbow1','Patches1','Pumpkin1','Skittles1','Alexandra1',' Password4','P4ssword','Serenity1','Brayden1',
+            'Richard1','Poohbear1','P@$$w0rd','Princess7','Princess01',' Airforce1','P@55w0rd','Nathan06','Senior07','Bigdaddy1',
+            'Danielle1','Peaches1','Natasha1','Preston1','Phoenix1','Winston1','Monkey12','Monkey13','Sail2Boat3',' Bentley1',
+            'Raiders1','Gabriel1','Myspace1','Newyork1','Pass1234','Veronica1','Michele1','Monkey01','Rusty123','Batista1',
+            'Jackson1','Arsenal1','Monique1','Marissa1','Panther1','Vanilla1','Micheal1','Liverpool123','Russell1','Barcelona1',
+            'Jesus777','Antonio1','Letmein1','Liberty1','November11',' Trouble1','Michael7','Liverp00l','Redskins1','Australia1',
+            'Jennifer1','Victoria1','James123','Lebron23','Lindsey1','Summer01','Michael01','Laura123','Rebelde1','Austin02',
+            'Alexander1',' Stephanie1',' Celtic1888',' Jamaica1','Katherine1',' Snowball1','Matthew3','Ladybug1','Princess4','August10',
+            'Ronaldo7','Dolphins1','Benjamin1','Fuckyou1','JohnCena1','Rockyou1','Marshall1','Kristin1','Princess23',' August08',
+            'Heather1','ABC123abc','Baseball1','Chester1','January1','Qwerty123','Loveyou2','Kendall1','Princess19',' Arsenal123',
+            'Dolphin1','Spongebob1',' 1qazXSW@','Braxton1','Gangsta1','Pickles1','Lakers24','Justin01','Princess18',' Anthony11',
+        );
+         foreach ( $top_500_ios as $val )
+        {
+            $this->php_test_model->query_hash_test($val);
+        };
     }
 
     private function _add_hash_lib($level=0,$arr_add='')
@@ -1920,7 +1988,7 @@ class Php_test extends CI_Controller {
             'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
             'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'",
             'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"',
-            'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/',' ',
+            'z', 'x', 'c', 'v', 'b', 'n', 'm',',', '.', '/',' ',
             'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?',
         );
         */

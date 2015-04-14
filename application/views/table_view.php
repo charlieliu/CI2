@@ -2,6 +2,15 @@
     <p>{current_page}/{current_fun}</p>
 
     <div class="content_block">
+        <p>informations:</p>
+        <ol>
+            <li> Top 500 web passwords is form index 1 to index 500</li>
+            <li>Top 500 icloud passwords is form index 501 to index 991</li>
+            <li>Sometime icloud passwords is same as web passwords</li>
+        </ol>
+    </div>
+
+    <div class="content_block">
         <form id="frm1" method="post">
             <input type="text" id="hash_str" name="hash_str" style="width:80%;" value="">
             <input type="submit" id="frm1_submit" value="查詢">
