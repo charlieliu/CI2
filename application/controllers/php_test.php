@@ -688,6 +688,7 @@ class Php_test extends CI_Controller {
         //Mozilla/5.0 (Linux; U; Android 4.1.2; zh-tw; SonyLT26w Build/6.2.B.1.96) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
         //Mozilla/5.0 (Linux; Android 4.1.2; LT26w Build/6.2.B.1.96) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36
         //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36
+        //WIN8 safari : Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
 
         // 版本判斷
         if( $output['AN']=='' )
@@ -1698,7 +1699,8 @@ class Php_test extends CI_Controller {
         $post = $this->pub->trim_val($post) ;
         $page_max = 20 ;
         $page = intval($post['page']) ;
-        $total = intval($this->php_test_model->get_hash_test_num()[0]['total']) ;
+        $total = $this->php_test_model->get_hash_test_num() ;// for WIN8's apache
+        $total = isset($total[0]['total']) ? intval($total[0]['total']) : (isset($total['total']) ? intval($total['total']) : intval($total) ) ;
         //echo 'LINE : '.__LINE__.'total='.$total.'<br>' ;
         if( $total<500 )
         {
