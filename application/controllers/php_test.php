@@ -6,6 +6,8 @@ class Php_test extends CI_Controller {
 
     public $page_list = '';
 
+    public $UserAgent = array() ;
+
     public function getPageList()
     {
         echo json_encode($this->page_list);
@@ -20,10 +22,10 @@ class Php_test extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->model('php_test_model','',TRUE) ;
 
-        $UserAgent = $this->pub->get_UserAgent() ;
-        if( isset($UserAgent['O']) )
+        $this->UserAgent = $this->pub->get_UserAgent() ;
+        if( isset($this->UserAgent['O']) )
         {
-            $this->php_test_model->query_user_agent($UserAgent) ;
+            $this->php_test_model->query_user_agent($this->UserAgent) ;
         }
 
         // 顯示資料
@@ -467,10 +469,9 @@ class Php_test extends CI_Controller {
         $ip_address_3 = $this->session->userdata('REMOTE_ADDR') ;// 自訂資料
         //$user_data = $this->_str_replace(print_r($user_data,true)) ;
         //$user_data = $this->session->all_userdata() ;
-        $UserAgent = $this->pub->get_UserAgent() ;
-        if( !empty($UserAgent['M']) || !empty($UserAgent['S']) || !empty($UserAgent['A']) || !empty($UserAgent['AN']) )
+        if( !empty($this->UserAgent['M']) || !empty($this->UserAgent['S']) || !empty($this->UserAgent['A']) || !empty($this->UserAgent['AN']) )
         {
-            $UserAgent_str = '('.$UserAgent['M'].'/'.$UserAgent['S'].')'.$UserAgent['A'].' : '.$UserAgent['AN'] ;
+            $UserAgent_str = '('.$this->UserAgent['M'].'/'.$this->UserAgent['S'].')'.$this->UserAgent['A'].' : '.$this->UserAgent['AN'] ;
         }
         else
         {
