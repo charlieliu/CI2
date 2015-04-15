@@ -31,7 +31,6 @@ function pgSelect(){
 
 function prev(){
     var pg = ( parseInt( $('#pageNow').val() )-1 );
-    console.log(pg);
     if( pg<=1 ) pg=1;
     pagenav(pg);
 };

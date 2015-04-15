@@ -1,4 +1,6 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+header('Content-Type: text/html; charset=utf8');
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Php_test extends CI_Controller {
 
@@ -16,7 +18,7 @@ class Php_test extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        header('Content-Type: text/html; charset=utf8');
+
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
@@ -812,6 +814,14 @@ class Php_test extends CI_Controller {
             'content_value' => base64_decode($test_str),
         ) ;
 
+        // 6Ihq6UpmpuYH6MiGR6ZHLAYGBqjG58hniObopg
+        /*
+        echo '$test_str='.$test_str.'<br>';
+        echo 'base64_decode($test_str)='.base64_decode($test_str).'<br>';
+        echo 'base64_decode(str_replace(" ","+",$test_str))='.base64_decode(str_replace(" ","+",$test_str)).'<br>';
+        echo 'base64_decode(serialize($test_str))='.base64_decode(serialize($test_str)).'<br>';
+        */
+
         $content[] = array(
             'content_title' => 'urldecode()',
             'content_value' => urldecode($test_str),
@@ -827,7 +837,7 @@ class Php_test extends CI_Controller {
             'content_value' => utf8_decode($test_str),
         ) ;
 
-        $chr_str = chr($test_str) ;
+        $chr_str = is_numeric($test_str) ? chr($test_str) : '' ;
         $chr_str = ($chr_str==' ') ? '&nbsp;' : $chr_str ;
         $content[] = array(
             'content_title' => 'chr()',
@@ -1580,15 +1590,20 @@ class Php_test extends CI_Controller {
                 $options[$options_75] = 'page '.$options_75.'(50%)' ;
                 $options[$options_50] = 'page '.$options_50.'(75%)' ;
                 */
+               // first 5 pages
                 for( $i=1; $i<=5; $i++ )
                 {
                         $options[$i] = 'page '.$i ;
                 }
+                // select page
+                $options[$page] = 'page '.$page ;
+                // last 5 pages
                 for( $i=($pagecnt-4); $i<=$pagecnt; $i++ )
                 {
                         $options[$i] = 'page '.$i ;
                 }
-                //ksort($options);
+                // order by key
+                ksort($options);
             }
             else
             {
