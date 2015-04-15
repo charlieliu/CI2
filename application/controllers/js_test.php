@@ -465,22 +465,25 @@ class Js_test extends CI_Controller {
     {
         // 取得列表資料
         $head_list = array();
-        $head_1 = json_decode($this->pub->CurlPost(base_url().'welcome/getPageList'));
+        $head_1 = json_decode($this->pub->CurlPost(base_url().'welcome/getPageList','jqm'));
         $head_1 = $this->pub->o2a($head_1);
 
-        foreach ($head_1 as $v)
+        if( !empty($head_1) )
         {
-            if( !empty($v['c']) )
+            foreach ($head_1 as $v)
             {
-                $head_2 = json_decode($this->pub->CurlPost(base_url().$v['c'].'/getPageList'));
-                $head_2 = $this->pub->o2a($head_2);
+                if( !empty($v['c']) )
+                {
+                    $head_2 = json_decode($this->pub->CurlPost(base_url().$v['c'].'/getPageList','jqm'));
+                    $head_2 = $this->pub->o2a($head_2);
+                }
+                else
+                {
+                    $head_2 = array();
+                }
+                $v['children'] = $head_2 ;
+                $head_list[] = $v ;
             }
-            else
-            {
-                $head_2 = array();
-            }
-            $v['children'] = $head_2 ;
-            $head_list[] = $v ;
         }
 
         // 標題 內容顯示
