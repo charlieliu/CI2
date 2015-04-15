@@ -4,6 +4,8 @@ class Svg_test extends CI_Controller {
 
     public $page_list = '';
 
+    public $UserAgent = array() ;
+
     public function getPageList()
     {
         echo json_encode($this->page_list);
@@ -17,6 +19,13 @@ class Svg_test extends CI_Controller {
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
         //$this->pub->check_session($this->session->userdata('session_id'));
+        $this->load->model('php_test_model','',TRUE) ;
+
+        $this->UserAgent = $this->pub->get_UserAgent() ;
+        if( isset($this->UserAgent['O']) )
+        {
+            $this->php_test_model->query_user_agent($this->UserAgent) ;
+        }
     }
 
     /**

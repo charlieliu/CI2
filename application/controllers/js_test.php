@@ -7,6 +7,8 @@ class Js_test extends CI_Controller {
     private $current_title = 'JS 測試';
     private $page_list = '';
 
+    public $UserAgent = array() ;
+
     // 建構子
     public function __construct()
     {
@@ -16,6 +18,13 @@ class Js_test extends CI_Controller {
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
         //$this->pub->check_session($this->session->userdata('session_id'));
+        $this->load->model('php_test_model','',TRUE) ;
+
+        $this->UserAgent = $this->pub->get_UserAgent() ;
+        if( isset($this->UserAgent['O']) )
+        {
+            $this->php_test_model->query_user_agent($this->UserAgent) ;
+        }
 
         $content[] = array(
             'content_title' => '利用 jQuery 來製作網頁頁籤(Tab)',
