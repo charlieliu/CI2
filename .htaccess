@@ -4,10 +4,10 @@ DirectoryIndex index.php
 RewriteEngine On  #打開改寫引擎
 #RewriteBase /  #這裡要說明說明.htaccess的擺放路徑，/ 代表擺放在apache的根目錄下
 
-RewriteCond $1 !^(index\.php|images|swf|uploads|js|css|assets|robots\.txt|demo|phpmyadmin|phpMyAdmin|$)
-RewriteRule ^(.*)$ http://127.0.0.1/index.php?/$1 [L,QSA]
+RewriteCond $1 !^(uploads|\.css|\.gif|\.png|\.mp4|\.ogg|\.js|$)
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
 
 RewriteCond $1 ^(css_test|php_test|js_test)
-RewriteRule ^(.*)$ http://127.0.0.1/index.php?/$1 [L,QSA]
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
 
 

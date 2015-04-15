@@ -18,7 +18,7 @@ class Login extends CI_Controller {
         // load parser
         $this->load->library(array('parser','session', 'pub'));
         $this->load->helper(array('form', 'url'));
-        $this->pub->check_session($this->session->userdata('session_id'));
+        //$this->pub->check_session($this->session->userdata('session_id'));
     }
 
     /**
