@@ -237,6 +237,7 @@ class Pub{
             "S" => '',  // 作業系統
         );
         // 作業系統
+        // Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25
         if( strpos($str,'Android') ){
             $output['M'] = 'Mobile';
             $output['S'] = 'Android';
@@ -251,15 +252,15 @@ class Pub{
             $output['M'] = 'Mobile';
             $output['S'] = 'iPhone';
         }
-        else if( strpos($str,'ipod')!==false )
+        else if( strpos($str,'ipod')!==false || strpos($str,'iPod')!==false )
         {
             $output['M'] = 'Mobile';
-            $output['S'] = 'ipod';
+            $output['S'] = 'iPod';
         }
-        else if( strpos($str,'ipad')!==false )
+        else if( strpos($str,'ipad')!==false || strpos($str,'iPad')!==false )
         {
             $output['M'] = 'Mobile';
-            $output['S'] = 'ipad';
+            $output['S'] = 'iPad';
         }
         else if( strpos($str,'Palm')!==false )
         {
@@ -369,7 +370,7 @@ class Pub{
         {
             switch($output['A']){
                 case 'Opera':
-                    $sit_0 = stripos($str,'OPR/') + 4;
+                    $sit_0 = ( $output['S']=='Windows' ) ? ( stripos($str,'Opera/') + 6 ) : ( stripos($str,'OPR/') + 4 );
                     break;
                 case 'Internet Explorer':
                     $sit_0 = stripos($str,'MSIE ') + 5;
@@ -422,7 +423,7 @@ class Pub{
                 }
                 else
                 {
-                    $output['AN'] = '' ;
+                    $output['AN'] = $str ;
                 }
             }
             else

@@ -138,12 +138,44 @@ class Php_test_model extends CI_Model {
             $sql = "SELECT * FROM `user_agent`  WHERE `UA_id`=?";
             $query = $this->db->query($sql,array($agent['O'])) ;
             $data = $query->result_array() ;
+            $data = count($data)==1 ? $data[0] : $data ;
             $total = $query->num_rows() ;
             $total = is_array($total) ? $total[0]['total'] : $total ;
-            $status = empty($total) ? '101' : '100' ;
-            if( $status=='101' && $is_add )
+
+            if( empty($total) )
             {
-                $this->add_user_agent($agent) ;
+                $status = '101' ;
+                if( $is_add )
+                {
+                    $this->add_user_agent($agent) ;
+                }
+            }
+            else
+            {
+                $status = '100' ;
+                $mod_arr = array() ;
+                $check_points = array(
+                    'agent_name' => 'A',
+                    'agent_version' => 'AN',
+                    'agent_type' => 'M',
+                    'agent_system' => 'S',
+                );
+                foreach ($check_points as $key=>$val )
+                {
+                    if( !empty($data[$key]) && !empty($agent[$val]) && $data[$key]!=$agent[$val] )
+                    {
+                        $mod_arr[$key] = $agent[$val] ;
+                    }
+                    else if( empty($data[$key]) && !empty($agent[$val]) )
+                    {
+                        $mod_arr[$key] = $agent[$val] ;
+                    }
+                }
+                if( !empty($mod_arr) )
+                {
+                    $mod_arr['UA_id'] = $data['UA_id'] ;
+                    $this->mod_user_agent($mod_arr) ;
+                }
             }
         }
         else
@@ -192,6 +224,13 @@ class Php_test_model extends CI_Model {
             $status = 200 ;
         }
         return array('status'=>$status,'data'=>$data,'total'=>$total,'act'=>'add_user_agent',);
+    }
+
+    public function mod_user_agent($mod_arr)
+    {
+        $this->db->where('UA_id', $mod_arr['UA_id']);
+        // CI 更新用法
+        $result = $this->db->update('user_agent',$mod_arr);
     }
 }
 ?>
