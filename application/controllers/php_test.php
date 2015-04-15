@@ -1,5 +1,4 @@
 <?php
-header('Content-Type: text/html; charset=utf8');
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Php_test extends CI_Controller {
@@ -18,6 +17,7 @@ class Php_test extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        header('Content-Type: text/html; charset=utf8');
 
         // load parser
         $this->load->library(array('parser','session', 'pub'));
