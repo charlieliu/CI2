@@ -84,24 +84,26 @@ class Excel extends PHPExcel {
 					$max_col = $col_num>$max_col ? $col_num : $max_col ;
 				}
 			}
+			// merge column for A1(title)
+			$this->getActiveSheet()->mergeCells('A1:'.$this->num2apha($max_col).'1') ;
 			// set value type text
 			for ($i=2; $i<=$max_col ; $i++)
 			{
 				$col_str = $this->num2apha($i);
 				$this->getActiveSheet()->getStyle($col_str)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT) ;
 			}
-			// merge column for A1(title)
-			$this->getActiveSheet()->mergeCells('A1:'.$this->num2apha($max_col).'1') ;
+			// set A2 bold font
+			$this->getActiveSheet()->getStyle('A2:'.$col_str.'2')->getFont()->setBold(TRUE) ;
 			// create xls' name
 			$filename = $title.date('YmdHis').'.xls' ;
 
 			ob_end_clean() ;
-			//header('Content-Transfer-Encoding: binary')
-			header('Content-Type: application/vnd.ms-excel; name='.$filename);// for IE & Opera
-			header('Content-Type: application/octet-stream; name='.$filename);// for others
-			header('Content-Disposition: attachment; filename='.$filename);
+			header('Content-Transfer-Encoding: binary') ;
+			header('Content-Type: application/vnd.ms-excel; name='.$filename) ;// for IE & Opera
+			header('Content-Type: application/octet-stream; name='.$filename) ;// for others
+			header('Content-Disposition: attachment; filename='.$filename) ;
 			// no cache
-			header('Cache-Control: max-age=0');
+			header('Cache-Control: max-age=0') ;
 
 			$objWriter = new PHPExcel_Writer_Excel5($this, 'Excel5') ;
 			//$objWriter = PHPExcel_IOFactory::createWriter($this, 'Excel5');
