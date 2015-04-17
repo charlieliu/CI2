@@ -4,22 +4,20 @@
 	<div class="content_block">
 		<p>informations:</p>
 		<ol>
-			<li> Top 500 web passwords is form index 1 to index 500</li>
+			<li>Top 500 web passwords is form index 1 to index 500</li>
 			<li>Top 500 icloud passwords is form index 501 to index 991</li>
 			<li>Sometime icloud passwords is same as web passwords</li>
 		</ol>
 	</div>
 
 	<div class="content_block">
-		<form id="frm1" method="post">
+		<form id="frm1" method="post" target="ifm_exp" action="get_pwd_excel">
 			<input type="text" id="hash_str" name="hash_str" style="width:80%;" value="">
 			<input type="submit" id="frm1_submit" value="查詢">
 			<input type="reset" id="frm1_reset" value="清除表單">
 			<input type="button" id="down_xls" value="downloads xls">
-		</form>
-		<form id="frm2" method="post" target="ifm_exp" action="get_pwd_excel" style="display:none;" >
-			<input type="hidden" id="frm2_page" name="page" value="">
-			<input type="hidden" id="frm2_page_max" name="page_max" value="20">
+			<input type="hidden" id="frm1_page" name="page" value="">
+			<input type="hidden" id="frm1_page_max" name="page_max" value="20">
 		</form>
 		<iframe id="ifm_exp" name="ifm_exp" style="display:none;"></iframe>
 	</div>

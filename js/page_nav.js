@@ -1,7 +1,10 @@
 function pagenav(pg){
     if( $("#finder").val()!=''  ) var str = $("#"+$("#finder").val()).serialize();
-    var postdata = 'page='+pg+( ( str===undefined) ? '' : ('&' + str) );
+    var postdata = ( ( str===undefined) ? '' : (str+'&') )+'page='+pg;
+    //console.log(postdata);
+    //console.log(URLs);
     $.ajax({
+        url: URLs,
         type: "POST",
         data: postdata,
         dataType: "json"
