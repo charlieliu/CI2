@@ -20,7 +20,7 @@ class Excel extends PHPExcel {
 		parent::__construct();
 	}
 
-	public function xls2Array($file)
+	public function xls2Array($file,$skip_empty=TRUE)
 	{
 		$objReader = PHPExcel_IOFactory::createReaderForFile($file) ;
 		$objReader->setReadDateOnly(TRUE) ;
@@ -39,7 +39,25 @@ class Excel extends PHPExcel {
 				$v = trim($v) ;
 				$tmpAry[] = $v ;
 			}
-			$rtnAry[] = $tmpAry ;
+			if( $skip_empty )
+			{
+				// remove repeat value in the row
+				$chk_ary = array_unique($tmpAry) ;
+				// check array's value
+				if( count($chk_ary)=1 && $chk_ary[0]=='' )
+				{
+					// remove empty  row
+				}
+				else
+				{
+					$rtnAry[] = $tmpAry ;
+				}
+			}
+			else
+			{
+				// default
+				$rtnAry[] = $tmpAry ;
+			}
 		}
 		return $rtnAry ;
 	}
