@@ -3,6 +3,7 @@
 
     <form method="POST">
         <input type="text" name="hash_str" value="{hash_str}">
+        <input type="hidden" id="{csrf_name}" name="{csrf_name}" value="{csrf_value}">
         <input type="submit" value="查詢">
     </form>
 

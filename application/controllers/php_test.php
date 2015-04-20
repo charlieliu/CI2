@@ -4,10 +4,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Php_test extends CI_Controller {
 
 	public $current_title = 'PHP 測試';
-
 	public $page_list = '';
-
 	public $UserAgent = array() ;
+
+	private $_csrf = null ;
 
 	public function getPageList()
 	{
@@ -18,6 +18,12 @@ class Php_test extends CI_Controller {
 	{
 		parent::__construct();
 		header('Content-Type: text/html; charset=utf8');
+
+		// for CSRF
+		$this->_csrf = array(
+			'csrf_name' => $this->security->get_csrf_token_name(),
+			'csrf_value' => $this->security->get_csrf_hash(),
+		);
 
 		// load parser
 		$this->load->library(array('parser','session', 'pub'));
@@ -790,6 +796,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
+		$data = array_merge($data,$this->_csrf);
 		$content_div = $this->parser->parse('hash_test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
@@ -868,6 +875,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
+		$data = array_merge($data,$this->_csrf);
 		$content_div = $this->parser->parse('hash_test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
@@ -1677,6 +1685,7 @@ class Php_test extends CI_Controller {
 			);
 
 			// 中間挖掉的部分
+			$data = array_merge($data,$this->_csrf);
 			$content_div = $this->parser->parse('table_view', $data, true);
 			// 中間部分塞入外框
 			$html_date = $data ;

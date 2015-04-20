@@ -20,6 +20,7 @@
                 <option value="Opera">
                 <option value="Safari">
             </datalist>
+            <input type="hidden" name="{csrf_name}" value="{csrf_value}">
             <input type="submit">
         </form>
 

@@ -8,7 +8,9 @@
         <div>
             密碼&nbsp;:&nbsp;<input type="password" id="pwd" name="pwd" placeholder="pwd">
         </div>
+        <input type="hidden" id="{csrf_name}" name="{csrf_name}" value="{csrf_value}">
         <input id="btn_submit" class="btn btn-primary" type="submit" value="{btn_value}">
         <a class="btn btn-warning" href="{base_url}login/register">Create an new account</a>
     </form>
+    <script type="text/javascript" src="http://127.0.0.1/login/get_url/login"></script>
 </div>

@@ -42,6 +42,7 @@
                 </table>
                 <div class="mg1em">
                     <input type="range" name="range" id="range" min="0" max="100" step="5" required>
+                    <input type="hidden" name="{csrf_name}" value="{csrf_value}">
                     <input type="submit" name="submit" value="Submit">
                 </div>
                 <div class="mg1em results"></div>
@@ -82,6 +83,7 @@
                 </table>
                 <div class="mg1em">
                     <input type="text" name="country_code" pattern="[A-Za-z]{3}" title="Three letter country code" placeholder="Three letter country code" required>
+                    <input type="hidden" name="{csrf_name}" value="{csrf_value}">
                     <input type="submit" name="submit" value="Submit">
                 </div>
                 <div class="mg1em results"></div>
@@ -95,6 +97,7 @@
                 <div class="mg1em">
                     Username: <input type="text" name="usr_name">
                     Encryption: <keygen name="security" autofocus>
+                    <input type="hidden" name="{csrf_name}" value="{csrf_value}">
                     <input type="submit" name="submit" value="Submit">
                 </div>
                 <div class="mg1em results"></div>
