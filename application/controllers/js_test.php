@@ -594,8 +594,8 @@ class Js_test extends CI_Controller {
 	public function get_top_pwds()
 	{
 		$this->load->model('php_test_model','',TRUE) ;
-		$reports = $this->php_test_model->query_hash_test('',0,991) ;
-		$pwds =array() ;
+		$reports = $this->php_test_model->query_hash_test('',1,991) ;
+		$pwds =array('password','passwords') ;
 		foreach ($reports['data'] as $row)
 		{
 			$pwds[] = $row['hash_key'] ;
