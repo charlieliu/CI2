@@ -1,4 +1,3 @@
-var URLs = 'get_top_500_pwd' ;
 $(document).ready(function(){
 	$("#finder").val('frm1');
 	$("#frm1_submit").click(function(event){

@@ -1682,6 +1682,7 @@ class Php_test extends CI_Controller {
 				'page'=>$page,
 				'pagecnt'=>$pagecnt,
 				'page_dropdown'=>$page_dropdown,
+				'base_url'=>base_url(),
 			);
 
 			// 中間挖掉的部分
@@ -1903,6 +1904,16 @@ class Php_test extends CI_Controller {
 			}
 		}
 		return $output ;
+	}
+
+	public function get_url($tag='')
+	{
+		header('content-type: application/javascript') ;
+		switch ($tag) {
+			case 'get_top_500_pwd':
+				echo 'var URLs = "'.base_url().'php_test/get_top_500_pwd";' ;
+				break;
+		}
 	}
 }
 ?>

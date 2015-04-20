@@ -35,4 +35,7 @@
         <a class="next-page btn disable" href="javascript:next();" >next</a>
         <span id="pageDropdown" name="pageDropdown">{page_dropdown}</span>
     </div>
+
+    <script type="text/javascript" src="{base_url}php_test/get_url/get_top_500_pwd"></script>
+
 </div>
