@@ -25,7 +25,7 @@ class Login extends CI_Controller {
 		);
 
 		// load parser
-		$this->load->library(array('parser','session', 'pub'));
+		$this->load->library(array('parser','session', 'pub','password_strength'));
 		$this->load->helper(array('form', 'url'));
 		//$this->pub->check_session($this->session->userdata('session_id'));
 		$this->load->model('php_test_model','',TRUE) ;
@@ -87,9 +87,9 @@ class Login extends CI_Controller {
 		{
 			$status = 'pwd is empty' ;
 		}
-		$post['password'] = $post['pwd'];
-		$this->load->model('Login_model','',TRUE);
-		$users = $this->Login_model->getUsers($post['username']);
+		//$post['password'] = $post['pwd'];
+		$this->load->model('login_model','',TRUE);
+		$users = $this->login_model->getUsers($post['username']);
 		if( intval($users['total'])!=1 )
 		{
 			//$status = 'users total'.intval($users['total']) ;
@@ -97,14 +97,24 @@ class Login extends CI_Controller {
 		}
 		else
 		{
-			$userdata = array(
-				'uid'=>$users['data'][0]['uid'],
-				'username'=>$users['data'][0]['username'],
-			);
-			$this->session->set_userdata($userdata);
-			$status = 100;
+			// check pwds
+			$pwds_hash = substr(md5($users['data'][0]['salt'].$post['pwd']),0,20) ;
+			if( $pwds_hash==$users['data'][0]['password'] )
+			{
+				$userdata = array(
+					'uid'=>$users['data'][0]['uid'],
+					'username'=>$users['data'][0]['username'],
+				);
+				$this->session->set_userdata($userdata);
+				$status = 100;
+			}
+			else
+			{
+				$status = 102;
+			}
 		}
-		echo json_encode(array('status'=>$status,));
+		$output_ary = array_merge(array('status'=>$status,),$post) ;
+		echo json_encode($output_ary);
 	}
 
 	public function register()
@@ -142,45 +152,60 @@ class Login extends CI_Controller {
 		{
 			$status = 'name is empty';
 		}
-		else if( !preg_match("/^[\x{4e00}-\x{9fa5}\w\.\-]+$/u", $post['username']) )
+
+		if( !preg_match("/^[\x{4e00}-\x{9fa5}\w\.\-]+$/u", $post['username']) )
 		{
 			$status = 'name 限用中英文數字_.-';
 		}
-		else if( empty($post['pwd']) )
+
+		if( !isset($post['pwd']) )
 		{
 			$status = 'pwd is empty';
 		}
-		else if( empty($post['repwd']) )
+		else
+		{
+			$pwd_level = $this->password_strength->check_strength($post['pwd']) ;
+			if( !preg_match("/^(\w|\-|\#)+$/", $post['pwd']) )
+			{
+				$status = '6碼英數字或符號，符號限[_][-][#]';
+			}
+			else if( $pwd_level<=2 )
+			{
+				$status = '密碼強度不足';
+			}
+		}
+		if( empty($post['repwd']) )
 		{
 			$status = 'repwd is empty';
 		}
-		else if( empty($post['email']) )
+		if( empty($post['email']) )
 		{
 			$status = 'email is empty';
 		}
-		else if( !preg_match("/^(\w|\.|\+|\-)+@(\w|\-)+\.(\w|\.|\-)+$/", $post['email']) )
+		if( !preg_match("/^(\w|\.|\+|\-)+@(\w|\-)+\.(\w|\.|\-)+$/", $post['email']) )
 		{
 			$status = 'email address error';
 		}
-		else if( empty($post['addr']) )
+		if( empty($post['addr']) )
 		{
 			$status = 'address is empty';
 		}
-		else if( $post['pwd']!=$post['repwd'] )
+		if( $post['pwd']!=$post['repwd'] )
 		{
 			$status = 'pwd and repwd is different';
 		}
-		else
+		if( empty($status) )
 		{
-			$this->load->model('Login_model','',TRUE);
-			$content = $this->Login_model->getUsers($post['username']);
+			$this->load->model('login_model','',TRUE);
+			$content = $this->login_model->getUsers($post['username']);
 			if( $content['total']>0 )
 			{
 				$status = 'username has be used';
 			}
 			else
 			{
-				$salt = rand(101,999);
+				//$salt = rand(101,999);
+				$salt = $this->password_strength->get_salt() ;
 				$data = array(
 					'username'=>$post['username'],
 					'salt'=>$salt,
@@ -188,10 +213,11 @@ class Login extends CI_Controller {
 					'email'=>$post['email'],
 					'addr'=>$post['addr'],
 				);
-				$status = $this->Login_model->insUsers($data);
+				$status = $this->login_model->insUsers($data);
 			}
 		}
-		echo json_encode(array('status'=>$status,));
+		$output_ary = array_merge(array('status'=>$status,),$post) ;
+		echo json_encode($output_ary);
 	}
 
 	public function get_url($tag='')
