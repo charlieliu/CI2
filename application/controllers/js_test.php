@@ -590,5 +590,18 @@ class Js_test extends CI_Controller {
 		$view = $this->parser->parse('index_view', $html_date, true);
 		$this->pub->remove_view_space($view);
 	}
+
+	public function get_top_pwds()
+	{
+		$this->load->model('php_test_model','',TRUE) ;
+		$reports = $this->php_test_model->query_hash_test('',0,991) ;
+		$pwds =array() ;
+		foreach ($reports['data'] as $row)
+		{
+			$pwds[] = $row['hash_key'] ;
+		}
+		header('content-type: application/javascript') ;
+		echo 'var top_pwds = '.json_encode($pwds).';' ;
+	}
 }
 ?>

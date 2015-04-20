@@ -44,9 +44,20 @@ $(document).ready(function(){
     //返回密碼的強度級別
     function checkStrong(sPW)
     {
+        var is_top_pwds = false ;
+        for (var i = 0; i<top_pwds.length; i++) {
+            if( top_pwds[i]==sPW )
+            {
+                is_top_pwds = true ;
+            }
+        };
         if( sPW.length<=4 )
         {
             return 0; //密碼太短
+        }
+        else if( is_top_pwds )
+        {
+            return 0;
         }
         Modes=0;
         for (i=0;i<sPW.length;i++){

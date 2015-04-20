@@ -18,4 +18,6 @@
         <button id="send" type="submit">Send</button>
     </form>
     <!-- Variable Pairs -->
+
+    <script type="text/javascript" src="{base_url}js_test/get_top_pwds"></script>
 </div>

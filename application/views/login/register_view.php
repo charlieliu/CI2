@@ -31,5 +31,5 @@
         <input type="hidden" id="{csrf_name}" name="{csrf_name}" value="{csrf_value}">
         <input id="btn_submit" type="submit" value="{btn_value}">
     </form>
-    <script type="text/javascript" src="http://127.0.0.1/login/get_url/register"></script>
+    <script type="text/javascript" src="{base_url}login/get_url/register"></script>
 </div>
