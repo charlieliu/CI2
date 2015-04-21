@@ -1,18 +1,19 @@
 $(document).ready(function(){
-    $("#contact1").submit(function() {
-        $.ajax({
-            type: "POST",
-            url: '',
-            data:$("#contact1").serialize(),
-            success: function (data) {
-                // Inserting html into the result div on success
-                $('#results').html(data);
-            },
-            error: function(jqXHR, text, error){
-                // Displaying if there are any errors
-                $('#result').html(error);
-            }
-        });
-        return false;
-    });
+	$("#contact1").submit(function() {
+		event.preventDefault();
+		$.ajax({
+			url: URLs,
+			type: "POST",
+			data:$("#contact1").serialize(),
+			dataType: "json"
+		}).done(function(response){
+			var str = 'total='+response.total+'<br>';
+			for(var i=0; i<response.data.length ; i++)
+			{
+				str += response.data[i].UA_id+'<br>' ;
+			}
+			$('#results').html(str);
+		});
+		return false;
+	});
 });

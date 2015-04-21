@@ -12,7 +12,7 @@
             <datalist id="browsers">
                 <?php foreach ($browsers as $val): ?><option value="<?=$val?>"><?PHP endforeach; ?>
             </datalist>
-            <input type="hidden" name="{csrf_name}" value="{csrf_value}">
+            <input type="hidden" id="{csrf_name}" name="{csrf_name}" value="{csrf_value}">
             <input type="submit">
         </form>
 
@@ -20,5 +20,7 @@
     </div>
 
     <div id="results" class="mg1em"></div>
+
+    <script type="text/javascript" src="{base_url}html5_test/get_url/3"></script>
 
 </div>

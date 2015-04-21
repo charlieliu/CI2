@@ -95,11 +95,26 @@ class Html5_test extends CI_Controller {
 	// VIEW
 	public function test($in='1')
 	{
+		$this->load->model('html_test_model','',TRUE) ;
 
 		$post = $this->input->post();
 		$post = $this->pub->trim_val($post);
 		if( !empty($post) )
 		{
+			if( $in=='3' && !empty($post['browser']) )
+			{
+				$query_ary = explode(' ', $post['browser']) ;
+				if( !empty($query_ary[1]) )
+				{
+					$browsers = $this->html_test_model->query_browsers($query_ary[0],$query_ary[1]);
+				}
+				else if( !empty($query_ary[0]) )
+				{
+					$browsers = $this->html_test_model->query_browsers($query_ary[0]);
+				}
+				$browsers = array_merge($post,$browsers) ;
+				exit( json_encode($browsers) ) ;
+			}
 			if( isset($_FILES) )
 			{
 				foreach ($_FILES as $key => $value)
@@ -310,8 +325,14 @@ class Html5_test extends CI_Controller {
 					break;
 				case '3':
 					$data['title'] .= ' -- &lt;datalist&gt;' ;
-					$this->load->model('html_test_model','',TRUE) ;
-					$data['browsers'] = $this->html_test_model->query_browsers();
+					$browsers = $this->html_test_model->query_browsers();
+					$data['browsers'] = array() ;
+					foreach ($browsers['data'] as $row)
+					{
+						$version = explode('.', $row['agent_version']) ;
+						$data['browsers'][] = $row['agent_name'].' '.$version[0] ;
+					}
+					$data['browsers'] = array_unique($data['browsers'])  ;
 					break;
 				case '4':
 					$data['title'] .= ' -- &lt;output&gt;' ;
@@ -341,6 +362,15 @@ class Html5_test extends CI_Controller {
 
 			$view = $this->parser->parse('index_view', $html_date, true);
 			$this->pub->remove_view_space($view);
+		}
+	}
+
+	public function get_url($in='')
+	{
+		header('content-type: application/javascript') ;
+		if( $in=='3' )
+		{
+			echo 'var URLs = "'.base_url().'html5_test/test/3";' ;
 		}
 	}
 }

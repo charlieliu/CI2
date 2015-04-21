@@ -13,20 +13,34 @@ class Html_test_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function query_browsers()
+	public function query_browsers($str='',$version='')
 	{
-		$sql = "SELECT * FROM `user_agent` WHERE 1=1 ORDER BY `agent_name`,`agent_version` ;";
-		$query = $this->db->query($sql) ;
+		if( empty($str) )
+		{
+			$sql = "SELECT * FROM `user_agent` WHERE 1=1 ORDER BY `agent_name`,`agent_version`,`agent_system` ;";
+			$query = $this->db->query($sql) ;
+		}
+		else
+		{
+			$sql = "SELECT * FROM `user_agent` WHERE `agent_name`=? OR `agent_version`=? OR `agent_system`=? OR `agent_type`=?  ORDER BY `agent_name`,`agent_version`,`agent_system` ;";
+			$query = $this->db->query($sql,array($str,$str,$str,$str)) ;
+		}
 		$data = $query->result_array() ;
 		$total = $query->num_rows() ;
-		$browsers = array() ;
-		foreach ($data as $row)
+		if( !empty($version) )
 		{
-			$version = explode('.', $row['agent_version']) ;
-			$browsers[] = $row['agent_name'].' '.$version[0] ;
+			$output = array() ;
+			foreach ($data as $row)
+			{
+				if( strchr($row['agent_version'],$version) )
+				{
+					$output[] = $row ;
+				}
+			}
+			$data = $output ;
+			$total = count($data) ;
 		}
-		$browsers = array_unique($browsers)  ;
-		return $browsers ;
+		return array('data'=>$data,'total'=>$total,) ;
 	}
 }
 ?>
