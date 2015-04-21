@@ -4,21 +4,13 @@
     <div class="content_block mg1em padding1em">
         &lt;input&nbsp;<span style="color:red;">list="browsers"</span>&nbsp;name="browser"&gt;<br>
         &lt;datalist&nbsp;<span style="color:red;">id="browsers"</span>&gt;<br>
-        {space_4}&lt;option value="Internet Explorer"&gt;<br>
-        {space_4}&lt;option value="Firefox"&gt;<br>
-        {space_4}&lt;option value="Chrome"&gt;<br>
-        {space_4}&lt;option value="Opera"&gt;<br>
-        {space_4}&lt;option value="Safari"&gt;<br>
+        <?php foreach ($browsers as $val): ?>{space_4}&lt;option value="<?=$val?>"&gt;<br><?PHP endforeach; ?>
         &lt;/datalist&gt;<br>
         &lt;input type="submit"&gt;<br>
         <form id="contact1">
             <input list="browsers" name="browser">
             <datalist id="browsers">
-                <option value="Internet Explorer">
-                <option value="Firefox">
-                <option value="Chrome">
-                <option value="Opera">
-                <option value="Safari">
+                <?php foreach ($browsers as $val): ?><option value="<?=$val?>"><?PHP endforeach; ?>
             </datalist>
             <input type="hidden" name="{csrf_name}" value="{csrf_value}">
             <input type="submit">

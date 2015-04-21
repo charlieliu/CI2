@@ -311,6 +311,7 @@ class Html5_test extends CI_Controller {
 				case '3':
 					$data['title'] .= ' -- &lt;datalist&gt;' ;
 					$this->load->model('html_test_model','',TRUE) ;
+					$data['browsers'] = $this->html_test_model->query_browsers();
 					break;
 				case '4':
 					$data['title'] .= ' -- &lt;output&gt;' ;

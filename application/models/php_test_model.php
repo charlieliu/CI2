@@ -25,7 +25,7 @@ class Php_test_model extends CI_Model {
             $query = $this->db->query($sql,array($hash_key));
             $total = $query->num_rows() ;
         }
-        else if( $limit!=20 )
+        else if( $offset!=0 || $limit!=20 )
         {
             $sql = "SELECT * FROM `hash_test` LIMIT ".$offset.",".$limit." ;";
             $query = $this->db->query($sql);
