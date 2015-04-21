@@ -27,7 +27,7 @@ class Html_test_model extends CI_Model {
 		}
 		$data = $query->result_array() ;
 		$total = $query->num_rows() ;
-		if( !empty($version) )
+		if( $version!='' )
 		{
 			$output = array() ;
 			foreach ($data as $row)

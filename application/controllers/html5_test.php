@@ -104,7 +104,7 @@ class Html5_test extends CI_Controller {
 			if( $in=='3' && !empty($post['browser']) )
 			{
 				$query_ary = explode(' ', $post['browser']) ;
-				if( !empty($query_ary[1]) )
+				if( isset($query_ary[1]) )
 				{
 					$browsers = $this->html_test_model->query_browsers($query_ary[0],$query_ary[1]);
 				}
@@ -112,7 +112,8 @@ class Html5_test extends CI_Controller {
 				{
 					$browsers = $this->html_test_model->query_browsers($query_ary[0]);
 				}
-				$browsers = array_merge($post,$browsers) ;
+				//$browsers = array_merge($post,$browsers) ;
+				//$browsers = array_merge($query_ary,$browsers) ;
 				exit( json_encode($browsers) ) ;
 			}
 			if( isset($_FILES) )
