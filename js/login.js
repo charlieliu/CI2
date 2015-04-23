@@ -39,5 +39,6 @@ $(document).ready(function(){
 				"json"
 			);
 		}
+		return false;
 	});
 });

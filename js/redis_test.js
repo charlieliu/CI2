@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	$(".redis_test").submit(function() {
-		event.preventDefault();
+	$(".redis_test").submit(function(event) {
+		if( event.preventDefault ) event.preventDefault ; else event.returnValue=false ;
 		$.ajax({
 			url: URLs,
 			type: "POST",
@@ -10,5 +10,6 @@ $(document).ready(function(){
 			//$('#results').html(response.result);
 			alert(response.result);
 		});
+		return false;
 	});
 });

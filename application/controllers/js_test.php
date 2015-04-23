@@ -496,8 +496,13 @@ class Js_test extends CI_Controller {
 	{
 		// 取得列表資料
 		$head_list = array();
-		$head_1 = json_decode($this->pub->CurlPost(base_url().'welcome/getPageList','jqm'));
+		$head_1 = $this->pub->CurlPost(base_url().'welcome/getPageList','jqm') ;
+		//var_dump($head_1);
+		$head_1 = json_decode($head_1);
+		//var_dump($head_1);
 		$head_1 = $this->pub->o2a($head_1);
+		//var_dump($head_1);
+		//exit;
 
 		if( !empty($head_1) )
 		{
@@ -505,8 +510,7 @@ class Js_test extends CI_Controller {
 			{
 				if( !empty($v['c']) )
 				{
-					$head_2 = json_decode($this->pub->CurlPost(base_url().$v['c'].'/getPageList','jqm'));
-					$head_2 = $this->pub->o2a($head_2);
+					$head_2 = $this->pub->o2a(json_decode($this->pub->CurlPost(base_url().$v['c'].'/getPageList','jqm'))) ;
 				}
 				else
 				{

@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	$("#contact1").submit(function() {
-		event.preventDefault();
+	$("#contact1").submit(function(event) {
+		if( event.preventDefault ) event.preventDefault ; else event.returnValue=false ;
 		$.ajax({
 			url: URLs,
 			type: "POST",

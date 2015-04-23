@@ -62,17 +62,17 @@ class Welcome extends CI_Controller {
         $content[] = array(
             'content_title' => 'HTML5 測試',
             'content_url' => base_url().'html5_test',
-            'c'=>'',
+            'c'=>'html5_test',
         ) ;
         $content[] = array(
             'content_title' => 'Login 測試',
             'content_url' => base_url().'login',
-            'c'=>'',
+            'c'=>'login',
         ) ;
         $content[] = array(
             'content_title' => 'redis 測試',
             'content_url' => base_url().'redis_test',
-            'c'=>'',
+            'c'=>'redis_test',
         ) ;
         $content[] = array(
             'content_title' => 'phpinfo',

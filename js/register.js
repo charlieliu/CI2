@@ -61,6 +61,7 @@ $(function(){
 				"json"
 			);
 		}
+		return false;
 	});
 	$('#addr').css('width',$('#email').css('width'));
 });

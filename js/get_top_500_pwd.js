@@ -1,11 +1,11 @@
 $(document).ready(function(){
 	$("#finder").val('frm1');
 	$("#frm1_submit").click(function(event){
-		event.preventDefault();
+		if( event.preventDefault ) event.preventDefault ; else event.returnValue=false ;
 		pagenav(1);
 	});
 	$("#frm1_reset").click(function(event){
-		event.preventDefault();
+		if( event.preventDefault ) event.preventDefault ; else event.returnValue=false ;
 		$('#frm1')[0].reset();
 		pagenav(1);
 	});
