@@ -7,6 +7,7 @@ class Redis_test extends CI_Controller {
 	private $current_title = 'Redis 測試';
 	private $page_list = array();
 	private $_csrf = null ;
+	private $_dblink = 0 ;
 
 	public $UserAgent = array() ;
 
@@ -32,6 +33,7 @@ class Redis_test extends CI_Controller {
 			$this->load->model('php_test_model','',TRUE) ;
 			$this->php_test_model->query_user_agent($this->UserAgent) ;
 		}
+		$this->_dblink = intval($this->session->flashdata('redis_db')) ;
 	}
 
 	// 取得標題
@@ -47,17 +49,17 @@ class Redis_test extends CI_Controller {
 			'title'=>'適合全體類型的命令',
 			'act'=>array(
 				// 適合全體類型的命令
-				'EXISTS'=>'EXISTS key 判斷一個鍵是否存在;存在返回 1;否則返回0;',
-				'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
-				'TYPE'=>'TYPE key 返回某個key元素的數據類型 ( none:不存在,string:字符,list,set,zset,hash)',
+				'SELECT'=>'SELECT index 選擇數據庫',
 				'KEYS'=>'KEYS pattern 返回匹配的key列表 (KEYS foo*:查找foo開頭的keys)',
+				'DBSIZE'=>'DBSIZE返回當前數據庫的key的總數',
+				'EXISTS'=>'EXISTS key 判斷一個鍵是否存在;存在返回 1;否則返回0;',
+				'TYPE'=>'TYPE key 返回某個key元素的數據類型 ( none:不存在,string:字符,hash:雜湊,list:列表,set,zset)',
 				'RANDOMKEY'=>'RANDOMKEY 隨機獲得一個已經存在的key，如果當前數據庫爲空，則返回空字符串',
 				'RENAME'=>'RENAME oldname newname更改key的名字，新鍵如果存在將被覆蓋',
 				'RENAMENX'=>'RENAMENX oldname newname 更改key的名字，如果名字存在則更改失敗',
-				'DBSIZE'=>'DBSIZE返回當前數據庫的key的總數',
+				'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
 				'XPIRE'=>'XPIRE設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
 				'TTL'=>'TTL查找某個key還有多長時間過期,返回時間秒',
-				'SELECT'=>'SELECT index 選擇數據庫',
 				'MOVE'=>'MOVE key dbindex 將指定鍵從當前數據庫移到目標數據庫 dbindex。成功返回 1;否則返回0（源數據庫不存在key或目標數據庫已存在同名key）;',
 				'FLUSHDB'=>'FLUSHDB 清空當前數據庫中的所有鍵',
 				'FLUSHALL'=>'FLUSHALL 清空所有數據庫中的所有鍵',
@@ -68,11 +70,11 @@ class Redis_test extends CI_Controller {
 			'act'=>array(
 				// 處理字符串的命令
 				'SET'=>'SET key value 給一個鍵設置字符串值。SET keyname datalength data (SET bruce 10 paitoubing:保存key爲burce,字符串長度爲10的一個字符串paitoubing到數據庫)，data最大不可超過1G。',
+				'MSET'=>'MSET key1 value1 key2 value2 … keyN valueN 在一次原子操作下一次性設置多個鍵和值',
 				'SETNX'=>'SETNX key value SETNX與SET的區別是SET可以創建與更新key的value，而SETNX是如果key不存在，則創建key與value數據',
+				'MSETNX'=>'MSETNX key1 value1 key2 value2 … keyN valueN 在一次原子操作下一次性設置多個鍵和值（目標鍵不存在情況下，如果有一個以上的key已存在，則失敗返回0）',
 				'GETSET'=>'GETSET key value可以理解成獲得的key的值然後SET這個值，更加方便的操作 (SET bruce 10 paitoubing,這個時候需要修改bruce變成1234567890並獲取這個以前的數據paitoubing,GETSET bruce 10 1234567890)',
 				'APPEND'=>'APPEND key value 尾端追加value',
-				'MSET'=>'MSET key1 value1 key2 value2 … keyN valueN 在一次原子操作下一次性設置多個鍵和值',
-				'MSETNX'=>'MSETNX key1 value1 key2 value2 … keyN valueN 在一次原子操作下一次性設置多個鍵和值（目標鍵不存在情況下，如果有一個以上的key已存在，則失敗返回0）',
 				'GET'=>'GET key獲取某個key 的值。如key不存在，則返回字符串“nil”；如key的值不爲字符串類型，則返回一個錯誤。',
 				'MGET'=>'MGET key1 key2 … keyN 一次性返回多個鍵的值',
 				'STRLEN'=>'STRLEN key 返回符串長度',
@@ -106,8 +108,8 @@ class Redis_test extends CI_Controller {
 			'title'=>'列表型態',
 			'act'=>array(
 				// 列表型態
-				'RPUSH'=>'RPUSH key value 從 List 尾部添加一個元素（如序列不存在，則先創建，如已存在同名Key而非序列，則返回錯誤）',
-				'LPUSH'=>'LPUSH key value 從 List 頭部添加一個元素',
+				'LPUSH'=>'LPUSH key value 從 List 頭部添加一個元素（如序列不存在，則先創建，如已存在同名Key而非序列，則返回錯誤）',
+				'RPUSH'=>'RPUSH key value 從 List 尾部添加一個元素',
 				'LPOP'=>'LPOP key 彈出 List 的第一個元素',
 				'RPOP'=>'RPOP key 彈出 List 的最後一個元素',
 				'RPOPLPUSH'=>'RPOPLPUSH srckey dstkey 彈出 _srckey_ 中最後一個元素並將其壓入 _dstkey_頭部，key不存在或序列爲空則返回“nil”',
@@ -117,6 +119,7 @@ class Redis_test extends CI_Controller {
 				'LINDEX'=>'LINDEX key index返回某個位置的序列值(LINDEX testlist 0;返回序列testlist位置爲0的元素)',
 				'LSET'=>'LSET key index value更新某個位置元素的值',
 				'LREM'=>'LREM key count value 從 List 的頭部（count正數）或尾部（count負數）刪除一定數量（count）匹配value的元素，返回刪除的元素數量。',
+				'LINSERT'=>'LINSERT key BEFORE|AFTER pivot value 在列表中從左向右找到pivot的元素，然後根據第二個參數BEFORE|AFTER來決定插入到元素前面或後面。',
 			)
 		) ;
 		$grid_data['redis_act'][]= array(
@@ -167,6 +170,7 @@ class Redis_test extends CI_Controller {
 				SORT mylist BY weight_* STORE resultkey<br>將返回的結果存放於resultkey序列（List）',
 			)
 		) ;
+		$grid_data['redis_db'] = $this->_dblink ;
 		$grid_data = array_merge($grid_data,$this->_csrf);
 		$grid_view = $this->parser->parse('redis_test/redis_test_grid_view', $grid_data, true) ;
 
@@ -195,10 +199,19 @@ class Redis_test extends CI_Controller {
 
 	public function do_redis()
 	{
+		$this->session->keep_flashdata('redis_db');
 		$this->load->library('redis') ;
-		if( $this->redis->command('PING')!='PONG' )
+		/*
+		$command = $this->redis->command('PING') ;
+		if( $command!='PONG' )
 		{
-			exit('LINE:'.__LINE__.' PING');
+			exit('LINE:'.__LINE__.' command='.$command);
+		}
+		*/
+		$command = $this->redis->command('select '.$this->_dblink) ;
+		if( $command!='OK' )
+		{
+			exit('LINE:'.__LINE__.' command("select '.$this->_dblink.'")='.$command);
 		}
 
 		$post = $this->input->post();
@@ -222,7 +235,18 @@ class Redis_test extends CI_Controller {
 				$result = $this->redis->exists($key_str) ;
 				break;
 			case 'del':
-				$result = $this->redis->del($key_str) ;
+				if( !empty($post['key_str']) && !empty($post['key_str2']) &&!empty($post['key_str3']) )
+				{
+					$result = $this->redis->del($key_str, $key_str2, $key_str3) ;
+				}
+				else if( !empty($post['key_str']) && !empty($post['key_str2']) )
+				{
+					$result = $this->redis->del($key_str, $key_str2) ;
+				}
+				else if( !empty($post['key_str']) )
+				{
+					$result = $this->redis->del($key_str) ;
+				}
 				break;
 			case 'type':
 				$result = $this->redis->type($key_str) ;
@@ -252,9 +276,15 @@ class Redis_test extends CI_Controller {
 			case 'select':
 				$ind_str = intval($ind_str) ;
 				$result = $this->redis->select($ind_str) ;
+				if( $result=='OK' )
+				{
+					$this->_dblink = $ind_str ;
+					$this->session->set_flashdata('redis_db', $ind_str);
+				}
 				break;
 			case 'move':
-				$result = $this->redis->move($key_str, $val_str) ;
+				$ind_str = intval($ind_str) ;
+				$result = $this->redis->move($key_str, $ind_str) ;
 				break;
 			case 'flushdb':
 				$result = $this->redis->flushdb() ;
@@ -265,7 +295,26 @@ class Redis_test extends CI_Controller {
 
 			// 處理字符串的命令
 			case 'set':
-				$result = $this->redis->set($key_str, $val_str) ;
+			case 'mset':
+				if( isset($post['key_str']) && isset($post['key_str2']) )
+				{
+					$result = $this->redis->mset($key_str, $val_str, $key_str2, $val_str2) ;
+				}
+				else if( isset($post['key_str']) )
+				{
+					$result = $this->redis->set($key_str, $val_str) ;
+				}
+				break;
+			case 'setnx':
+			case 'msetnx':
+				if( isset($post['key_str']) && isset($post['key_str2']) )
+				{
+					$result = $this->redis->msetnx($key_str, $val_str, $key_str2, $val_str2) ;
+				}
+				else if( isset($post['key_str']) )
+				{
+					$result = $this->redis->setnx($key_str, $val_str) ;
+				}
 				break;
 			case 'setbit':
 				$result = $this->redis->setbit($key_str, $off_str, $val_str) ;
@@ -283,7 +332,15 @@ class Redis_test extends CI_Controller {
 				$result = $this->redis->append($key_str, $val_str) ;
 				break;
 			case 'get':
-				$result = $this->redis->get($key_str) ;
+			case 'mget':
+				if( isset($post['key_str']) && isset($post['key_str2']) )
+				{
+					$result = $this->redis->mget($key_str, $key_str2) ;
+				}
+				else if( isset($post['key_str']) )
+				{
+					$result = $this->redis->get($key_str) ;
+				}
 				break;
 			case 'getset':
 				$result = $this->redis->getset($key_str, $val_str) ;
@@ -291,27 +348,35 @@ class Redis_test extends CI_Controller {
 			case 'strlen':
 				$result = $this->redis->strlen($key_str) ;
 				break;
-			case 'setnx':
-				$result = $this->redis->setnx($key_str, $val_str) ;
-				break;
 			case 'incr':
-				$result = $this->redis->incr($key_str) ;
-				break;
 			case 'incrby':
-				$val_str = intval($val_str) ;
-				$result = $this->redis->incrby($key_str, $val_str) ;
+				if( isset($post['val_str']) )
+				{
+					$val_str = intval($val_str) ;
+					$result = $this->redis->incrby($key_str, $val_str) ;
+				}
+				else
+				{
+					$result = $this->redis->incr($key_str) ;
+				}
 				break;
 			case 'incrbyfloat':
 				//$val_str = floatval($val_str) ;
 				$result = $this->redis->incrbyfloat($key_str, $val_str) ;
 				break;
 			case 'decr':
-				$result = $this->redis->decr($key_str) ;
-				break;
 			case 'decrby':
-				$val_str = intval($val_str) ;
-				$result = $this->redis->decrby($key_str, $val_str) ;
+				if( isset($post['val_str']) )
+				{
+					$val_str = intval($val_str) ;
+					$result = $this->redis->decrby($key_str, $val_str) ;
+				}
+				else
+				{
+					$result = $this->redis->decr($key_str) ;
+				}
 				break;
+
 			// 雜湊型態
 			case 'hset':
 				$result = $this->redis->hset($key_str, $field_str, $val_str) ;
@@ -324,6 +389,7 @@ class Redis_test extends CI_Controller {
 				$result = $this->redis->hincrby($key_str, $field_str, $val_str) ;
 				break;
 			case 'hkeys':
+				//$key_str = $key_str.'*' ;
 				$result = $this->redis->hkeys($key_str) ;
 				break;
 			case 'hlen':
@@ -337,6 +403,9 @@ class Redis_test extends CI_Controller {
 				break;
 			case 'hexists':
 				$result = $this->redis->hexists($key_str, $field_str) ;
+				break;
+			case 'hdel':
+				$result = $this->redis->hdel($key_str, $field_str) ;
 				break;
 
 			// 列表型態
@@ -352,11 +421,29 @@ class Redis_test extends CI_Controller {
 			case 'rpop':
 				$result = $this->redis->rpop($key_str) ;
 				break;
+			case 'rpoplpush':
+				$result = $this->redis->rpoplpush($key_str, $key_str2) ;
+				break;
 			case 'llen':
 				$result = $this->redis->llen($key_str) ;
 				break;
 			case 'lrange':
 				$result = $this->redis->lrange($key_str, $val_str, $val_str2) ;
+				break;
+			case 'ltrim':
+				$result = $this->redis->ltrim($key_str, $val_str, $val_str2) ;
+				break;
+			case 'lindex':
+				$result = $this->redis->lindex($key_str, $ind_str) ;
+				break;
+			case 'lset':
+				$result = $this->redis->lset($key_str, $ind_str, $val_str) ;
+				break;
+			case 'lrem':
+				$result = $this->redis->lrem($key_str, $ind_str, $val_str) ;
+				break;
+			case 'linsert':
+				$result = $this->redis->linsert($key_str, $off_str, $field_str, $val_str) ;
 				break;
 
 			default:
@@ -397,7 +484,7 @@ class Redis_test extends CI_Controller {
 		}
 		$result = is_null($result) ? 'nil' : $result ;
 		$result = is_bool($result) ? ($result ? 'true' : 'false') : $result ;
-		echo json_encode(array('result'=>$result,'post'=>$post,'input'=>$input)) ;
+		echo json_encode(array('result'=>$result,'dblink'=>$this->_dblink,'post'=>$post,'input'=>$input)) ;
 	}
 
 	public function get_url()

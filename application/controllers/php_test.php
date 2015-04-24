@@ -1598,17 +1598,17 @@ class Php_test extends CI_Controller {
 				$options[$options_75] = 'page '.$options_75.'(50%)' ;
 				$options[$options_50] = 'page '.$options_50.'(75%)' ;
 				*/
-			   // first 5 pages
+				// first 5 pages
 				for( $i=1; $i<=5; $i++ )
 				{
-						$options[$i] = 'page '.$i ;
+					$options[$i] = 'page '.$i ;
 				}
 				// select page
 				$options[$page] = 'page '.$page ;
 				// last 5 pages
 				for( $i=($pagecnt-4); $i<=$pagecnt; $i++ )
 				{
-						$options[$i] = 'page '.$i ;
+					$options[$i] = 'page '.$i ;
 				}
 				// order by key
 				ksort($options);
@@ -1617,7 +1617,7 @@ class Php_test extends CI_Controller {
 			{
 				for( $i=1; $i<=$pagecnt; $i++ )
 				{
-						$options[$i] = 'page '.$i ;
+					$options[$i] = 'page '.$i ;
 				}
 			}
 			$page_dropdown = form_dropdown('page', $options, $page);

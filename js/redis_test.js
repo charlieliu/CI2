@@ -9,6 +9,7 @@ $(document).ready(function(){
 		}).done(function(response){
 			//$('#results').html(response.result);
 			alert(response.result);
+			$('.dblink').html(response.dblink);
 		});
 		return false;
 	});
