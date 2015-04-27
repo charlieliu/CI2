@@ -123,24 +123,23 @@ class Redis_test extends CI_Controller {
 			)
 		) ;
 		$grid_data['redis_act'][]= array(
-			'title'=>'處理集合(sets)的命令（有索引無序序列）',
+			'title'=>'集合型態',
 			'act'=>array(
 				// 處理集合(sets)的命令（有索引無序序列）
 				'SADD'=>'SADD key member增加元素到SETS序列,如果元素（membe）不存在則添加成功 1，否則失敗 0;(SADD testlist 3 n one)',
 				'SREM'=>'SREM key member 刪除SETS序列的某個元素，如果元素不存在則失敗0，否則成功 1(SREM testlist 3 N one)',
-				'SPOP'=>'SPOP key 從集閤中隨機彈出一個成員',
-				'SMOVE'=>'SMOVE srckey dstkey member 把一個SETS序列的某個元素 移動到 另外一個SETS序列 (SMOVE testlist test 3n two;從序列testlist移動元素two到 test中，testlist中將不存在two元素)',
+				'SMEMBERS'=>'SMEMBERS key 返回某個序列的所有元素',
 				'SCARD'=>'SCARD key 統計某個SETS的序列的元素數量',
 				'SISMEMBER'=>'SISMEMBER key member 獲知指定成員是否存在於集閤中',
+				'SDIFF'=>'SDIFF key1 key2,key3 … keyN 依據 key2, …, keyN 求 key1 的差集。官方例子：<br>key1 = x,a,b,c<br>key2 = c<br>key3 = a,d',
+				'SDIFFSTORE'=>'SDIFFSTORE dstkey key1 key2 … keyN 依據 key2, …, keyN 求 key1 的差集並存入 dstkey',
 				'SINTER'=>'SINTER key1 key2 … keyN 返回 key1, key2, …, keyN 中的交集',
 				'SINTERSTORE'=>'SINTERSTORE dstkey key1 key2 … keyN 將 key1, key2, …, keyN 中的交集存入 dstkey',
 				'SUNION'=>'SUNION key1 key2 … keyN 返回 key1, key2, …, keyN 的並集',
 				'SUNIONSTORE'=>'SUNIONSTORE dstkey key1 key2 … keyN 將 key1, key2, …, keyN 的並集存入 dstkey',
-				'SDIFF'=>'SDIFF key1 key2 … keyN 依據 key2, …, keyN 求 key1 的差集。官方例子：<br>key1 = x,a,b,c<br>key2 = c<br>key3 = a,d',
-				'SDIFF'=>'SDIFF key1,key2,key3 => x,b',
-				'SDIFFSTORE'=>'SDIFFSTORE dstkey key1 key2 … keyN 依據 key2, …, keyN 求 key1 的差集並存入 dstkey',
-				'SMEMBERS'=>'SMEMBERS key 返回某個序列的所有元素',
+				'SPOP'=>'SPOP key 從集閤中隨機彈出一個成員',
 				'SRANDMEMBER'=>'SRANDMEMBER key 隨機返回某個序列的元素',
+				'SMOVE'=>'SMOVE srckey dstkey member 把一個SETS序列的某個元素 移動到 另外一個SETS序列 (SMOVE testlist test 3n two;從序列testlist移動元素two到 test中，testlist中將不存在two元素)',
 			)
 		) ;
 		$grid_data['redis_act'][]= array(
@@ -228,6 +227,8 @@ class Redis_test extends CI_Controller {
 		$opt_str = isset($post['opt_str']) ? $post['opt_str'] : '' ;
 		$ind_str = isset($post['ind_str']) ? $post['ind_str'] : '' ;
 		$field_str = isset($post['field_str']) ? $post['field_str'] : '' ;
+		$dstkey = isset($post['dstkey']) ? $post['dstkey'] : '' ;
+		$result = 'ERROR' ;
 		switch($redis_act)
 		{
 			// 適合全體類型的命令
@@ -422,7 +423,7 @@ class Redis_test extends CI_Controller {
 				$result = $this->redis->rpop($key_str) ;
 				break;
 			case 'rpoplpush':
-				$result = $this->redis->rpoplpush($key_str, $key_str2) ;
+				$result = $this->redis->rpoplpush($key_str, $dstkey) ;
 				break;
 			case 'llen':
 				$result = $this->redis->llen($key_str) ;
@@ -444,6 +445,83 @@ class Redis_test extends CI_Controller {
 				break;
 			case 'linsert':
 				$result = $this->redis->linsert($key_str, $off_str, $field_str, $val_str) ;
+				break;
+
+			// 集合型態
+			case 'sadd':
+				$result = $this->redis->sadd($key_str, $val_str) ;
+				break;
+			case 'srem':
+				$result = $this->redis->srem($key_str, $val_str) ;
+				break;
+			case 'sismember':
+				$result = $this->redis->sismember($key_str, $val_str) ;
+				break;
+			case 'smembers':
+				$result = $this->redis->smembers($key_str) ;
+				break;
+			case 'scard':
+				$result = $this->redis->scard($key_str) ;
+				break;
+			case 'sdiff':
+				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']) )
+				{
+					$result = $this->redis->sdiff($key_str, $key_str2, $key_str3) ;
+				}
+				else if( isset($post['key_str']) && isset($post['key_str2']) )
+				{
+					$result = $this->redis->sdiff($key_str, $key_str2) ;
+				}
+				break;
+			case 'sdiffstore':
+				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['dstkey']) )
+				{
+					$result = $this->redis->sdiffstore($dstkey, $key_str, $key_str2) ;
+				}
+				break;
+			case 'sinter':
+				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']) )
+				{
+					$result = $this->redis->sinter($key_str, $key_str2, $key_str3) ;
+				}
+				else if( isset($post['key_str']) && isset($post['key_str2']) )
+				{
+					$result = $this->redis->sinter($key_str, $key_str2) ;
+				}
+				break;
+			case 'sinterstore':
+				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['dstkey']) )
+				{
+					$result = $this->redis->sinterstore($dstkey, $key_str, $key_str2) ;
+				}
+				break;
+			case 'sunion':
+				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']) )
+				{
+					$result = $this->redis->sunion($key_str, $key_str2, $key_str3) ;
+				}
+				else if( isset($post['key_str']) && isset($post['key_str2']) )
+				{
+					$result = $this->redis->sunion($key_str, $key_str2) ;
+				}
+				break;
+			case 'sunionstore':
+				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['dstkey']) )
+				{
+					$result = $this->redis->sunionstore($dstkey, $key_str, $key_str2) ;
+				}
+				break;
+			case 'spop':
+				$result = $this->redis->spop($key_str) ;
+				break;
+			case 'srandmember':
+				$result = $this->redis->srandmember($key_str) ;
+				break;
+			case 'smove':
+				if( isset($post['key_str']) && isset($post['dstkey']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->smove($key_str, $dstkey, $val_str) ;
+				}
 				break;
 
 			default:
