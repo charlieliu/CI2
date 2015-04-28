@@ -33,6 +33,7 @@ class Redis_test extends CI_Controller {
 			$this->load->model('php_test_model','',TRUE) ;
 			$this->php_test_model->query_user_agent($this->UserAgent) ;
 		}
+		$this->session->keep_flashdata('redis_db');
 		$this->_dblink = intval($this->session->flashdata('redis_db')) ;
 	}
 
@@ -51,14 +52,14 @@ class Redis_test extends CI_Controller {
 				// 適合全體類型的命令
 				'SELECT'=>'SELECT index 選擇數據庫',
 				'KEYS'=>'KEYS pattern 返回匹配的key列表 (KEYS foo*:查找foo開頭的keys)',
-				'DBSIZE'=>'DBSIZE返回當前數據庫的key的總數',
+				'DBSIZE'=>'DBSIZE返回當前數據庫鍵的總數',
 				'EXISTS'=>'EXISTS key 判斷一個鍵是否存在;存在返回 1;否則返回0;',
 				'TYPE'=>'TYPE key 返回某個key元素的數據類型 ( none:不存在,string:字符,hash:雜湊,list:列表,set,zset)',
-				'RANDOMKEY'=>'RANDOMKEY 隨機獲得一個已經存在的key，如果當前數據庫爲空，則返回空字符串',
+				'RANDOMKEY'=>'RANDOMKEY 隨機獲得一個已經存在的鍵，如果當前數據庫爲空，則返回空字符串',
 				'RENAME'=>'RENAME oldname newname更改key的名字，新鍵如果存在將被覆蓋',
 				'RENAMENX'=>'RENAMENX oldname newname 更改key的名字，如果名字存在則更改失敗',
 				'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
-				'XPIRE'=>'XPIRE設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
+				'XPIRE'=>'XPIRE key count 設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
 				'TTL'=>'TTL查找某個key還有多長時間過期,返回時間秒',
 				'MOVE'=>'MOVE key dbindex 將指定鍵從當前數據庫移到目標數據庫 dbindex。成功返回 1;否則返回0（源數據庫不存在key或目標數據庫已存在同名key）;',
 				'FLUSHDB'=>'FLUSHDB 清空當前數據庫中的所有鍵',
@@ -135,10 +136,10 @@ class Redis_test extends CI_Controller {
 				'SDIFFSTORE'=>'SDIFFSTORE dstkey key1 key2 … keyN 依據 key2, …, keyN 求 key1 的差集並存入 dstkey',
 				'SINTER'=>'SINTER key1 key2 … keyN 返回 key1, key2, …, keyN 中的交集',
 				'SINTERSTORE'=>'SINTERSTORE dstkey key1 key2 … keyN 將 key1, key2, …, keyN 中的交集存入 dstkey',
-				'SUNION'=>'SUNION key1 key2 … keyN 返回 key1, key2, …, keyN 的並集',
-				'SUNIONSTORE'=>'SUNIONSTORE dstkey key1 key2 … keyN 將 key1, key2, …, keyN 的並集存入 dstkey',
-				'SPOP'=>'SPOP key 從集閤中隨機彈出一個成員',
-				'SRANDMEMBER'=>'SRANDMEMBER key 隨機返回某個序列的元素',
+				'SUNION'=>'SUNION key1 key2 … keyN 返回 key1, key2, …, keyN 的聯集',
+				'SUNIONSTORE'=>'SUNIONSTORE dstkey key1 key2 … keyN 將 key1, key2, …, keyN 的聯集存入 dstkey',
+				'SPOP'=>'SPOP key 從集合中隨機彈出一個成員',
+				'SRANDMEMBER'=>'SRANDMEMBER key count 隨機返回某個序列的元素 count:正(不重複N次) 負(重複N次)',
 				'SMOVE'=>'SMOVE srckey dstkey member 把一個SETS序列的某個元素 移動到 另外一個SETS序列 (SMOVE testlist test 3n two;從序列testlist移動元素two到 test中，testlist中將不存在two元素)',
 			)
 		) ;
@@ -146,12 +147,19 @@ class Redis_test extends CI_Controller {
 			'title'=>'處理有序集合(sorted sets)的命令 (zsets)',
 			'act'=>array(
 				// 處理有序集合(sorted sets)的命令 (zsets)
-				'ZADD'=>'ZADD key score member 添加指定成員到有序集閤中，如果目標存在則更新score（分值，排序用）',
-				'ZREM'=>'ZREM key member 從有序集合刪除指定成員',
+				'ZADD'=>'ZADD key score member 添加指定成員到有序集閤中，如果目標存在則更新分數（score排序用）',
 				'ZINCRBY'=>'ZINCRBY key increment member 如果成員存在則將其增加_increment_，否則將設置一個score爲_increment_的成員',
-				'ZRANGE'=>'ZRANGE key start end 返回升序排序後的指定範圍的成員',
-				'ZREVRANGE'=>'ZREVRANGE key start end 返回降序排序後的指定範圍的成員',
-				'ZRANGEBYSCORE'=>'ZRANGEBYSCORE key min max 返回所有符合score >= min和score <= max的成員 ZCARD key 返回有序集合的元素數量 ZSCORE key element 返回指定成員的SCORE值 ZREMRANGEBYSCORE key min max 刪除符合 score >= min 和 score <= max 條件的所有成員',
+				'ZREM'=>'ZREM key member 從有序集合刪除指定成員',
+				'ZREMRANGEBYRANK'=>'ZREMRANGEBYRANK key start end 刪除指定範圍的成員 start/end:排序(0,1,2,....)',
+				'ZSCORE'=>'ZSCORE key member 返回分數',
+				'ZRANK'=>'ZRANK key member 返回排序(升序)',
+				'ZREVRANK'=>'ZREVRANK key member 返回排序(降序)',
+				'ZRANGE'=>'ZRANGE key start end 返回升序排序後的指定範圍的成員 start/end:排序(0,1,2,....)',
+				'ZREVRANGE'=>'ZREVRANGE key start end 返回降序排序後的指定範圍的成員 start/end:排序(0,1,2,....)',
+				'ZRANGEBYSCORE'=>'ZRANGEBYSCORE key min max 返回所有符合 分數 >= min 和 分數<=max 的成員 ( "(分數">"min", +inf:正無限大 )',
+				'ZCARD'=>'ZCARD key 返回有序集合的元素數量',
+				'ZINTERSTORE'=>'ZINTERSTORE dstkey numkey key key2 key3 ... 新增dstkey 為numkey個key key2 key3 ...交集',
+				'ZUNIONSTORE'=>'ZUNIONSTORE dstkey numkey key key2 key3 ... 新增dstkey 為numkey個key key2 key3 ...聯集',
 			)
 		) ;
 		$grid_data['redis_act'][]= array(
@@ -198,7 +206,6 @@ class Redis_test extends CI_Controller {
 
 	public function do_redis()
 	{
-		$this->session->keep_flashdata('redis_db');
 		$this->load->library('redis') ;
 		/*
 		$command = $this->redis->command('PING') ;
@@ -216,76 +223,81 @@ class Redis_test extends CI_Controller {
 		$post = $this->input->post();
 		$post = $this->pub->trim_val($post);
 
-		$redis_act = isset($post['redis_act']) ? strtolower($post['redis_act']) : '' ;
-		$key_str = isset($post['key_str']) ? $post['key_str'] : '' ;
-		$val_str = isset($post['val_str']) ? $post['val_str'] : '' ;
-		$key_str2 = isset($post['key_str2']) ? $post['key_str2'] : '' ;
-		$val_str2 = isset($post['val_str2']) ? $post['val_str2'] : '' ;
-		$key_str3 = isset($post['key_str3']) ? $post['key_str3'] : '' ;
-		$val_str3 = isset($post['val_str3']) ? $post['val_str3'] : '' ;
-		$off_str = isset($post['off_str']) ? $post['off_str'] : '' ;
-		$opt_str = isset($post['opt_str']) ? $post['opt_str'] : '' ;
-		$ind_str = isset($post['ind_str']) ? $post['ind_str'] : '' ;
-		$field_str = isset($post['field_str']) ? $post['field_str'] : '' ;
-		$dstkey = isset($post['dstkey']) ? $post['dstkey'] : '' ;
+		$input['redis_act'] = isset($post['redis_act']) ? strtolower($post['redis_act']) : '' ;
+		$input['key_str'] = isset($post['key_str']) ? $post['key_str'] : '' ;
+		$input['key_str2'] = isset($post['key_str2']) ? $post['key_str2'] : '' ;
+		$input['key_str3'] = isset($post['key_str3']) ? $post['key_str3'] : '' ;
+		$input['val_str'] = isset($post['val_str']) ? $post['val_str'] : '' ;
+		$input['val_str2'] = isset($post['val_str2']) ? $post['val_str2'] : '' ;
+		$input['val_str3'] = isset($post['val_str3']) ? $post['val_str3'] : '' ;
+		$input['off_str'] = isset($post['off_str']) ? $post['off_str'] : '' ;
+		$input['opt_str'] = isset($post['opt_str']) ? $post['opt_str'] : '' ;
+		$input['ind_str'] = isset($post['ind_str']) ? $post['ind_str'] : '' ;
+		$input['field_str'] = isset($post['field_str']) ? $post['field_str'] : '' ;
+		$input['dstkey'] = isset($post['dstkey']) ? $post['dstkey'] : '' ;
+		$input['score'] = isset($post['score']) ? $post['score'] : '' ;
+		$input['numkey'] = isset($post['numkey']) ? intval($post['numkey']) : 0 ;
 		$result = 'ERROR' ;
-		switch($redis_act)
+		switch($input['redis_act'])
 		{
 			// 適合全體類型的命令
 			case 'exists':
-				$result = $this->redis->exists($key_str) ;
+				$result = $this->redis->exists($input['key_str']) ;
 				break;
 			case 'del':
 				if( !empty($post['key_str']) && !empty($post['key_str2']) &&!empty($post['key_str3']) )
 				{
-					$result = $this->redis->del($key_str, $key_str2, $key_str3) ;
+					$result = $this->redis->del($input['key_str'], $input['key_str2'], $input['key_str3']) ;
 				}
 				else if( !empty($post['key_str']) && !empty($post['key_str2']) )
 				{
-					$result = $this->redis->del($key_str, $key_str2) ;
+					$result = $this->redis->del($input['key_str'], $input['key_str2']) ;
 				}
 				else if( !empty($post['key_str']) )
 				{
-					$result = $this->redis->del($key_str) ;
+					$result = $this->redis->del($input['key_str']) ;
 				}
 				break;
 			case 'type':
-				$result = $this->redis->type($key_str) ;
+				$result = $this->redis->type($input['key_str']) ;
 				break;
 			case 'keys':
-				$key_str = $key_str.'*' ;
-				$result = $this->redis->keys($key_str) ;
+				$input['key_str'] = $input['key_str'].'*' ;
+				$result = $this->redis->keys($input['key_str']) ;
 				break;
 			case 'randomkey':
 				$result = $this->redis->randomkey() ;
 				break;
 			case 'rename':
-				$result = $this->redis->rename($key_str, $val_str) ;
+				$result = $this->redis->rename($input['key_str'], $input['val_str']) ;
 				break;
 			case 'renamenx':
-				$result = $this->redis->renamenx($key_str, $val_str) ;
+				$result = $this->redis->renamenx($input['key_str'], $input['val_str']) ;
 				break;
 			case 'dbsize':
 				$result = $this->redis->dbsize() ;
 				break;
 			case 'xpire':
-				$result = $this->redis->xpire($key_str, $val_str) ;
+				$result = $this->redis->xpire($input['key_str'], $input['ind_str']) ;
 				break;
 			case 'ttl':
-				$result = $this->redis->ttl($key_str) ;
+				$result = $this->redis->ttl($input['key_str']) ;
 				break;
 			case 'select':
-				$ind_str = intval($ind_str) ;
-				$result = $this->redis->select($ind_str) ;
+				$input['ind_str'] = intval($input['ind_str']) ;
+				$result = $this->redis->select($input['ind_str']) ;
 				if( $result=='OK' )
 				{
-					$this->_dblink = $ind_str ;
-					$this->session->set_flashdata('redis_db', $ind_str);
+					$this->_dblink = $input['ind_str'] ;
+					$this->session->set_flashdata('redis_db', $input['ind_str']);
 				}
 				break;
 			case 'move':
-				$ind_str = intval($ind_str) ;
-				$result = $this->redis->move($key_str, $ind_str) ;
+				if( isset($post['ind_str']) )
+				{
+					$input['ind_str'] = intval($input['ind_str']) ;
+					$result = $this->redis->move($input['key_str'], $input['ind_str']) ;
+				}
 				break;
 			case 'flushdb':
 				$result = $this->redis->flushdb() ;
@@ -299,266 +311,343 @@ class Redis_test extends CI_Controller {
 			case 'mset':
 				if( isset($post['key_str']) && isset($post['key_str2']) )
 				{
-					$result = $this->redis->mset($key_str, $val_str, $key_str2, $val_str2) ;
+					$result = $this->redis->mset($input['key_str'], $input['val_str'], $input['key_str2'], $input['val_str2']) ;
 				}
 				else if( isset($post['key_str']) )
 				{
-					$result = $this->redis->set($key_str, $val_str) ;
+					$result = $this->redis->set($input['key_str'], $input['val_str']) ;
 				}
 				break;
 			case 'setnx':
 			case 'msetnx':
 				if( isset($post['key_str']) && isset($post['key_str2']) )
 				{
-					$result = $this->redis->msetnx($key_str, $val_str, $key_str2, $val_str2) ;
+					$result = $this->redis->msetnx($input['key_str'], $input['val_str'], $input['key_str2'], $input['val_str2']) ;
 				}
 				else if( isset($post['key_str']) )
 				{
-					$result = $this->redis->setnx($key_str, $val_str) ;
+					$result = $this->redis->setnx($input['key_str'], $input['val_str']) ;
 				}
 				break;
 			case 'setbit':
-				$result = $this->redis->setbit($key_str, $off_str, $val_str) ;
+				$result = $this->redis->setbit($input['key_str'], $input['off_str'], $input['val_str']) ;
 				break;
 			case 'getbit':
-				$result = $this->redis->getbit($key_str, $val_str) ;
+				$result = $this->redis->getbit($input['key_str'], $input['val_str']) ;
 				break;
 			case 'bitcount':
-				$result = $this->redis->bitcount($key_str) ;
+				$result = $this->redis->bitcount($input['key_str']) ;
 				break;
 			case 'bitop':
-				$result = $this->redis->bitop($opt_str, $key_str, $key_str2, $key_str3) ;
+				$result = $this->redis->bitop($input['opt_str'], $input['key_str'], $input['key_str2'], $input['key_str3']) ;
 				break;
 			case 'append':
-				$result = $this->redis->append($key_str, $val_str) ;
+				$result = $this->redis->append($input['key_str'], $input['val_str']) ;
 				break;
 			case 'get':
 			case 'mget':
 				if( isset($post['key_str']) && isset($post['key_str2']) )
 				{
-					$result = $this->redis->mget($key_str, $key_str2) ;
+					$result = $this->redis->mget($input['key_str'], $input['key_str2']) ;
 				}
 				else if( isset($post['key_str']) )
 				{
-					$result = $this->redis->get($key_str) ;
+					$result = $this->redis->get($input['key_str']) ;
 				}
 				break;
 			case 'getset':
-				$result = $this->redis->getset($key_str, $val_str) ;
+				$result = $this->redis->getset($input['key_str'], $input['val_str']) ;
 				break;
 			case 'strlen':
-				$result = $this->redis->strlen($key_str) ;
+				$result = $this->redis->strlen($input['key_str']) ;
 				break;
 			case 'incr':
 			case 'incrby':
 				if( isset($post['val_str']) )
 				{
-					$val_str = intval($val_str) ;
-					$result = $this->redis->incrby($key_str, $val_str) ;
+					$input['val_str'] = intval($input['val_str']) ;
+					$result = $this->redis->incrby($input['key_str'], $input['val_str']) ;
 				}
 				else
 				{
-					$result = $this->redis->incr($key_str) ;
+					$result = $this->redis->incr($input['key_str']) ;
 				}
 				break;
 			case 'incrbyfloat':
-				//$val_str = floatval($val_str) ;
-				$result = $this->redis->incrbyfloat($key_str, $val_str) ;
+				$result = $this->redis->incrbyfloat($input['key_str'], $input['val_str']) ;
 				break;
 			case 'decr':
 			case 'decrby':
 				if( isset($post['val_str']) )
 				{
-					$val_str = intval($val_str) ;
-					$result = $this->redis->decrby($key_str, $val_str) ;
+					$input['val_str'] = intval($input['val_str']) ;
+					$result = $this->redis->decrby($input['key_str'], $input['val_str']) ;
 				}
 				else
 				{
-					$result = $this->redis->decr($key_str) ;
+					$result = $this->redis->decr($input['key_str']) ;
 				}
 				break;
 
 			// 雜湊型態
 			case 'hset':
-				$result = $this->redis->hset($key_str, $field_str, $val_str) ;
+				$result = $this->redis->hset($input['key_str'], $input['field_str'], $input['val_str']) ;
 				break;
 			case 'hsetnx':
-				$result = $this->redis->hsetnx($key_str, $field_str, $val_str) ;
+				$result = $this->redis->hsetnx($input['key_str'], $input['field_str'], $input['val_str']) ;
 				break;
 			case 'hincrby':
-				$val_str = intval($val_str) ;
-				$result = $this->redis->hincrby($key_str, $field_str, $val_str) ;
+				$input['val_str'] = intval($input['val_str']) ;
+				$result = $this->redis->hincrby($input['key_str'], $input['field_str'], $input['val_str']) ;
 				break;
 			case 'hkeys':
 				//$key_str = $key_str.'*' ;
-				$result = $this->redis->hkeys($key_str) ;
+				$result = $this->redis->hkeys($input['key_str']) ;
 				break;
 			case 'hlen':
-				$result = $this->redis->hlen($key_str) ;
+				$result = $this->redis->hlen($input['key_str']) ;
 				break;
 			case 'hget':
-				$result = $this->redis->hget($key_str, $field_str) ;
+				$result = $this->redis->hget($input['key_str'], $input['field_str']) ;
 				break;
 			case 'hgetall':
-				$result = $this->redis->hgetall($key_str) ;
+				$result = $this->redis->hgetall($input['key_str']) ;
 				break;
 			case 'hexists':
-				$result = $this->redis->hexists($key_str, $field_str) ;
+				$result = $this->redis->hexists($input['key_str'], $input['field_str']) ;
 				break;
 			case 'hdel':
-				$result = $this->redis->hdel($key_str, $field_str) ;
+				$result = $this->redis->hdel($input['key_str'], $input['field_str']) ;
 				break;
 
 			// 列表型態
 			case 'rpush':
-				$result = $this->redis->rpush($key_str, $val_str) ;
+				$result = $this->redis->rpush($input['key_str'], $input['val_str']) ;
 				break;
 			case 'lpush':
-				$result = $this->redis->lpush($key_str, $val_str) ;
+				$result = $this->redis->lpush($input['key_str'], $input['val_str']) ;
 				break;
 			case 'lpop':
-				$result = $this->redis->lpop($key_str) ;
+				$result = $this->redis->lpop($input['key_str']) ;
 				break;
 			case 'rpop':
-				$result = $this->redis->rpop($key_str) ;
+				$result = $this->redis->rpop($input['key_str']) ;
 				break;
 			case 'rpoplpush':
-				$result = $this->redis->rpoplpush($key_str, $dstkey) ;
+				$result = $this->redis->rpoplpush($input['key_str'], $input['dstkey']) ;
 				break;
 			case 'llen':
-				$result = $this->redis->llen($key_str) ;
+				$result = $this->redis->llen($input['key_str']) ;
 				break;
 			case 'lrange':
-				$result = $this->redis->lrange($key_str, $val_str, $val_str2) ;
+				$result = $this->redis->lrange($input['key_str'], $input['val_str'], $input['val_str2']) ;
 				break;
 			case 'ltrim':
-				$result = $this->redis->ltrim($key_str, $val_str, $val_str2) ;
+				$result = $this->redis->ltrim($input['key_str'], $input['val_str'], $input['val_str2']) ;
 				break;
 			case 'lindex':
-				$result = $this->redis->lindex($key_str, $ind_str) ;
+				$result = $this->redis->lindex($input['key_str'], $input['ind_str']) ;
 				break;
 			case 'lset':
-				$result = $this->redis->lset($key_str, $ind_str, $val_str) ;
+				$result = $this->redis->lset($input['key_str'], $input['ind_str'], $input['val_str']) ;
 				break;
 			case 'lrem':
-				$result = $this->redis->lrem($key_str, $ind_str, $val_str) ;
+				$result = $this->redis->lrem($input['key_str'], $input['ind_str'], $input['val_str']) ;
 				break;
 			case 'linsert':
-				$result = $this->redis->linsert($key_str, $off_str, $field_str, $val_str) ;
+				$result = $this->redis->linsert($input['key_str'], $input['off_str'], $input['field_str'], $input['val_str']) ;
 				break;
 
 			// 集合型態
 			case 'sadd':
-				$result = $this->redis->sadd($key_str, $val_str) ;
+				$result = $this->redis->sadd($input['key_str'], $input['val_str']) ;
 				break;
 			case 'srem':
-				$result = $this->redis->srem($key_str, $val_str) ;
+				$result = $this->redis->srem($input['key_str'], $input['val_str']) ;
 				break;
 			case 'sismember':
-				$result = $this->redis->sismember($key_str, $val_str) ;
+				$result = $this->redis->sismember($input['key_str'], $input['val_str']) ;
 				break;
 			case 'smembers':
-				$result = $this->redis->smembers($key_str) ;
+				$result = $this->redis->smembers($input['key_str']) ;
 				break;
 			case 'scard':
-				$result = $this->redis->scard($key_str) ;
+				$result = $this->redis->scard($input['key_str']) ;
 				break;
 			case 'sdiff':
-				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']) )
+				if( isset($post['key_str']) && isset($post['key_str2']) && $input['key_str3']!='' )
 				{
-					$result = $this->redis->sdiff($key_str, $key_str2, $key_str3) ;
+					$result = $this->redis->sdiff($input['key_str'], $input['key_str2'], $input['key_str3']) ;
 				}
 				else if( isset($post['key_str']) && isset($post['key_str2']) )
 				{
-					$result = $this->redis->sdiff($key_str, $key_str2) ;
+					$result = $this->redis->sdiff($input['key_str'], $input['key_str2']) ;
 				}
 				break;
 			case 'sdiffstore':
 				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['dstkey']) )
 				{
-					$result = $this->redis->sdiffstore($dstkey, $key_str, $key_str2) ;
+					$result = $this->redis->sdiffstore($input['dstkey'], $input['key_str'], $input['key_str2']) ;
 				}
 				break;
 			case 'sinter':
-				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']) )
+				if( isset($post['key_str']) && isset($post['key_str2']) && $input['key_str3']!='' )
 				{
-					$result = $this->redis->sinter($key_str, $key_str2, $key_str3) ;
+					$result = $this->redis->sinter($input['key_str'], $input['key_str2'], $input['key_str3']) ;
 				}
 				else if( isset($post['key_str']) && isset($post['key_str2']) )
 				{
-					$result = $this->redis->sinter($key_str, $key_str2) ;
+					$result = $this->redis->sinter($input['key_str'], $input['key_str2']) ;
 				}
 				break;
 			case 'sinterstore':
 				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['dstkey']) )
 				{
-					$result = $this->redis->sinterstore($dstkey, $key_str, $key_str2) ;
+					$result = $this->redis->sinterstore($input['dstkey'], $input['key_str'], $input['key_str2']) ;
 				}
 				break;
 			case 'sunion':
-				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']) )
+				if( isset($post['key_str']) && isset($post['key_str2']) && $input['key_str3']!='' )
 				{
-					$result = $this->redis->sunion($key_str, $key_str2, $key_str3) ;
+					$result = $this->redis->sunion($input['key_str'], $input['key_str2'], $input['key_str3']) ;
 				}
 				else if( isset($post['key_str']) && isset($post['key_str2']) )
 				{
-					$result = $this->redis->sunion($key_str, $key_str2) ;
+					$result = $this->redis->sunion($input['key_str'], $input['key_str2']) ;
 				}
 				break;
 			case 'sunionstore':
 				if( isset($post['key_str']) && isset($post['key_str2']) && isset($post['dstkey']) )
 				{
-					$result = $this->redis->sunionstore($dstkey, $key_str, $key_str2) ;
+					$result = $this->redis->sunionstore($input['dstkey'], $input['key_str'], $input['key_str2']) ;
 				}
 				break;
 			case 'spop':
-				$result = $this->redis->spop($key_str) ;
+				$result = $this->redis->spop($input['key_str']) ;
 				break;
 			case 'srandmember':
-				$result = $this->redis->srandmember($key_str) ;
+				if( isset($post['key_str']) && !empty($post['ind_str']) )
+				{
+					$input['ind_str'] = intval($input['ind_str']) ;
+					$result = $this->redis->srandmember($input['key_str'], $input['ind_str']) ;
+				}
+				else if( isset($post['key_str']) )
+				{
+					$result = $this->redis->srandmember($input['key_str']) ;
+				}
 				break;
 			case 'smove':
 				if( isset($post['key_str']) && isset($post['dstkey']) && isset($post['val_str']) )
 				{
-					$result = $this->redis->smove($key_str, $dstkey, $val_str) ;
+					$result = $this->redis->smove($input['key_str'], $input['dstkey'], $input['val_str']) ;
+				}
+				break;
+
+			// 有序集合型態
+			case 'zadd':
+				if( isset($post['key_str']) && isset($post['score']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->zadd($input['key_str'], $input['score'], $input['val_str']) ;
+				}
+				break;
+			case 'zincrby':
+				if( isset($post['key_str']) && isset($post['score']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->zincrby($input['key_str'], $input['score'], $input['val_str']) ;
+				}
+				break;
+			case 'zrem':
+				if( isset($post['key_str']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->zrem($input['key_str'], $input['val_str']) ;
+				}
+				break;
+			case 'zremrangebyrank':
+				if( isset($post['key_str']) && isset($post['val_str']) && isset($post['val_str2']) )
+				{
+					$result = $this->redis->zremrangebyrank($input['key_str'], $input['val_str'], $input['val_str2']) ;
+				}
+				break;
+			case 'zrevrange':
+				if( isset($post['key_str']) && isset($post['val_str']) && isset($post['val_str2']) )
+				{
+					$result = $this->redis->zrevrange($input['key_str'], $input['val_str'], $input['val_str2']) ;
+				}
+				break;
+			case 'zrange':
+				if( isset($post['key_str']) && isset($post['val_str']) && isset($post['val_str2']) )
+				{
+					$result = $this->redis->zrange($input['key_str'], $input['val_str'], $input['val_str2']) ;
+				}
+				break;
+			case 'zrank':
+				if( isset($post['key_str']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->zrank($input['key_str'], $input['val_str']) ;
+				}
+				break;
+			case 'zrevrank':
+				if( isset($post['key_str']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->zrevrank($input['key_str'], $input['val_str']) ;
+				}
+				break;
+			case 'zscore':
+				if( isset($post['key_str']) && isset($post['val_str']) )
+				{
+					$result = $this->redis->zscore($input['key_str'], $input['val_str']) ;
+				}
+				break;
+			case 'zrangebyscore':
+				if( isset($post['key_str']) && isset($post['val_str']) && isset($post['val_str2']) )
+				{
+					$result = $this->redis->zrangebyscore($input['key_str'], $input['val_str'], $input['val_str2']) ;
+				}
+				break;
+			case 'zcard':
+				if( isset($post['key_str']) )
+				{
+					$result = $this->redis->zcard($input['key_str']) ;
+				}
+				break;
+			case 'zinterstore':
+				if( isset($post['dstkey']) && !empty($input['numkey']) )
+				{
+					if( $input['numkey']==1 && isset($post['key_str']) )
+					{
+						$result = $this->redis->zinterstore($input['dstkey'], 1, $input['key_str'] ) ;
+					}
+					else if( $input['numkey']==2 && isset($post['key_str']) && isset($post['key_str2']) )
+					{
+						$result = $this->redis->zinterstore($input['dstkey'], 2, $input['key_str'], $input['key_str2']) ;
+					}
+					else if( $input['numkey']==3 && isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']))
+					{
+						$result = $this->redis->zinterstore($input['dstkey'], 3, $input['key_str'], $input['key_str2'], $input['key_str3'] ) ;
+					}
+				}
+				break;
+			case 'zunionstore':
+				if( isset($post['dstkey']) && !empty($input['numkey']) )
+				{
+					if( $input['numkey']==1 && isset($post['key_str']) )
+					{
+						$result = $this->redis->zunionstore($input['dstkey'], 1, $input['key_str'] ) ;
+					}
+					else if( $input['numkey']==2 && isset($post['key_str']) && isset($post['key_str2']) )
+					{
+						$result = $this->redis->zunionstore($input['dstkey'], 2, $input['key_str'], $input['key_str2']) ;
+					}
+					else if( $input['numkey']==3 && isset($post['key_str']) && isset($post['key_str2']) && isset($post['key_str3']))
+					{
+						$result = $this->redis->zunionstore($input['dstkey'], 2, $input['key_str'], $input['key_str2'], $input['key_str3'] ) ;
+					}
 				}
 				break;
 
 			default:
 				$result = strtoupper($redis_act).' do not exists' ;
 				break;
-		}
-		if( isset($post['redis_act']) )
-		{
-			$input['redis_act'] = $redis_act ;
-		}
-		if( isset($post['key_str']) )
-		{
-			$input['key_str'] = $key_str ;
-		}
-		if( isset($post['val_str']) )
-		{
-			$input['val_str'] = $val_str ;
-		}
-		if( isset($post['key_str2']) )
-		{
-			$input['key_str2'] = $key_str2 ;
-		}
-		if( isset($post['val_str2']) )
-		{
-			$input['val_str2'] = $val_str2 ;
-		}
-		if( isset($post['off_str']) )
-		{
-			$input['off_str'] = $off_str ;
-		}
-		if( isset($post['ind_str']) )
-		{
-			$input['ind_str'] = $ind_str ;
-		}
-		if( isset($post['field_str']) )
-		{
-			$input['field_str'] = $field_str ;
 		}
 		$result = is_null($result) ? 'nil' : $result ;
 		$result = is_bool($result) ? ($result ? 'true' : 'false') : $result ;
