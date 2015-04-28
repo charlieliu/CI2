@@ -645,8 +645,16 @@ class Redis_test extends CI_Controller {
 				}
 				break;
 
+			case 'multi':
+				$result = $this->redis->command('MULTI').'/';
+				$result .= $this->redis->set('a', 'a').'/';
+				$result .= $this->redis->set('b', 'b').'/';
+				//$result .= $this->redis->command('EXEC').'/';
+				$this->redis->command('EXEC');
+				break;
+
 			default:
-				$result = strtoupper($redis_act).' do not exists' ;
+				$result = strtoupper($input['redis_act']).' do not exists' ;
 				break;
 		}
 		$result = is_null($result) ? 'nil' : $result ;
