@@ -11,5 +11,7 @@
         </form>
     </div>
 
+    <div id="redis_log">{redis_log}</div>
+
     <script type="text/javascript" src="{base_url}redis_test/get_url/redis_get"></script>
 </div>

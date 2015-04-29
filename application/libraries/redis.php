@@ -11,6 +11,7 @@
 * @link 	https://github.com/joelcox/codeigniter-redis
 * @link		http://joelcox.nl
 * @license	http://www.opensource.org/licenses/mit-license.html
+* @editer	liuchangli0107@gmail.com
 */
 class CI_Redis {
 
@@ -30,14 +31,6 @@ class CI_Redis {
 	*/
 	private $_connection;
 
-	/**
-	* Debug
-	*
-	* Whether we're in debug mode
-	* @var		bool
-	*/
-	public $debug = FALSE;
-
 	public $dblink = 0 ;
 
 	/**
@@ -48,13 +41,14 @@ class CI_Redis {
 	*/
 	const CRLF = "\r\n";
 
+	private $log_str = '' ;
+
 	/**
 	* Constructor
 	*/
 	public function __construct($params = array())
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
-		log_message('debug', 'Redis Class Initialized');
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 
 		$this->_ci = get_instance();
 		$this->_ci->load->config('redis');
@@ -91,7 +85,7 @@ class CI_Redis {
 
 		// Authenticate when needed
 		$this->_auth($config['password']);
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 	}
 
 	/**
@@ -104,11 +98,10 @@ class CI_Redis {
 	*/
 	public function __call($method, $arguments)
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
-		//if($method=='select') $this->dblink=intval($arguments[0]) ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$request = $this->_encode_request($method, $arguments);
-		//var_dump($request);
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return $this->_write_request($request);
 	}
 
@@ -121,13 +114,13 @@ class CI_Redis {
 	*/
 	public function command($string)
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
-		//var_dump($string);
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $string='.print_r($string,TRUE)) ;
 		$slices = explode(' ', $string);
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $slices='.print_r($slices,TRUE)) ;
 		$request = $this->_encode_request($slices[0], array_slice($slices, 1));
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		//var_dump($request);
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return $this->_write_request($request);
 	}
 
@@ -140,18 +133,19 @@ class CI_Redis {
 	*/
 	private function _auth($password = NULL)
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		// Authenticate when password is set
 		if ( !empty($password) )
 		{
 			// See if we authenticated successfully
 			if ($this->command('AUTH ' . $password) !== 'OK')
 			{
+				$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' Could not connect to Redis, invalid password') ;
 				show_error('Could not connect to Redis, invalid password');
 			}
 
 		}
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 	}
 
 	/**
@@ -163,7 +157,7 @@ class CI_Redis {
 	*/
 	public function _clear_socket()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__) ;
 		// Read one character at a time
 		fflush($this->_connection);
 		return NULL;
@@ -178,12 +172,8 @@ class CI_Redis {
 	*/
 	private function _write_request($request)
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
-		//var_dump($request);
-		if ($this->debug === TRUE)
-		{
-			log_message('debug', 'Redis unified request: ' . $request);
-		}
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
 
 		// How long is the data we are sending?
 		$value_length = strlen($request);
@@ -220,12 +210,11 @@ class CI_Redis {
 
 		// Read our request into a variable
 		$return = $this->_read_request();
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		//var_dump($return);
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $return='.print_r($return,TRUE)) ;
 
 		// Clear the socket so no data remains in the buffer
 		$this->_clear_socket();
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>',TRUE) ;
 		return $return;
 	}
 
@@ -237,10 +226,9 @@ class CI_Redis {
 	*/
 	private function _read_request()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$type = fgetc($this->_connection);
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		//var_dump($type);
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $type='.print_r($type,TRUE)) ;
 
 		// Times we will attempt to trash bad data in search of a
 		// valid type indicator
@@ -251,18 +239,11 @@ class CI_Redis {
 		while ( ! in_array($type, $response_types) && $try < $type_error_limit)
 		{
 			$type = fgetc($this->_connection);
-			//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-			//var_dump($type);
+			$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $type='.print_r($type,TRUE)) ;
 			$try++;
 		}
 
-		if ($this->debug === TRUE)
-		{
-			log_message('debug', 'Redis response type: ' . $type);
-		}
-
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		//var_dump($type);
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $type='.print_r($type,TRUE)) ;
 		switch ($type)
 		{
 			case '+':
@@ -283,7 +264,7 @@ class CI_Redis {
 			default:
 				return FALSE;
 		}// switch ($type)
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 	}
 
 	/**
@@ -294,10 +275,11 @@ class CI_Redis {
 	*/
 	private function _single_line_reply()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$value = rtrim(fgets($this->_connection));
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $value='.print_r($value,TRUE)) ;
 		$this->_clear_socket();
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return $value;
 	}
 
@@ -309,13 +291,13 @@ class CI_Redis {
 	*/
 	private function _error_reply()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		// Extract the error message
 		$error = substr(rtrim(fgets($this->_connection)), 4);
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $error='.print_r($error,TRUE)) ;
 
-		log_message('error', 'Redis server returned an error: ' . $error);
 		$this->_clear_socket();
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return FALSE;
 	}
 
@@ -327,7 +309,7 @@ class CI_Redis {
 	*/
 	private function _integer_reply()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__) ;
 		return (int) rtrim(fgets($this->_connection));
 	}
 
@@ -340,7 +322,7 @@ class CI_Redis {
 	*/
 	private function _bulk_reply()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 
 		// How long is the data we are reading? Support waiting for data to
 		// fully return from redis and enter into socket.
@@ -349,11 +331,13 @@ class CI_Redis {
 		if ($value_length <= 0) return NULL;
 
 		$response = '';
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $response='.print_r($response,TRUE)) ;
 
 		// Handle reply if data is less than or equal to 8192 bytes, just read it
 		if ($value_length <= 8192)
 		{
 			$response = fread($this->_connection, $value_length);
+			$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $response='.print_r($response,TRUE)) ;
 		}
 		else
 		{
@@ -388,6 +372,7 @@ class CI_Redis {
 				}
 
 				$response .= $chunk;
+				$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $chunk='.print_r($chunk,TRUE)) ;
 
 				// Re-calculate how much data is left to read
 				$data_left = $data_left - $read_size;
@@ -395,10 +380,11 @@ class CI_Redis {
 			}// while ($data_left > 0 )
 		}
 		// Handle reply if data is less than or equal to 8192 bytes, just read it end
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $response='.print_r($response,TRUE)) ;
 
 		// Clear the socket in case anything remains in there
 		$this->_clear_socket();
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return isset($response) ? $response : FALSE;
 	}
 
@@ -410,7 +396,7 @@ class CI_Redis {
 	*/
 	private function _multi_bulk_reply()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		// Get the amount of values in the response
 		$response = array();
 		$total_values = (int) fgets($this->_connection);
@@ -433,10 +419,11 @@ class CI_Redis {
 			$response[] = $this->_bulk_reply();
 		}
 		// Loop all values and add them to the response array end
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $response='.print_r($response,TRUE)) ;
 
 		// Clear the socket
 		$this->_clear_socket();
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return isset($response) ? $response : FALSE;
 	}
 
@@ -451,10 +438,10 @@ class CI_Redis {
 	*/
 	private function _encode_request($method, $arguments = array())
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$request = '$' . strlen($method) . self::CRLF . $method . self::CRLF;
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		//var_dump($request) ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $arguments='.print_r($arguments,TRUE)) ;
 		$_args = 1;
 
 		// Append all the arguments in the request string
@@ -483,9 +470,8 @@ class CI_Redis {
 		}
 
 		$request = '*' . $_args . self::CRLF . $request;
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		//var_dump($request) ;
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return $request;
 	}
 
@@ -498,7 +484,7 @@ class CI_Redis {
 	*/
 	public function info($section = FALSE)
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		if ($section !== FALSE)
 		{
 			$response = $this->command('INFO '. $section);
@@ -517,21 +503,22 @@ class CI_Redis {
 			$parts = explode(':', $line);
 			if (isset($parts[1])) $data[$parts[0]] = $parts[1];
 		}
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>' ;
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
 		return $data;
 	}
 
-	/**
-	* Debug
-	*
-	* Set debug mode
-	* @param	bool 	set the debug mode on or off
-	* @return 	void
-	*/
-	public function debug($bool)
+	private function write_log($str='',$is_write=FALSE)
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
-		$this->debug = (bool) $bool;
+		$this->log_str .= $str.'<br>' ;
+		if( $is_write ){
+			$this->set_log() ;
+		}
+	}
+
+	private function set_log()
+	{
+		$this->_ci->load->library('session');
+		$this->_ci->session->set_userdata('redis_log', $this->log_str);
 	}
 
 	/**
@@ -542,7 +529,6 @@ class CI_Redis {
 	*/
 	function __destruct()
 	{
-		//echo 'LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.'<br>' ;
 		if ($this->_connection) fclose($this->_connection);
 	}
 }

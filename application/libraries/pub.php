@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pub{
+class CI_Pub{
     public function CurlPost($postURL='', $postdata='')
     {
         if( empty($postURL) )

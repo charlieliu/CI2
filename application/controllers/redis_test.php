@@ -8,6 +8,7 @@ class Redis_test extends CI_Controller {
 	private $page_list = array();
 	private $_csrf = null ;
 	private $_dblink = 0 ;
+	private $_redis_log = '' ;
 
 	public $UserAgent = array() ;
 
@@ -35,6 +36,8 @@ class Redis_test extends CI_Controller {
 		}
 		$this->session->keep_flashdata('redis_db');
 		$this->_dblink = intval($this->session->flashdata('redis_db')) ;
+
+		$this->_redis_log = $this->session->userdata('redis_log') ;
 	}
 
 	// 取得標題
@@ -199,6 +202,7 @@ class Redis_test extends CI_Controller {
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
 		$html_date['js'][] = 'js/redis_test.js';
+		$html_date['redis_log'] = $this->_redis_log ;
 
 		$view = $this->parser->parse('index_view', $html_date, true);
 		$this->pub->remove_view_space($view);
@@ -649,8 +653,7 @@ class Redis_test extends CI_Controller {
 				$result = $this->redis->command('MULTI').'/';
 				$result .= $this->redis->set('a', 'a').'/';
 				$result .= $this->redis->set('b', 'b').'/';
-				//$result .= $this->redis->command('EXEC').'/';
-				$this->redis->command('EXEC');
+				$result .= $this->redis->command('EXEC');
 				break;
 
 			default:
@@ -659,7 +662,8 @@ class Redis_test extends CI_Controller {
 		}
 		$result = is_null($result) ? 'nil' : $result ;
 		$result = is_bool($result) ? ($result ? 'true' : 'false') : $result ;
-		echo json_encode(array('result'=>$result,'dblink'=>$this->_dblink,'post'=>$post,'input'=>$input)) ;
+		$this->_redis_log = $this->session->userdata('redis_log') ;
+		echo json_encode(array('result'=>$result,'dblink'=>$this->_dblink,'post'=>$post,'input'=>$input,'redis_log'=>$this->_redis_log)) ;
 	}
 
 	public function get_url()
