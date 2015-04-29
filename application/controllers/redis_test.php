@@ -650,10 +650,12 @@ class Redis_test extends CI_Controller {
 				break;
 
 			case 'multi':
-				$result = $this->redis->command('MULTI').'/';
-				$result .= $this->redis->set('a', 'a').'/';
-				$result .= $this->redis->set('b', 'b').'/';
-				$result .= $this->redis->command('EXEC');
+				$result = array() ;
+				$result[] = $this->redis->command('MULTI') ;
+				$result[] = $this->redis->set('a', 'a') ;
+				$result[] = $this->redis->set('b', 'b') ;
+				$result[] = $this->redis->set('c', 'c') ;
+				$result[] = $this->redis->command('EXEC') ;
 				break;
 
 			default:

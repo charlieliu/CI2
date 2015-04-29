@@ -42,6 +42,7 @@ class CI_Redis {
 	const CRLF = "\r\n";
 
 	private $log_str = '' ;
+	private $time_mark = 0 ;
 
 	/**
 	* Constructor
@@ -98,10 +99,13 @@ class CI_Redis {
 	*/
 	public function __call($method, $arguments)
 	{
+		$this->_ci->benchmark->mark('__call_start');
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$request = $this->_encode_request($method, $arguments);
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
+		$this->_ci->benchmark->mark('__call_end');
+		$this->time_mark += $this->_ci->benchmark->elapsed_time('__call_start','__call_end');
 		return $this->_write_request($request);
 	}
 
@@ -114,6 +118,7 @@ class CI_Redis {
 	*/
 	public function command($string)
 	{
+		$this->_ci->benchmark->mark('command_start');
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $string='.print_r($string,TRUE)) ;
 		$slices = explode(' ', $string);
@@ -121,6 +126,8 @@ class CI_Redis {
 		$request = $this->_encode_request($slices[0], array_slice($slices, 1));
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end') ;
+		$this->_ci->benchmark->mark('command_end');
+		$this->time_mark += $this->_ci->benchmark->elapsed_time('command_start','command_end');
 		return $this->_write_request($request);
 	}
 
@@ -172,6 +179,7 @@ class CI_Redis {
 	*/
 	private function _write_request($request)
 	{
+		$this->_ci->benchmark->mark('_write_request_start');
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' start') ;
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' $request='.print_r($request,TRUE)) ;
 
@@ -214,7 +222,10 @@ class CI_Redis {
 
 		// Clear the socket so no data remains in the buffer
 		$this->_clear_socket();
-		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' end<br>',TRUE) ;
+		$this->_ci->benchmark->mark('_write_request_end');
+		$this->time_mark += $this->_ci->benchmark->elapsed_time('_write_request_start','_write_request_end');
+		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' endtime='.$this->time_mark.'<br>',TRUE) ;
+		$this->time_mark = 0 ;
 		return $return;
 	}
 

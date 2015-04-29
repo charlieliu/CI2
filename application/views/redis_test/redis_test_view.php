@@ -4,6 +4,13 @@
     {grid_view}
 
     <div class="content_block">
+        <p>MULTI</p>
+        <ol>
+            <li>MULTI</li>
+            <li>SET a a</li>
+            <li>SET b b</li>
+            <li>EXEC</li>
+        </ol>
         <form class="redis_test" >
             <input type="hidden" name="redis_act" value="MULTI">
             <input type="hidden" name="{csrf_name}" value="{csrf_value}">
