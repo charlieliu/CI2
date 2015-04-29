@@ -26,8 +26,7 @@ class Welcome extends CI_Controller {
 		$this->UserAgent = $this->pub->get_UserAgent() ;
 		if( isset($this->UserAgent['O']) )
 		{
-			//$this->php_test_model->query_user_agent($this->UserAgent) ;
-			echo $this->UserAgent['O'] ;
+			$this->php_test_model->query_user_agent($this->UserAgent) ;
 			// chrome // Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36
 			// Safari // Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
 			// Opera // Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36 OPR/29.0.1795.47
