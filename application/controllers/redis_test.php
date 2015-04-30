@@ -234,7 +234,6 @@ class Redis_test extends CI_Controller {
 		}
 
 		$post = $this->input->post();
-		$post = $this->pub->trim_val($post);
 
 		$input['redis_act']	= isset($post['redis_act'])	? strtolower($post['redis_act']) : '' ;
 		$input['key_str']	= isset($post['key_str'])!=''	? $post['key_str'] : '' ;
@@ -243,7 +242,7 @@ class Redis_test extends CI_Controller {
 		$input['val_str']		= isset($post['val_str'])		? $post['val_str'] : '' ;
 		$input['val_str2']	= isset($post['val_str2'])		? $post['val_str2'] : '' ;
 		$input['val_str3']	= isset($post['val_str3'])		? $post['val_str3'] : '' ;
-		$input['off_str']		= isset($post['off_str'])		? intval($post['off_str']) : 0 ;
+		$input['off_str']		= isset($post['off_str'])		? $post['off_str'] : '' ;
 		$input['opt_str']	= isset($post['opt_str'])		? $post['opt_str'] : '' ;
 		$input['ind_str']	= isset($post['ind_str'])		? $post['ind_str'] : '' ;
 		$input['field_str']	= isset($post['field_str'])	? $post['field_str'] : '' ;
@@ -374,6 +373,7 @@ class Redis_test extends CI_Controller {
 			case 'setbit':
 				if( trim($input['key_str'])!='' )
 				{
+					$input['off_str'] = intval($input['off_str']) ;
 					$result = $this->redis->setbit($input['key_str'], $input['off_str'], $input['val_str']) ;
 				}
 				break;
@@ -585,7 +585,12 @@ class Redis_test extends CI_Controller {
 				}
 				break;
 			case 'linsert':
-				if( trim($input['key_str'])!='' )
+				$input['off_str'] = strtoupper($input['off_str']) ;
+				if(
+					trim($input['key_str'])!='' &&
+					( $input['off_str']=='BEFORE' || $input['off_str']=='AFTER' ) &&
+					$input['field_str']!=''
+				)
 				{
 					$result = $this->redis->linsert($input['key_str'], $input['off_str'], $input['field_str'], $input['val_str']) ;
 				}
