@@ -31,8 +31,6 @@ class CI_Redis {
 	*/
 	private $_connection;
 
-	public $dblink = 0 ;
-
 	/**
 	* CRLF
 	*
@@ -43,6 +41,8 @@ class CI_Redis {
 
 	private $log_str = '' ;
 	private $time_mark = 0 ;
+
+	public $total_time = 0 ;
 
 	/**
 	* Constructor
@@ -225,7 +225,7 @@ class CI_Redis {
 		$this->_ci->benchmark->mark('_write_request_end');
 		$this->time_mark += $this->_ci->benchmark->elapsed_time('_write_request_start','_write_request_end');
 		$this->write_log('LINE:'.__LINE__.' FUNCTION:'.__FUNCTION__.' endtime='.$this->time_mark.'<br>',TRUE) ;
-		$this->time_mark = 0 ;
+		$this->count_time() ;
 		return $return;
 	}
 
@@ -530,6 +530,12 @@ class CI_Redis {
 	{
 		$this->_ci->load->library('session');
 		$this->_ci->session->set_userdata('redis_log', $this->log_str);
+	}
+
+	private function count_time()
+	{
+		$this->total_time += $this->time_mark;
+		$this->time_mark = 0 ;
 	}
 
 	/**

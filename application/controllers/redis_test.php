@@ -165,6 +165,14 @@ class Redis_test extends CI_Controller {
 				'ZUNIONSTORE'=>'ZUNIONSTORE dstkey numkey key key2 key3 ... 新增dstkey 為numkey個key key2 key3 ...聯集',
 			)
 		) ;
+
+		$grid_data['redis_act'][]= array(
+			'title'=>'command',
+			'act'=>array(
+				'command'=>'command value',
+			)
+		) ;
+/*
 		$grid_data['redis_act'][]= array(
 			'title'=>'排序（List, Set, Sorted Set）',
 			'act'=>array(
@@ -180,6 +188,7 @@ class Redis_test extends CI_Controller {
 				SORT mylist BY weight_* STORE resultkey<br>將返回的結果存放於resultkey序列（List）',
 			)
 		) ;
+*/
 		$grid_data['redis_db'] = $this->_dblink ;
 		$grid_data = array_merge($grid_data,$this->_csrf);
 		$grid_view = $this->parser->parse('redis_test/redis_test_grid_view', $grid_data, true) ;
@@ -649,23 +658,49 @@ class Redis_test extends CI_Controller {
 				}
 				break;
 
+			case 'command':
+				$result = array() ;
+				$result[] = $this->redis->command($input['val_str']) ;
+				break;
+
 			case 'multi':
 				$result = array() ;
+
+				$this->benchmark->mark('MULTI_start');
 				$result[] = $this->redis->command('MULTI') ;
-				$result[] = $this->redis->set('a', 'a') ;
-				$result[] = $this->redis->set('b', 'b') ;
-				$result[] = $this->redis->set('c', 'c') ;
+				$this->benchmark->mark('MULTI_end');
+				$result[] = $this->benchmark->elapsed_time('MULTI_start','MULTI_end');
+
+				$this->benchmark->mark('act1_start');
+				$result[] = $this->redis->set('key', '1') ;
+				$this->benchmark->mark('act1_end');
+				$result[] = $this->benchmark->elapsed_time('act1_start','act1_end');
+
+				$this->benchmark->mark('act2_start');
+				$result[] = $this->redis->sadd('key', '2') ;
+				$this->benchmark->mark('act2_end');
+				$result[] = $this->benchmark->elapsed_time('act2_start','act2_end');
+
+				$this->benchmark->mark('act3_start');
+				$result[] = $this->redis->set('key', '3') ;
+				$this->benchmark->mark('act3_end');
+				$result[] = $this->benchmark->elapsed_time('act3_start','act3_end');
+
+				$this->benchmark->mark('EXEC_start');
 				$result[] = $this->redis->command('EXEC') ;
+				$this->benchmark->mark('EXEC_end');
+				$result[] = $this->benchmark->elapsed_time('EXEC_start','EXEC_end');
 				break;
 
 			default:
 				$result = strtoupper($input['redis_act']).' do not exists' ;
 				break;
 		}
+		$time = $this->redis->total_time ;
 		$result = is_null($result) ? 'nil' : $result ;
 		$result = is_bool($result) ? ($result ? 'true' : 'false') : $result ;
 		$this->_redis_log = $this->session->userdata('redis_log') ;
-		echo json_encode(array('result'=>$result,'dblink'=>$this->_dblink,'post'=>$post,'input'=>$input,'redis_log'=>$this->_redis_log)) ;
+		echo json_encode(array('time'=>$time,'result'=>$result,'dblink'=>$this->_dblink,'post'=>$post,'input'=>$input,'redis_log'=>$this->_redis_log)) ;
 	}
 
 	public function get_url()
