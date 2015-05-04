@@ -1701,7 +1701,6 @@ class Php_test extends CI_Controller {
 
 	public function get_pwd_excel()
 	{
-		$this->load->library('excel');
 		$post = $this->input->post() ;
 		$post = $this->pub->trim_val($post) ;
 		$page_max = intval($post['page_max']);
@@ -1710,6 +1709,7 @@ class Php_test extends CI_Controller {
 		$pwd_data = $this->php_test_model->query_hash_test($hash_str,$page,$page_max) ;
 		$header[] = array('index','passwords','md5', 'sha1', 'sha256', 'sha512', );
 		$data = array_merge($header,$pwd_data['data']) ;
+		$this->load->library('excel');
 		$this->excel->Array2xls($data,'get_pwd_excel') ;
 	}
 

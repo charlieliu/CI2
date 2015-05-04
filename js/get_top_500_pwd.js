@@ -16,6 +16,7 @@ $(document).ready(function(){
 		pagenav(pg);
 	});
 	$("#down_xls").click(function(){
+		//if( event.preventDefault ) event.preventDefault ; else event.returnValue=false ;
 		$('#frm1_page').val($('#pageNow').val()) ;
 		$('#frm1').submit() ;
 	});

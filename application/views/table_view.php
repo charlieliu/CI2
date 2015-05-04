@@ -13,7 +13,7 @@
     <div class="content_block">
         <form id="frm1" method="post" target="ifm_exp" action="get_pwd_excel">
             <input type="text" id="hash_str" name="hash_str" style="width:80%;" value="">
-            <input type="submit" id="frm1_submit" value="查詢">
+            <input type="button" id="frm1_submit" value="查詢">
             <input type="reset" id="frm1_reset" value="清除表單">
             <input type="button" id="down_xls" value="downloads xls">
             <input type="hidden" id="frm1_page" name="page" value="">

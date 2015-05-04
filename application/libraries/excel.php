@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/* third_party/PHPExcel.php and third_party/PHPExcel copy from https://github.com/PHPOffice/PHPExcel */
 require_once APPPATH."/third_party/PHPExcel.php";
 require_once APPPATH."/third_party/PHPExcel/IOFactory.php";
 require_once APPPATH."/third_party/PHPExcel/Cell.php";
@@ -7,7 +8,9 @@ require_once APPPATH."/third_party/PHPExcel/Writer/Excel2007.php";
 require_once APPPATH."/third_party/PHPExcel/CachedObjectStorageFactory.php";
 require_once APPPATH."/third_party/PHPExcel/Settings.php";
 
+
 class Excel extends PHPExcel {
+
 	public function __construct($params=null)
 	{
 		if( !is_null($params) )
@@ -20,6 +23,7 @@ class Excel extends PHPExcel {
 		parent::__construct();
 	}
 
+	/*
 	public function xls2Array($file,$skip_empty=TRUE)
 	{
 		$objReader = PHPExcel_IOFactory::createReaderForFile($file) ;
@@ -61,6 +65,7 @@ class Excel extends PHPExcel {
 		}
 		return $rtnAry ;
 	}
+	*/
 
 	public function Array2xls($arr=array(),$title='')
 	{
