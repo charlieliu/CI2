@@ -23,9 +23,9 @@ class Excel extends PHPExcel {
 		parent::__construct();
 	}
 
-	/*
 	public function xls2Array($file,$skip_empty=TRUE)
 	{
+		$rtnAry = array();
 		$objReader = PHPExcel_IOFactory::createReaderForFile($file) ;
 		$objReader->setReadDateOnly(TRUE) ;
 
@@ -48,7 +48,7 @@ class Excel extends PHPExcel {
 				// remove repeat value in the row
 				$chk_ary = array_unique($tmpAry) ;
 				// check array's value
-				if( count($chk_ary)=1 && $chk_ary[0]=='' )
+				if( count($chk_ary)==1 && $chk_ary[0]=='' )
 				{
 					// remove empty  row
 				}
@@ -65,7 +65,7 @@ class Excel extends PHPExcel {
 		}
 		return $rtnAry ;
 	}
-	*/
+
 
 	public function Array2xls($arr=array(),$title='')
 	{
