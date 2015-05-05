@@ -294,6 +294,10 @@ class Pub{
 		{
 			$output['A'] = "Internet Explorer";
 		}
+		else if( strpos($str,"PaleMoon")!== false )
+		{
+			$output['A'] = "PaleMoon";
+		}
 		else if( strpos($str,"Firefox")!== false )
 		{
 			$output['A'] = "Firefox";
@@ -408,6 +412,9 @@ class Pub{
 					break;
 				case 'Epiphany':
 					$sit_0 = stripos($str,'Epiphany/') + 9;
+					break;
+				case 'PaleMoon':
+					$sit_0 = stripos($str,'PaleMoon/') + 9;
 					break;
 				case 'QupZilla':
 					$sit_0 = stripos($str,'QupZilla/') + 9;
