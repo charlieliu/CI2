@@ -331,6 +331,10 @@ class Pub{
 		{
 			$output['A'] = "Safari";
 		}
+		else if( strpos($str,"Konqueror")!== false )
+		{
+			$output['A'] = "Konqueror";
+		}
 		else if( strpos($str,"rv:")!== false &&  strpos($str,"Trident/")!== false )
 		{
 			$output['A'] = "Internet Explorer";
@@ -407,6 +411,9 @@ class Pub{
 					break;
 				case 'QupZilla':
 					$sit_0 = stripos($str,'QupZilla/') + 9;
+					break;
+				case 'Konqueror':
+					$sit_0 = stripos($str,'Konqueror/') + 10;
 					break;
 				default:
 					$sit_0 = 0;
