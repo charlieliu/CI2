@@ -11,6 +11,7 @@
 
 /*jslint nomen: true, regexp: true */
 /*global $, window, blueimp */
+var maxFileSize = (2*1024*1024) ;
 
 $(function () {
     'use strict';
@@ -18,9 +19,7 @@ $(function () {
     // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload({});
     // Enable iframe cross-domain access via redirect option:
-    $('#fileupload').fileupload('option', {
-        maxFileSize: (2*1024*1024)
-    });
+    $('#fileupload').fileupload('option', {maxFileSize: maxFileSize});
 
     // Load existing files:
     $('#fileupload').addClass('fileupload-processing');

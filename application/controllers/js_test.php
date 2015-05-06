@@ -322,55 +322,63 @@ class Js_test extends CI_Controller {
 		if ( ! $this->upload->do_upload('files'))
 		{
 			$error = $this->upload->display_errors();
-			$error = str_replace("<p>","", $error);
-			$error = str_replace("</p>","", $error);
-			$info->error = $error;
+			$info->error = substr($error, stripos("<p>", $error)+3, stripos("</p>", $error) );
 			$files[] = $info;
 		}
 		else
 		{
 			$data = $this->upload->data();
 
-			$thumbnailUrl = '' ;
-			if( $data['is_image'] && file_exists($data['full_path']) )
+			$info->sha512 = hash_file('sha512', $upload_path_url.$data['file_name']) ;
+			$info->tmp_sha512 = file_exists($_FILES['files']['tmp_name']) ? hash_file('sha512', $_FILES['files']['tmp_name']) : '' ;
+			if( !empty($info->tmp_sha512) && $info->sha512==$info->tmp_sha512 )
 			{
-				// to re-size for thumbnail images un-comment and set path here and in json array
-				$config = array();
-				$config['image_library'] = 'gd2';
-				$config['source_image'] = $data['full_path'];
-				$config['create_thumb'] = TRUE;
-				$config['maintain_ratio'] = TRUE;
-				$config['width'] = 75;
-				$config['height'] = 50;
-				//$config['new_image'] = $data['file_path'].'thumbs/'.$data['file_name'];
-				//$config['thumb_marker'] = '';
-				//$this->load->library('image_lib', $config);
-				$this->load->library('image_lib');
-				// Set your config up
-				$this->image_lib->initialize($config);
-				// Do your manipulation
-				$this->image_lib->clear();
-				if ( $this->image_lib->resize() )
+				// uploads' file and tmp file have same hash_file value
+				$thumbnailUrl = '' ;
+				if( $data['is_image'] && file_exists($data['full_path']) )
 				{
-					$thumbnailUrl = $upload_path_url.'thumbs/'.$data['file_name'] ;
+					// to re-size for thumbnail images un-comment and set path here and in json array
+					$config = array();
+					$config['image_library'] = 'gd2';
+					$config['source_image'] = $data['full_path'];
+					$config['create_thumb'] = TRUE;
+					$config['maintain_ratio'] = TRUE;
+					$config['width'] = 75;
+					$config['height'] = 50;
+					//$config['new_image'] = $data['file_path'].'thumbs/'.$data['file_name'];
+					//$config['thumb_marker'] = '';
+					//$this->load->library('image_lib', $config);
+					$this->load->library('image_lib');
+					// Set your config up
+					$this->image_lib->initialize($config);
+					// Do your manipulation
+					$this->image_lib->clear();
+					if ( $this->image_lib->resize() )
+					{
+						$thumbnailUrl = $upload_path_url.'thumbs/'.$data['file_name'] ;
+					}
+					else
+					{
+						$thumbnailUrl = $upload_path_url.$data['file_name'];
+						//exit( $this->image_lib->display_errors() ) ;
+					}
 				}
-				else
-				{
-					$thumbnailUrl = $upload_path_url.$data['file_name'];
-					//exit( $this->image_lib->display_errors() ) ;
-				}
+				//set the data for the json array
+				$info->name = $data['file_name'];
+				$info->size = $data['file_size'];
+				$info->osize = $_FILES['files']['size'];
+				$info->type = $data['file_type'];
+				$info->url = $upload_path_url . $data['file_name'];
+				// I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
+				$info->thumbnailUrl = $thumbnailUrl ;
+				$info->deleteUrl = base_url() . 'js_test/deleteImage/' . $data['file_name'];
+				$info->deleteType = 'DELETE';
+				$info->error = null;
 			}
-			//set the data for the json array
-			$info->name = $data['file_name'];
-			$info->size = $data['file_size'];
-			$info->osize = $_FILES['files']['size'];
-			$info->type = $data['file_type'];
-			$info->url = $upload_path_url . $data['file_name'];
-			// I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$data['file_name']
-			$info->thumbnailUrl = $thumbnailUrl ;
-			$info->deleteUrl = base_url() . 'file_upload/deleteImage/' . $data['file_name'];
-			$info->deleteType = 'DELETE';
-			$info->error = null;
+			else
+			{
+				$info->error = 'hash files error';
+			}
 			$files[] = $info;
 		}
 
@@ -381,17 +389,24 @@ class Js_test extends CI_Controller {
 	}
 
 	// 刪除檔案
-	public function deleteImage($file) {
+	public function deleteImage($file)
+	{
+		$success = 'ERROR' ;
+		$is_file = 'ERROR' ;
+		$info = new stdClass();
 		//gets the job done but you might want to add error checking and security
-		$success = unlink(FCPATH . 'uploads/' . $file);
-		if( file_exists(FCPATH . 'uploads/thumbs/' . $file) )
+		if( file_exists(FCPATH . 'uploads/' . $file) )
 		{
-			unlink(FCPATH . 'uploads/thumbs/' . $file);
+			$success = unlink(FCPATH . './uploads/' . $file);
+			if( file_exists(FCPATH . 'uploads/thumbs/' . $file) )
+			{
+				unlink(FCPATH . 'uploads/thumbs/' . $file);
+			}
+			$info->file = is_file(FCPATH.'uploads/'.$file);
 		}
 		//info to see if it is doing what it is supposed to
 		$info->sucess = $success;
-		$info->path = base_url() . 'uploads/' . $file;
-		$info->file = is_file(FCPATH . 'uploads/' . $file);
+		$info->path = base_url().'uploads/'.$file;
 
 		echo json_encode(array($info));
 	}

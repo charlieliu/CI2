@@ -116,5 +116,6 @@
 			{% } %}
 		</td>
 	</tr>
+	<!--<tr><td colspan="4">sha512:{%=file.sha512%}</td></tr>-->
 {% } %}
 </script>
