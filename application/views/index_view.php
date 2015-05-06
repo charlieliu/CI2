@@ -81,7 +81,7 @@
                 'type'  => "text/javascript",
                 'rel'   => "stylesheet",
                 'href'  => $val,
-                'ver'   => ''
+                'ver'   => '',
             );
             echo load_html_file($link);
         }
@@ -91,7 +91,7 @@
                 'type'  => "text/javascript",
                 'rel'   => "stylesheet",
                 'href'  => base_url().$val,
-                'ver'   => ''
+                'ver'   => '',
             );
             echo load_html_file($link);
         }

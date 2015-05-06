@@ -17,6 +17,10 @@ if(!function_exists('load_html_file'))
                     {
                         $html .= '?'.$link['ver'];
                     }
+                    if( isset($link['href']) && !empty($link['href']) )
+                    {
+                        $html .= '" integrity="sha512-'.hash_file('sha512',$link['href']).'" crossorigin="anonymous' ;
+                    }
                     $html .= '"></script>';
                     break;
                 case'css':
@@ -41,6 +45,10 @@ if(!function_exists('load_html_file'))
                     if( isset($link['ver']) && !empty($link['ver']) )
                     {
                         $html .= '?'.$link['ver'];
+                    }
+                    if( isset($link['href']) && !empty($link['href']) )
+                    {
+                        $html .= '" integrity="sha512-'.hash_file('sha512',$link['href']).'" crossorigin="anonymous' ;
                     }
                     $html .= '" />';
                     break;
