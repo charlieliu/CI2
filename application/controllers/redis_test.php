@@ -2,6 +2,8 @@
 /**
 * @author Charlie Liu <liuchangli0107@gmail.com>
 */
+require_once "./predis/autoload.php";
+
 class Redis_test extends CI_Controller {
 
 	private $current_title = 'Redis 測試';
@@ -62,7 +64,8 @@ class Redis_test extends CI_Controller {
 				'RENAME'=>'RENAME oldname newname更改key的名字，新鍵如果存在將被覆蓋',
 				'RENAMENX'=>'RENAMENX oldname newname 更改key的名字，如果名字存在則更改失敗',
 				'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
-				'XPIRE'=>'XPIRE key count 設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
+				'EXPIRE'=>'EXPIRE key count 設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
+				'PERSIST'=>'PERSIST key 清除某個key的過期時間',
 				'TTL'=>'TTL查找某個key還有多長時間過期,返回時間秒',
 				'MOVE'=>'MOVE key dbindex 將指定鍵從當前數據庫移到目標數據庫 dbindex。成功返回 1;否則返回0（源數據庫不存在key或目標數據庫已存在同名key）;',
 				'FLUSHDB'=>'FLUSHDB 清空當前數據庫中的所有鍵',
@@ -165,14 +168,14 @@ class Redis_test extends CI_Controller {
 				'ZUNIONSTORE'=>'ZUNIONSTORE dstkey numkey key key2 key3 ... 新增dstkey 為numkey個key key2 key3 ...聯集',
 			)
 		) ;
-
+/*
 		$grid_data['redis_act'][]= array(
 			'title'=>'command',
 			'act'=>array(
 				'command'=>'command value',
 			)
 		) ;
-/*
+
 		$grid_data['redis_act'][]= array(
 			'title'=>'排序（List, Set, Sorted Set）',
 			'act'=>array(
@@ -219,7 +222,7 @@ class Redis_test extends CI_Controller {
 
 	public function do_redis()
 	{
-		$this->load->library('redis') ;
+		//$this->load->library('redis') ;
 		/*
 		$command = $this->redis->command('PING') ;
 		if( $command!='PONG' )
@@ -227,7 +230,10 @@ class Redis_test extends CI_Controller {
 			exit('LINE:'.__LINE__.' command='.$command);
 		}
 		*/
-		$command = $this->redis->command('select '.$this->_dblink) ;
+		$this->benchmark->mark('total_time_start');
+		$this->redis = new Predis\Client() ;
+		//$command = $this->redis->command('select '.$this->_dblink) ;
+		$command = $this->redis->select($this->_dblink) ;
 		if( $command!='OK' )
 		{
 			exit('LINE:'.__LINE__.' command("select '.$this->_dblink.'")='.$command);
@@ -250,6 +256,7 @@ class Redis_test extends CI_Controller {
 		$input['score']		= isset($post['score'])		? $post['score'] : '' ;
 		$input['numkey']	= isset($post['numkey'])		? intval($post['numkey']) : 0 ;
 		$result = 'INPUT VALUE ERROR' ;
+		$time = array() ;
 		switch($input['redis_act'])
 		{
 			// 適合全體類型的命令
@@ -301,10 +308,16 @@ class Redis_test extends CI_Controller {
 			case 'dbsize':
 				$result = $this->redis->dbsize() ;
 				break;
-			case 'xpire':
+			case 'expire':
 				if( trim($input['key_str'])!='' )
 				{
-					$result = $this->redis->xpire($input['key_str'], $input['ind_str']) ;
+					$result = $this->redis->expire($input['key_str'], $input['ind_str']) ;
+				}
+				break;
+			case 'persist':
+				if( trim($input['key_str'])!='' )
+				{
+					$result = $this->redis->persist($input['key_str']) ;
 				}
 				break;
 			case 'ttl':
@@ -797,7 +810,7 @@ class Redis_test extends CI_Controller {
 					}
 				}
 				break;
-
+/*
 			case 'command':
 				if( trim($input['val_str'])!='' )
 				{
@@ -805,48 +818,92 @@ class Redis_test extends CI_Controller {
 					$this->benchmark->mark('command_start');
 					$result[] = $this->redis->command($input['val_str']) ;
 					$this->benchmark->mark('command_end');
-					$result[] = $this->benchmark->elapsed_time('command_start','command_end');
+					$time[] = $this->benchmark->elapsed_time('command_start','command_end');
 				}
 				break;
-
+*/
 			case 'multi':
 				$result = array() ;
 
 				$this->benchmark->mark('MULTI_start');
-				$result[] = $this->redis->command('MULTI') ;
+				$result[] = $this->redis->MULTI() ;
 				$this->benchmark->mark('MULTI_end');
-				$result[] = $this->benchmark->elapsed_time('MULTI_start','MULTI_end');
+				$time['MULTI'] = $this->benchmark->elapsed_time('MULTI_start','MULTI_end');
 
 				$this->benchmark->mark('act1_start');
-				$result[] = $this->redis->set('key', '1') ;
+				$result[] = $this->redis->SADD('user:1:following', '2') ;
 				$this->benchmark->mark('act1_end');
-				$result[] = $this->benchmark->elapsed_time('act1_start','act1_end');
+				$time['act1'] = $this->benchmark->elapsed_time('act1_start','act1_end');
 
 				$this->benchmark->mark('act2_start');
-				$result[] = $this->redis->sadd('key', '2') ;
+				$result[] = $this->redis->SADD('user:2:followers', '1') ;
 				$this->benchmark->mark('act2_end');
-				$result[] = $this->benchmark->elapsed_time('act2_start','act2_end');
-
-				$this->benchmark->mark('act3_start');
-				$result[] = $this->redis->set('key', '3') ;
-				$this->benchmark->mark('act3_end');
-				$result[] = $this->benchmark->elapsed_time('act3_start','act3_end');
+				$time['act2'] = $this->benchmark->elapsed_time('act2_start','act2_end');
 
 				$this->benchmark->mark('EXEC_start');
-				$result[] = $this->redis->command('EXEC') ;
+				//$result[] = $this->redis->command('EXEC') ;
+				$result[] = $this->redis->EXEC() ;
 				$this->benchmark->mark('EXEC_end');
-				$result[] = $this->benchmark->elapsed_time('EXEC_start','EXEC_end');
+				$time['EXEC'] = $this->benchmark->elapsed_time('EXEC_start','EXEC_end');
 				break;
 
 			default:
 				$result = strtoupper($input['redis_act']).' do not exists' ;
 				break;
 		}
-		$time = $this->redis->total_time ;
-		$result = is_null($result) ? 'nil' : $result ;
-		$result = is_bool($result) ? ($result ? 'true' : 'false') : $result ;
-		$this->_redis_log = $this->session->userdata('redis_log') ;
-		echo json_encode(array('time'=>$time,'result'=>$result,'dblink'=>$this->_dblink,'post'=>$post,'input'=>$input,'redis_log'=>$this->_redis_log)) ;
+		//$time = $this->redis->total_time ;
+		//$result = is_null($result) ? 'nil' : $result ;
+		//$result = is_bool($result) ? ($result ? 'true' : 'false') : $result ;
+		if( is_array($result) )
+		{
+			foreach($result as $key=>$val)
+			{
+				$result[$key] = $this->decode_result($val) ;
+			}
+		}
+		else
+		{
+			$result = $this->decode_result($result) ;
+		}
+		//$this->_redis_log = $this->session->userdata('redis_log') ;
+		$this->benchmark->mark('total_time_end');
+		$time['total_time'] = $this->benchmark->elapsed_time('total_time_start','total_time_end');
+		$this->_redis_log = print_r($time, TRUE) ;
+		echo json_encode(array(
+			//'time'=>$time,
+			'result'=>$result,
+			'dblink'=>$this->_dblink,
+			//'post'=>$post,
+			//'input'=>$input,
+			'redis_log'=>$this->_redis_log
+		)) ;
+	}
+
+	public function decode_result($input)
+	{
+		$output = $input ;
+		if( is_null($input) )
+		{
+			$output = 'nil' ;
+		}
+		else if( is_bool($input) )
+		{
+			$output = $input===TRUE ? 'true' : 'false' ;
+		}
+		else if( is_object($input) )
+		{
+			// Predis\Response\Status Object ( [payload:Predis\Response\Status:private] => OK )
+			// change object private value to array
+			$result = (array)$input ;
+			// create a new array
+			$output = array() ;
+			foreach ($result as $key => $value)
+			{
+				// add value to new value
+				$output[] = $value ;
+			}
+		}
+		return $output ;
 	}
 
 	public function get_url()

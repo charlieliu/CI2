@@ -7,9 +7,8 @@
         <p>MULTI</p>
         <ol>
             <li>MULTI</li>
-            <li>SET key 1</li>
-            <li>SADD key 2</li>
-            <li>SET key 3</li>
+            <li>SADD user:1:following 2</li>
+            <li>SADD user:2:followers 1</li>
             <li>EXEC</li>
         </ol>
         <form class="redis_test" >
