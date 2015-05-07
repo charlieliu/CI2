@@ -222,17 +222,16 @@ class Redis_test extends CI_Controller {
 
 	public function do_redis()
 	{
-		//$this->load->library('redis') ;
-		/*
-		$command = $this->redis->command('PING') ;
-		if( $command!='PONG' )
-		{
-			exit('LINE:'.__LINE__.' command='.$command);
-		}
-		*/
 		$this->benchmark->mark('total_time_start');
-		$this->redis = new Predis\Client() ;
-		//$command = $this->redis->command('select '.$this->_dblink) ;
+		$predis = TRUE ;
+		if( $predis )
+		{
+			$this->redis = new Predis\Client() ;
+		}
+		else
+		{
+			$this->load->library('redis') ;
+		}
 		$command = $this->redis->select($this->_dblink) ;
 		if( $command!='OK' )
 		{
@@ -242,7 +241,7 @@ class Redis_test extends CI_Controller {
 		$post = $this->input->post();
 
 		$input['redis_act']	= isset($post['redis_act'])	? strtolower($post['redis_act']) : '' ;
-		$input['key_str']	= isset($post['key_str'])!=''	? $post['key_str'] : '' ;
+		$input['key_str']	= isset($post['key_str'])		? $post['key_str'] : '' ;
 		$input['key_str2']	= isset($post['key_str2'])	? $post['key_str2'] : '' ;
 		$input['key_str3']	= isset($post['key_str3'])	? $post['key_str3'] : '' ;
 		$input['val_str']		= isset($post['val_str'])		? $post['val_str'] : '' ;
@@ -869,14 +868,15 @@ class Redis_test extends CI_Controller {
 		$this->benchmark->mark('total_time_end');
 		$time['total_time'] = $this->benchmark->elapsed_time('total_time_start','total_time_end');
 		$this->_redis_log = print_r($time, TRUE) ;
-		echo json_encode(array(
-			//'time'=>$time,
+		$output = array(
 			'result'=>$result,
 			'dblink'=>$this->_dblink,
-			//'post'=>$post,
-			//'input'=>$input,
-			'redis_log'=>$this->_redis_log
-		)) ;
+			'post'=>$post,
+			'input'=>$input,
+			'redis_log'=>$this->_redis_log,
+			'predis'=>$predis,
+		);
+		echo json_encode($output) ;
 	}
 
 	public function decode_result($input)
@@ -909,7 +909,7 @@ class Redis_test extends CI_Controller {
 	public function get_url()
 	{
 		header('content-type: application/javascript') ;
-		echo 'var URLs = "'.base_url().'redis_test/do_redis";' ;
+		echo 'var URLs = "'.base_url().'redis_test/do_redis?XDEBUG_SESSION_START=sublime.xdebug";' ;
 	}
 }
 ?>

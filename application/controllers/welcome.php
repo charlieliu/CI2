@@ -51,27 +51,27 @@ class Welcome extends CI_Controller {
 		) ;
 		$content[] = array(
 			'content_title' => 'PHP 測試',
-			'content_url' => base_url().'php_test',
+			'content_url' => base_url().'php_test?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'php_test',
 		) ;
 		$content[] = array(
 			'content_title' => 'JS 測試',
-			'content_url' => base_url().'js_test',
+			'content_url' => base_url().'js_test?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'js_test',
 		) ;
 		$content[] = array(
 			'content_title' => 'HTML5 測試',
-			'content_url' => base_url().'html5_test',
+			'content_url' => base_url().'html5_test?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'html5_test',
 		) ;
 		$content[] = array(
 			'content_title' => 'Login 測試',
-			'content_url' => base_url().'login',
+			'content_url' => base_url().'login?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'login',
 		) ;
 		$content[] = array(
 			'content_title' => 'redis 測試',
-			'content_url' => base_url().'redis_test',
+			'content_url' => base_url().'redis_test?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'redis_test',
 		) ;
 		$content[] = array(
