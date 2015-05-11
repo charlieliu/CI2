@@ -70,6 +70,11 @@ class Welcome extends CI_Controller {
 			'c'=>'login',
 		) ;
 		$content[] = array(
+			'content_title' => 'Predis 測試',
+			'content_url' => base_url().'predis_test?XDEBUG_SESSION_START=sublime.xdebug',
+			'c'=>'predis_test',
+		) ;
+		$content[] = array(
 			'content_title' => 'redis 測試',
 			'content_url' => base_url().'redis_test?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'redis_test',

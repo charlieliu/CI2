@@ -2,10 +2,11 @@
 /**
 * @author Charlie Liu <liuchangli0107@gmail.com>
 */
+require_once "./predis/autoload.php";
 
-class Redis_test extends CI_Controller {
+class Predis_test extends CI_Controller {
 
-	private $current_title = 'Redis 測試';
+	private $current_title = 'Predis 測試';
 	private $page_list = array();
 	private $_csrf = null ;
 	private $_dblink = 0 ;
@@ -38,7 +39,7 @@ class Redis_test extends CI_Controller {
 		$this->session->keep_flashdata('redis_db');
 		$this->_dblink = intval($this->session->flashdata('redis_db')) ;
 
-		$this->_redis_log = $this->session->userdata('redis_log') ;
+		//$this->_redis_log = $this->session->userdata('redis_log') ;
 	}
 
 	// 取得標題
@@ -168,29 +169,6 @@ class Redis_test extends CI_Controller {
 			)
 		) ;
 
-		$grid_data['redis_act'][]= array(
-			'title'=>'command',
-			'act'=>array(
-				'command'=>'command value',
-			)
-		) ;
-/*
-		$grid_data['redis_act'][]= array(
-			'title'=>'排序（List, Set, Sorted Set）',
-			'act'=>array(
-				// 排序（List, Set, Sorted Set）
-				'SORT'=>'SORT key BY pattern LIMIT start end GET pattern ASC|DESC ALPHA 按照指定模式排序集合或List<br><br>
-				SORT mylist<br>默認升序 ASC<br><br>
-				SORT mylist DESC<br><br>
-				SORT mylist LIMIT 0 10<br>從序號0開始，取10條<br><br>
-				SORT mylist LIMIT 0 10 ALPHA DESC<br>按首字符排序<br><br>
-				SORT mylist BY weight_*<br><br>
-				SORT mylist BY weight_* GET object_*<br><br>
-				SORT mylist BY weight_* GET object_* GET #<br><br>
-				SORT mylist BY weight_* STORE resultkey<br>將返回的結果存放於resultkey序列（List）',
-			)
-		) ;
-*/
 		$grid_data['redis_db'] = $this->_dblink ;
 		$grid_data = array_merge($grid_data,$this->_csrf);
 		$grid_view = $this->parser->parse('redis_test/redis_test_grid_view', $grid_data, true) ;
@@ -222,10 +200,11 @@ class Redis_test extends CI_Controller {
 
 	public function do_redis()
 	{
-		$this->load->library(array('redis','xhprof')) ;
+		$this->load->library('xhprof') ;
 		$this->xhprof->XHProf_Start() ;
-		// redis start
+		// Predis start
 		$this->benchmark->mark('total_time_start');
+		$this->redis = new Predis\Client() ;
 		$command = $this->redis->select($this->_dblink) ;
 		if( $command!='OK' )
 		{
@@ -855,11 +834,11 @@ class Redis_test extends CI_Controller {
 		{
 			$result = $this->decode_result($result) ;
 		}
-		$this->_redis_log = $this->session->userdata('redis_log') ;
+		//$this->_redis_log = $this->session->userdata('redis_log') ;
 		$this->benchmark->mark('total_time_end');
 		$time['total_time'] = $this->benchmark->elapsed_time('total_time_start','total_time_end');
-		$this->_redis_log .= print_r($time, TRUE) ;
-		$run_id = $this->xhprof->XHProf_End('redis',('redis_'.$input['redis_act']) ) ;
+		$this->_redis_log = print_r($time, TRUE) ;
+		$run_id = $this->xhprof->XHProf_End('redis',('Predis_'.$input['redis_act']) ) ;
 
 		$output = array(
 			'result'=>$result,
@@ -874,7 +853,7 @@ class Redis_test extends CI_Controller {
 	}
 
 	// query xhprof log
-	public function query_xhprof_log($remark_str)
+	public function query_xhprof_log($run_id, $remark_str='')
 	{
 		$this->load->model('xhprof_model','',TRUE);
 
@@ -938,7 +917,7 @@ class Redis_test extends CI_Controller {
 	public function get_url()
 	{
 		header('content-type: application/javascript') ;
-		echo 'var URLs = "'.base_url().'redis_test/do_redis?XDEBUG_SESSION_START=sublime.xdebug";' ;
+		echo 'var URLs = "'.base_url().'predis_test/do_redis?XDEBUG_SESSION_START=sublime.xdebug";' ;
 	}
 }
 ?>

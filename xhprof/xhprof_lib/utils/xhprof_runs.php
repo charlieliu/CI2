@@ -68,7 +68,7 @@ interface iXHProfRuns {
  */
 class XHProfRuns_Default implements iXHProfRuns {
 
-	private $dir = './log';
+	private $dir = '';
 	private $suffix = 'xhprof';
 
 	private function gen_run_id($type) {
@@ -92,7 +92,7 @@ class XHProfRuns_Default implements iXHProfRuns {
 		// if specified, else we default to the directory
 		// in which the error_log file resides.
 
-		if (empty($this->dir)) {
+		if (empty($dir)) {
 			$dir = ini_get("xhprof.output_dir");
 			if (empty($dir)) {
 
@@ -111,6 +111,7 @@ class XHProfRuns_Default implements iXHProfRuns {
 	public function get_run($run_id, $type, &$run_desc) {
 		$file_name = $this->file_name($run_id, $type);
 
+		// $file_name=/var/log/xhprof//554c82a34a187.redis.xhprof
 		if (!file_exists($file_name)) {
 			xhprof_error("Could not find file $file_name");
 			$run_desc = "Invalid Run Id = $run_id";

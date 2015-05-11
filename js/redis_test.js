@@ -12,6 +12,7 @@ $(document).ready(function(){
 			alert(response.result);
 			$('.dblink').html(response.dblink);
 			$('#redis_log').html(response.redis_log);
+			$('#xhprof_dif').html(response.xhprof_dif);
 		});
 		return false;
 	});

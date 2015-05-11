@@ -18,7 +18,9 @@
         </form>
     </div>
 
-    <div id="redis_log">{redis_log}</div>
+    <div class="content_block" id="redis_log">{redis_log}</div>
 
-    <script type="text/javascript" src="{base_url}redis_test/get_url/redis_get"></script>
+    <div class="content_block" id="xhprof_dif"></div>
+
+    <script type="text/javascript" src="{base_url}{class}/get_url/redis_get"></script>
 </div>
