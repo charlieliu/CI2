@@ -803,12 +803,12 @@ class Predis_test extends CI_Controller {
 				$time['MULTI'] = $this->benchmark->elapsed_time('MULTI_start','MULTI_end');
 
 				$this->benchmark->mark('act1_start');
-				$result[] = $this->redis->SADD('user:1:following', '2') ;
+				$result[] = $this->redis->SET('key', 'value') ;
 				$this->benchmark->mark('act1_end');
 				$time['act1'] = $this->benchmark->elapsed_time('act1_start','act1_end');
 
 				$this->benchmark->mark('act2_start');
-				$result[] = $this->redis->SADD('user:2:followers', '1') ;
+				$result[] = $this->redis->SET('key') ;
 				$this->benchmark->mark('act2_end');
 				$time['act2'] = $this->benchmark->elapsed_time('act2_start','act2_end');
 
@@ -825,9 +825,19 @@ class Predis_test extends CI_Controller {
 		}
 		if( is_array($result) )
 		{
-			foreach($result as $key=>$val)
+			foreach($result as $key=>$row)
 			{
-				$result[$key] = $this->decode_result($val) ;
+				if( is_array($row) )
+				{
+					foreach($row as $key_2=>$val)
+					{
+						$result[$key][$key_2] = $this->decode_result($val) ;
+					}
+				}
+				else
+				{
+					$result[$key] = $this->decode_result($row) ;
+				}
 			}
 		}
 		else
@@ -847,13 +857,13 @@ class Predis_test extends CI_Controller {
 			'input'=>$input,
 			'redis_log'=>$this->_redis_log,
 			'run_id'=>$run_id,
-			'xhprof_dif'=>$this->query_xhprof_log($run_id, $input['redis_act']),
+			'xhprof_dif'=>$this->query_xhprof_log($input['redis_act']),
 		);
 		echo json_encode($output) ;
 	}
 
 	// query xhprof log
-	public function query_xhprof_log($run_id, $remark_str='')
+	public function query_xhprof_log($remark_str='')
 	{
 		$this->load->model('xhprof_model','',TRUE);
 

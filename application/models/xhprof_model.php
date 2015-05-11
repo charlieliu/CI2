@@ -13,15 +13,13 @@ class Xhprof_model extends CI_Model {
 		$this->load->database();
 	}
 
-	private $_sql_type = '' ;
-
 	public function query_log($run_id='', $set_name='',$remark_str='',$page=1,$limit=20,$is_add=TRUE)
 	{
 		$limit = intval($limit);
 		$offset = (intval($page)-1)*$limit ;
 		$offset = ($offset <0) ? 0 : $offset ;
 		$total = 0 ;
-		/*
+
 		$sql = "SELECT * FROM `xhprof_log` WHERE 1 = 1 " ;
 		$sql_ary = array() ;
 		if( $run_id!='' )
@@ -49,7 +47,7 @@ class Xhprof_model extends CI_Model {
 			$sql = "SELECT * FROM `xhprof_log` ORDER BY `datetime` DESC LIMIT ".$offset.",".$limit.";";
 			$query = $this->db->query($sql);
 		}
-		*/
+		/*
 		if( $run_id!='' )
 		{
 			$sql = "SELECT * FROM `xhprof_log` WHERE `run_id`=? ORDER BY `datetime` DESC LIMIT ".$offset.",".$limit.";" ;
@@ -65,6 +63,8 @@ class Xhprof_model extends CI_Model {
 			$total = $query->num_rows() ;
 			//var_dump($total);exit;
 		}
+		*/
+		$total = $query->num_rows() ;
 		$total = is_array($total) ? $total[0]['total'] : $total ;
 
 		if( count($sql_ary)>0 && $total==0 )
@@ -93,9 +93,8 @@ class Xhprof_model extends CI_Model {
 			'remark_str'=>$remark_str,
 		);
 		$file_name = '/var/log/xhprof/'.$run_id.'.'.$set_name.'.xhprof' ;
-		if( file_exists($file_name) && $this->_sql_type!='add' )
+		if( file_exists($file_name) )
 		{
-			$this->_sql_type = 'add' ;
 			$result = $this->db->insert('xhprof_log', $input);
 			if($result)
 			{
@@ -106,7 +105,6 @@ class Xhprof_model extends CI_Model {
 			{
 				$status = 300 ;
 			}
-			$this->_sql_type = '' ;
 		}
 		else
 		{
