@@ -8,7 +8,7 @@
         <ol>
             <li>MULTI</li>
             <li>SET key 1</li>
-            <li>SET key</li>
+            <li>SET key {class}</li>
             <li>EXEC</li>
         </ol>
         <form class="redis_test" >

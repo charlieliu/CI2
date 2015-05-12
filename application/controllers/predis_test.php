@@ -808,7 +808,7 @@ class Predis_test extends CI_Controller {
 				$time['act1'] = $this->benchmark->elapsed_time('act1_start','act1_end');
 
 				$this->benchmark->mark('act2_start');
-				$result[] = $this->redis->SET('key') ;
+				$result[] = $this->redis->SET('key', 'predis_test') ;
 				$this->benchmark->mark('act2_end');
 				$time['act2'] = $this->benchmark->elapsed_time('act2_start','act2_end');
 
