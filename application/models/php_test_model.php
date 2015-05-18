@@ -5,14 +5,12 @@
  * @author Charlie Liu <liuchangli0107@gmail.com>
  */
 class Php_test_model extends CI_Model {
-
     function __construct()
     {
         // 呼叫模型(Model)的建構函數
         parent::__construct();
         $this->load->database();
     }
-
     public function query_hash_test($hash_key='',$page=1,$limit=20,$is_add=true)
     {
         $limit = intval($limit);
@@ -54,7 +52,6 @@ class Php_test_model extends CI_Model {
             return array('status'=>'100','data'=>$query->result_array(),'total'=>$total,'act'=>'query_hash_test',);
         }
     }
-
     public function query_hash_val($hash_val='',$hash_type='')
     {
         if( $hash_val!='' )
@@ -88,14 +85,12 @@ class Php_test_model extends CI_Model {
             return array('status'=>'200','data'=>array(),'total'=>0,'act'=>'query_hash_val',);
         }
     }
-
     public function get_hash_test_num()
     {
         $sql = "SELECT count(`hash_key`) AS total  FROM `hash_test` ;";
         $query = $this->db->query($sql);
         return $query->result_array() ;
     }
-
     public function add_hash_test($hash_key='')
     {
         $data = array();
@@ -127,7 +122,6 @@ class Php_test_model extends CI_Model {
         }
         return array('status'=>$status,'data'=>$data,'total'=>$total,'act'=>'add_hash_test',);
     }
-
     public function query_user_agent($agent='',$is_add=true)
     {
         $data = array() ;
@@ -141,7 +135,6 @@ class Php_test_model extends CI_Model {
             $data = count($data)==1 ? $data[0] : $data ;
             $total = $query->num_rows() ;
             $total = is_array($total) ? $total[0]['total'] : $total ;
-
             if( empty($total) )
             {
                 $status = '101' ;
@@ -184,7 +177,6 @@ class Php_test_model extends CI_Model {
         }
         return array('status'=>$status,'data'=>$data,'total'=>$total,'act'=>'query_user_agent',);
     }
-
     /*
     $agent = array(
             "O" => UA_id,// 原始 HTTP_USER_AGENT
@@ -225,7 +217,6 @@ class Php_test_model extends CI_Model {
         }
         return array('status'=>$status,'data'=>$data,'total'=>$total,'act'=>'add_user_agent',);
     }
-
     public function mod_user_agent($mod_arr)
     {
         $this->db->where('UA_id', $mod_arr['UA_id']);

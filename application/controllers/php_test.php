@@ -508,7 +508,7 @@ class Php_test extends CI_Controller {
 
 		// 目前SESSION資料
 		// 呼叫 session_test_model
-		$SESSION_LOGS = $this->get_session_info($this->session->userdata('session_id'));
+		//$SESSION_LOGS = $this->get_session_info($this->session->userdata('session_id'));
 		/*
 		$SESSION_LOGS = array(
 		   'SESSION_ID'  => $session_id ,
@@ -1326,7 +1326,7 @@ class Php_test extends CI_Controller {
 	{
 		return FALSE ;
 	}
-
+/*
 	public function check_session()
 	{
 		$post = $this->input->post();
@@ -1520,7 +1520,7 @@ class Php_test extends CI_Controller {
 		}
 		return array('data'=>$data,'total'=>$info['total']);
 	}
-
+*/
 	public function get_top_500_pwd()
 	{
 		$hash_array = array('md5', 'sha1', 'sha256', 'sha512', );
