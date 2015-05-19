@@ -876,7 +876,7 @@ class Predis_test extends CI_Controller {
 			{
 				foreach ($predis_query['data'] as $predis_row)
 				{
-					$xhprof_dif[] = 'http://localhost/xhprof/xhprof_html/index.php?XDEBUG_SESSION_START=sublime.xdebug&run1='.$redis_row['run_id'].'&run2='.$predis_row['run_id'].'&source=redis<br>' ;
+					$xhprof_dif[] = base_url().'xhprof/xhprof_html/index.php?XDEBUG_SESSION_START=sublime.xdebug&run1='.$redis_row['run_id'].'&run2='.$predis_row['run_id'].'&source=redis<br>' ;
 				}
 			}
 		}
@@ -884,14 +884,14 @@ class Predis_test extends CI_Controller {
 		{
 			foreach ($predis_query['data'] as  $predis_row)
 			{
-				$xhprof_dif[] = 'http://localhost/xhprof/xhprof_html/index.php?XDEBUG_SESSION_START=sublime.xdebug&run='.$predis_row['run_id'].'&source=redis<br>' ;
+				$xhprof_dif[] = base_url().'xhprof/xhprof_html/index.php?XDEBUG_SESSION_START=sublime.xdebug&run='.$predis_row['run_id'].'&source=redis<br>' ;
 			}
 		}
 		else if( $redis_query['total']>0 )
 		{
 			foreach ($redis_query['data'] as  $redis_row)
 			{
-				$xhprof_dif[] = 'http://localhost/xhprof/xhprof_html/index.php?XDEBUG_SESSION_START=sublime.xdebug&run='.$redis_row['run_id'].'&source=redis<br>' ;
+				$xhprof_dif[] = base_url().'xhprof/xhprof_html/index.php?XDEBUG_SESSION_START=sublime.xdebug&run='.$redis_row['run_id'].'&source=redis<br>' ;
 			}
 		}
 		return $xhprof_dif ;
