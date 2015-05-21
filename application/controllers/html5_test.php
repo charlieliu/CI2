@@ -104,7 +104,18 @@ class Html5_test extends CI_Controller {
 			if( $in=='3' && !empty($post['browser']) )
 			{
 				$query_ary = explode(' ', $post['browser']) ;
-				if( isset($query_ary[1]) )
+				if( strpos($post['browser'],'Internet Explorer')!== false )
+				{
+					if( isset($query_ary[2]) )
+					{
+						$browsers = $this->html_test_model->query_browsers('Internet Explorer',$query_ary[2]);
+					}
+					else
+					{
+						$browsers = $this->html_test_model->query_browsers('Internet Explorer');
+					}
+				}
+				else if( isset($query_ary[1]) )
 				{
 					$browsers = $this->html_test_model->query_browsers($query_ary[0],$query_ary[1]);
 				}
