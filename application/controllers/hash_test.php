@@ -55,6 +55,7 @@ class Hash_test extends CI_Controller {
 			'current_page' => strtolower(__CLASS__), // 當下類別
 			'current_fun' => strtolower(__FUNCTION__), // 當下function
 			'base_url' => base_url(),
+			'version' => date('YmdHis'),
 		);
 		$data = array_merge($data, $this->_csrf) ;
 		$data = array_merge($data, $this->_md5_key) ;

@@ -9,6 +9,6 @@
         <span id="btn_disp" style="display:none;">查詢.....</span>
     </form>
 
-    <script type="text/javascript" src="{base_url}hash_test/get_url"></script>
-    <script type="text/javascript" src="{base_url}hash_test/get_js"></script>
+    <script type="text/javascript" src="{base_url}hash_test/get_url?v={version}"></script>
+    <script type="text/javascript" src="{base_url}hash_test/get_js?v={version}"></script>
 </div>
