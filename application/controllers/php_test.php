@@ -216,7 +216,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -324,7 +324,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -377,7 +377,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -564,7 +564,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -662,7 +662,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -797,7 +797,7 @@ class Php_test extends CI_Controller {
 		// Template parser class
 		// 中間挖掉的部分
 		$data = array_merge($data,$this->_csrf);
-		$content_div = $this->parser->parse('hash_test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/hash_test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -876,7 +876,7 @@ class Php_test extends CI_Controller {
 		// Template parser class
 		// 中間挖掉的部分
 		$data = array_merge($data,$this->_csrf);
-		$content_div = $this->parser->parse('hash_test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/hash_test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -1053,7 +1053,7 @@ class Php_test extends CI_Controller {
 		}
 
 		// tbody
-		$grid_view = $this->parser->parse('preg_test_grid_view', array('content'=>$content), true);
+		$grid_view = $this->parser->parse('php_test/preg_test_grid_view', array('content'=>$content), true);
 
 		if( !isset($post['str']) )
 		{
@@ -1069,12 +1069,12 @@ class Php_test extends CI_Controller {
 			);
 			// Template parser class
 			// 中間挖掉的部分
-			$content_div = $this->parser->parse('preg_test_outer_view', $data, true);
+			$content_div = $this->parser->parse('php_test/preg_test_outer_view', $data, true);
 
 			// 中間部分塞入外框
 			$html_date = $data ;
 			$html_date['content_div'] = $content_div ;
-			$html_date['js'][] = 'js/preg_test.js';
+			$html_date['js'][] = 'js/php_test/preg_test.js';
 			$this->parser->parse('index_view', $html_date ) ;
 		}
 		else
@@ -1157,7 +1157,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -1216,7 +1216,7 @@ class Php_test extends CI_Controller {
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('test_view', $data, true);
+		$content_div = $this->parser->parse('php_test/test_view', $data, true);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
@@ -1656,7 +1656,7 @@ class Php_test extends CI_Controller {
 			}
 		}
 
-		$table_grid_view = $this->parser->parse('table_grid_view', array('td'=>$td,'th'=>$th,), true);
+		$table_grid_view = $this->parser->parse('php_test/table_grid_view', array('td'=>$td,'th'=>$th,), true);
 
 		if( !empty($post) )
 		{
@@ -1687,12 +1687,12 @@ class Php_test extends CI_Controller {
 
 			// 中間挖掉的部分
 			$data = array_merge($data,$this->_csrf);
-			$content_div = $this->parser->parse('table_view', $data, true);
+			$content_div = $this->parser->parse('php_test/table_view', $data, true);
 			// 中間部分塞入外框
 			$html_date = $data ;
 			$html_date['content_div'] = $content_div ;
 			$html_date['js'][] = 'js/page_nav.js';
-			$html_date['js'][] = 'js/get_top_500_pwd.js';
+			$html_date['js'][] = 'js/php_test/get_top_500_pwd.js';
 
 			$view = $this->parser->parse('index_view', $html_date, true);
 			$this->pub->remove_view_space($view);

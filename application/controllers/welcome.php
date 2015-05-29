@@ -80,6 +80,11 @@ class Welcome extends CI_Controller {
 			'c'=>'redis_test',
 		) ;
 		$content[] = array(
+			'content_title' => '動態 Hash 測試',
+			'content_url' => base_url().'hash_test',
+			'c'=>'',
+		) ;
+		$content[] = array(
 			'content_title' => 'phpinfo',
 			'content_url' => base_url().'welcome/phpinfo',
 			'c'=>'',
