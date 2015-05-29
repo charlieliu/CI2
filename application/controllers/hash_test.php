@@ -36,6 +36,7 @@ class Hash_test extends CI_Controller {
 		}
 
 		$this->_add_md5_list('hash_str','is_active') ;
+		$this->_add_md5_list('hidden_text','is_owner','H') ;
 	}
 
 	// 取得標題
@@ -56,6 +57,7 @@ class Hash_test extends CI_Controller {
 			'base_url' => base_url(),
 		);
 		$data = array_merge($this->_csrf,$data) ;
+		$data = array_merge($this->_md5_key,$data) ;
 
 		// Template parser class
 		// 中間挖掉的部分
@@ -101,16 +103,19 @@ class Hash_test extends CI_Controller {
 	public function get_js()
 	{
 		header('content-type: application/javascript') ;
-		echo '$(document).ready(function(){$("#btn_submit").click(function(){$("#btn_show").hide();$("#btn_disp").show();$.post(URLs,{"' ;
-		echo $this->_md5_key['hash_str'].'" : $("#hash_str").val(),"csrf_test_name" : $("#csrf_test_name").val()' ;
+		echo '$(document).ready(function(){$("#btn_submit").click(function(){$("#btn_show").hide();$("#btn_disp").show();$.post(URLs,{' ;
+		foreach ($this->_md5_key as $key => $value) {
+			echo '"'.$value.'" : $("#'.$value.'").val(),' ;
+		}
+		echo '"csrf_test_name" : $("#csrf_test_name").val()' ;
 		echo '},function(response){' ;
 		echo 'alert(response.status);if(response.status="100"){$("#btn_show").show();$("#btn_disp").hide();}else{location.reload();};' ;
 		echo '},"json");});});';
 	}
 
-	private function _add_md5_list($key='', $value='')
+	private function _add_md5_list($key='', $value='',$head='T')
 	{
-		$hash_val = md5( $value.substr($this->session->userdata('session_id'), 0, 4) ) ;
+		$hash_val = $head.substr(md5( $value.$this->session->userdata('session_id') ), 0 , 11) ;
 		$this->_md5_key[$key] = $hash_val ;
 		$this->_md5_val[$hash_val] = $value ;
 	}
