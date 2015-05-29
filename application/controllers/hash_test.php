@@ -56,18 +56,16 @@ class Hash_test extends CI_Controller {
 			'current_fun' => strtolower(__FUNCTION__), // 當下function
 			'base_url' => base_url(),
 		);
-		$data = array_merge($this->_csrf,$data) ;
-		$data = array_merge($this->_md5_key,$data) ;
+		$data = array_merge($data, $this->_csrf) ;
+		$data = array_merge($data, $this->_md5_key) ;
 
 		// Template parser class
 		// 中間挖掉的部分
-		$content_div = $this->parser->parse('hash_test/hash_test_view', $data, true);
-		// 中間部分塞入外框
-		$html_date = $data ;
-		$html_date['content_div'] = $content_div ;
-		//$html_date['js'][] = 'js/hash_test/hash_test.js';
+		$data['content_div'] = $this->parser->parse('hash_test/hash_test_view', $data, true);
 
-		$view = $this->parser->parse('index_view', $html_date, true);
+		// 中間部分塞入外框
+		//$html_date['js'][] = 'js/hash_test/hash_test.js';
+		$view = $this->parser->parse('index_view', $data, true);
 		$this->pub->remove_view_space($view);
 	}
 

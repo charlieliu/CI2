@@ -81,7 +81,7 @@ class Welcome extends CI_Controller {
 		) ;
 		$content[] = array(
 			'content_title' => '動態 Hash 測試',
-			'content_url' => base_url().'hash_test',
+			'content_url' => base_url().'hash_test?XDEBUG_SESSION_START=sublime.xdebug',
 			'c'=>'',
 		) ;
 		$content[] = array(
