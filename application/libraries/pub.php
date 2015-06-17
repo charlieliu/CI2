@@ -17,7 +17,10 @@ class Pub{
 			curl_setopt($ch, CURLOPT_URL, $postURL);// set URL and other appropriate options
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
+			if( !empty($_SERVER["HTTP_USER_AGENT"]) )
+			{
+				curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
+			}
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
@@ -228,7 +231,7 @@ class Pub{
 		// IE請參考
 		// http://msdn.microsoft.com/en-us/library/ie/hh869301(v=vs.85).aspx
 
-		$str = $_SERVER["HTTP_USER_AGENT"] ;
+		$str = !empty($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '' ;
 		$output = array(
 			"O" => $str,// 原始 HTTP_USER_AGENT
 			"A" => '',  // 瀏覽器 種類 IE/Firefox/Chrome/Safari/Opera
