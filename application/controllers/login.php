@@ -113,7 +113,10 @@ class Login extends CI_Controller {
 				$status = 102;
 			}
 		}
-		$output_ary = array_merge(array('status'=>$status,),$post) ;
+		if( !empty($post) )
+		{
+			$output_ary = array_merge(array('status'=>$status,),$post) ;
+		}
 		echo json_encode($output_ary);
 	}
 
