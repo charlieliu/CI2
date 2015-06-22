@@ -276,7 +276,7 @@ class Js_test extends CI_Controller {
 		$html_date['css'][] = 'http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css';
 
 		$html_date['css_ie'] = array() ;
-		$html_date['css_ie'][] = 'jQuery-File-Upload-9.7.2/css/demo-ie8.css';
+		$html_date['css_ie'][] = 'js/jQuery-File-Upload-9.7.2/css/demo-ie8.css';
 
 		$html_date['js'] = array() ;
 		$html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/vendor/jquery.ui.widget.js';
