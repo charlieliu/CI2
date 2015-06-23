@@ -213,6 +213,7 @@ class Css_test extends CI_Controller {
             'current_page' => strtolower(__CLASS__), // 當下類別
             'current_fun' => strtolower(__FUNCTION__), // 當下function
             'current_title' => $this->current_title,
+            'base_url'=>base_url(),
         );
 
         // Template parser class

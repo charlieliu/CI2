@@ -103,8 +103,12 @@ class Hash_test extends CI_Controller {
 	{
 		header('content-type: application/javascript') ;
 		echo '$(document).ready(function(){$("#btn_submit").click(function(){$("#btn_show").hide();$("#btn_disp").show();$.post(URLs,{' ;
-		foreach ($this->_md5_key as $key => $value) {
-			echo '"'.$value.'" : $("#'.$value.'").val(),' ;
+		if( !empty($this->_md5_key) )
+		{
+			foreach ($this->_md5_key as $key => $value)
+			{
+				echo '"'.$value.'" : $("#'.$value.'").val(),' ;
+			}
 		}
 		echo '"csrf_test_name" : $("#csrf_test_name").val()' ;
 		echo '},function(response){' ;

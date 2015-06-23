@@ -38,6 +38,7 @@
                 'ver'   => ''
             );
             echo load_html_file($link);
+            exit($val);
         }
         else if( file_exists($val) )
         {
@@ -84,6 +85,7 @@
                 'ver'   => '',
             );
             echo load_html_file($link);
+            exit($val);
         }
         else if( file_exists($val) )
         {

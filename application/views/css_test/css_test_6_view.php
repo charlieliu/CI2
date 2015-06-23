@@ -6,38 +6,38 @@
             <tr>
                 <td>
                     <div class="demo">
-                        <span class="front"><img title="翻轉" alt="图片" src="images/j.jpg" ></span>
-                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
+                        <span class="front"><img title="翻轉" alt="图片" src="{base_url}images/j.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="{base_url}images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
                     <div class="demo">
-                        <span class="front"><img title="翻轉" alt="图片" src="images/q.jpg" ></span>
-                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
+                        <span class="front"><img title="翻轉" alt="图片" src="{base_url}images/q.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="{base_url}images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
                     <div class="demo">
-                        <span class="front"><img title="翻轉" alt="图片" src="images/u.jpg" ></span>
-                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
+                        <span class="front"><img title="翻轉" alt="图片" src="{base_url}images/u.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="{base_url}images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
                     <div class="demo">
-                        <span class="front"><img title="翻轉" alt="图片" src="images/e.jpg" ></span>
-                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
+                        <span class="front"><img title="翻轉" alt="图片" src="{base_url}images/e.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="{base_url}images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
                     <div class="demo">
-                        <span class="front"><img title="翻轉" alt="图片" src="images/r.jpg" ></span>
-                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
+                        <span class="front"><img title="翻轉" alt="图片" src="{base_url}images/r.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="{base_url}images/joba.jpg" ></span>
                     </div>
                 </td>
                 <td>
                     <div class="demo">
-                        <span class="front"><img title="翻轉" alt="图片" src="images/y.jpg" ></span>
-                        <span class="behind"><img title="翻轉" alt="图片" src="images/joba.jpg" ></span>
+                        <span class="front"><img title="翻轉" alt="图片" src="{base_url}images/y.jpg" ></span>
+                        <span class="behind"><img title="翻轉" alt="图片" src="{base_url}images/joba.jpg" ></span>
                     </div>
                 </td>
             </tr>

@@ -273,17 +273,24 @@ class Js_test extends CI_Controller {
 		//$html_date['css'][] = 'js/jQuery-File-Upload-9.7.2/css/style.css';
 		$html_date['css'][] = 'js/jQuery-File-Upload-9.7.2/css/jquery.fileupload.css';
 		$html_date['css'][] = 'js/jQuery-File-Upload-9.7.2/css/jquery.fileupload-ui.css';
-		$html_date['css'][] = 'http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css';
+		/* from https://github.com/blueimp */
+		//$html_date['css'][] = 'http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css';
+		$html_date['css'][] = 'css/js_test/blueimp-gallery.min.css';
 
 		$html_date['css_ie'] = array() ;
 		$html_date['css_ie'][] = 'js/jQuery-File-Upload-9.7.2/css/demo-ie8.css';
 
 		$html_date['js'] = array() ;
 		$html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/vendor/jquery.ui.widget.js';
-		$html_date['js'][] = 'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js';
-		$html_date['js'][] = 'http://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js';
-		$html_date['js'][] = 'http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js';
-		$html_date['js'][] = 'http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js';
+		/* from https://github.com/blueimp */
+		//$html_date['js'][] = 'http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js';
+		//$html_date['js'][] = 'http://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js';
+		//$html_date['js'][] = 'http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js';
+		//$html_date['js'][] = 'http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js';
+		$html_date['js'][] = 'js/js_test/tmpl.min.js';
+		$html_date['js'][] = 'js/js_test/load-image.all.min.js';
+		$html_date['js'][] = 'js/js_test/canvas-to-blob.min.js';
+		$html_date['js'][] = 'js/js_test/jquery.blueimp-gallery.min.js';
 		$html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/jquery.fileupload.js';
 		$html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/jquery.fileupload-process.js';
 		$html_date['js'][] = 'js/jQuery-File-Upload-9.7.2/js/jquery.fileupload-image.js';

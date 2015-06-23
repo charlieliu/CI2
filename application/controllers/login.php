@@ -117,6 +117,10 @@ class Login extends CI_Controller {
 		{
 			$output_ary = array_merge(array('status'=>$status,),$post) ;
 		}
+		else
+		{
+			$output_ary = array('status'=>$status) ;
+		}
 		echo json_encode($output_ary);
 	}
 
@@ -223,6 +227,10 @@ class Login extends CI_Controller {
 		{
 			$output_ary = array_merge(array('status'=>$status,),$post) ;
 		}
+		else
+		{
+			$output_ary = array('status'=>$status) ;
+		}
 		echo json_encode($output_ary);
 	}
 
@@ -235,6 +243,9 @@ class Login extends CI_Controller {
 				break;
 			case 'register':
 				echo 'var URLs = "'.base_url().'login/do_register";' ;
+				break;
+			default:
+				echo 'var URLs = "'.base_url().'";' ;
 				break;
 		}
 	}
