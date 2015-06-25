@@ -461,5 +461,25 @@ class Pub{
 	{
 		return $_SERVER['HTTP_ACCEPT_LANGUAGE'] ;
 	}
+
+	public function htmlspecialchars($ary=NULL)
+	{
+		if( !empty($ary) )
+		{
+			$ary_type = gettype($ary) ;
+			if( $ary_type=='array' )
+			{
+				foreach ($ary as $key => $value)
+				{
+					$ary[$key] = htmlspecialchars($value) ;
+				}
+			}
+			else if( $ary_type=='string' )
+			{
+				$ary = htmlspecialchars($ary) ;
+			}
+		}
+		return $ary ;
+	}
 }
 ?>

@@ -131,6 +131,8 @@ class Html5_test extends CI_Controller {
 			{
 				foreach ($_FILES as $key => $value)
 				{
+					$key = $this->pub->htmlspecialchars($key) ;
+					$value = $this->pub->htmlspecialchars($value) ;
 					$post['FILES'][$key] = $value;
 				}
 			}
