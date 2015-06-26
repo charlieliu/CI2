@@ -6,10 +6,12 @@
     <meta name="title" content="{title}">
     <meta name="description" content="{title}">
     <meta property="og:image" content="<?=base_url()?>images/joba.jpg">
+    <meta http-equiv="x-frame-options" content="sameorigin">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 
     <title>{title}</title>
     <?php
+    header("x-frame-options:sammeorigin");
     // 載入helper/test_helper.php
     $this->load->helper('test');
     // 小圖
