@@ -38,8 +38,6 @@
                 <label for="angularjs">AngularJS</label>
             </li>
         </ul>
-
-        <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/css_test_3.css" />
     </div>
     <!-- 用 CSS3 做表單 - 自訂單/多選框樣式 -->
 </div>

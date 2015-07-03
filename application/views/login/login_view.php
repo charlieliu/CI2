@@ -6,7 +6,7 @@
             帳號&nbsp;:&nbsp;<input type="text" id="username" name="username" placeholder="username">
         </div>
         <div>
-            密碼&nbsp;:&nbsp;<input type="password" id="pwd" name="pwd" placeholder="pwd">
+            密碼&nbsp;:&nbsp;<input type="password" id="pwd" name="pwd" placeholder="pwd" AUTOCOMPLETE="OFF">
         </div>
         <input type="hidden" id="{csrf_name}" name="{csrf_name}" value="{csrf_value}">
         <input id="btn_submit" class="btn btn-primary" type="submit" value="{btn_value}">
