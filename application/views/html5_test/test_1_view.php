@@ -4,8 +4,8 @@
     <div class="content_block mg1em padding1em">
         <video id="Video1" width="320" controls>
             //  Replace these with your own video files.
-            <source src="demo/demo.mp4" type="video/mp4" />
-            <source src="demo/demo.ogv" type="video/ogg" />
+            <source src="<?=base_url()?>demo/demo.mp4" type="video/mp4" />
+            <source src="<?=base_url()?>demo/demo.ogv" type="video/ogg" />
             HTML5 Video is required for this example.
             <a href="demo.mp4">Download the video</a> file.
         </video>
@@ -25,8 +25,8 @@
         {space_4}Your browser does not support the audio element.<br>
         &lt;/audio&gt;<br>
         <audio controls>
-            <source src="demo/horse.ogg" type="audio/ogg">
-            <source src="demo/horse.mp3" type="audio/mpeg">
+            <source src="<?=base_url()?>demo/horse.ogg" type="audio/ogg">
+            <source src="<?=base_url()?>demo/horse.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -38,8 +38,8 @@
         {space_4}Your browser does not support the video tag.<br>
         &lt;/video&gt;<br>
         <video controls>
-            <source src="demo/movie.mp4" type="video/mp4">
-            <source src="demo/movie.ogg" type="video/ogg">
+            <source src="<?=base_url()?>demo/movie.mp4" type="video/mp4">
+            <source src="<?=base_url()?>demo/movie.ogg" type="video/ogg">
             Your browser does not support the video tag.
         </video>
     </div>

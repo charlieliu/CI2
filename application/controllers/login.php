@@ -64,15 +64,17 @@ class Login extends CI_Controller {
 		// 中間挖掉的部分
 		$data = array_merge($data,$this->_csrf);
 		$content_div = $this->parser->parse('login/login_view', $data, true);
+		//exit($content_div);
 		// 中間部分塞入外框
 		$html_date = $data ;
 		$html_date['content_div'] = $content_div ;
 		//$html_date['css'][] = 'css/bootstrap-3.2.0-dist/css/bootstrap.min.css';
 		$html_date['js'][] = 'css/bootstrap-3.2.0-dist/js/bootstrap.min.js';
-		$html_date['js'][] = base_url().'login/get_url/login';
+		//$html_date['js'][] = base_url().'login/get_url/login';
 		$html_date['js'][] = 'js/login.js';
 
 		$view = $this->parser->parse('index_view', $html_date, true);
+		exit($view);
 		$this->pub->remove_view_space($view);
 	}
 
