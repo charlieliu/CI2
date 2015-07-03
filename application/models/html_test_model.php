@@ -22,6 +22,7 @@ class Html_test_model extends CI_Model {
 		}
 		else
 		{
+			//$str = addslashes($str) ;
 			$sql = "SELECT * FROM `user_agent` WHERE `agent_name`=? OR `agent_version`=? OR `agent_system`=? OR `agent_type`=?  ORDER BY `agent_name`,`agent_version`,`agent_system` ;";
 			$query = $this->db->query($sql,array($str,$str,$str,$str)) ;
 		}

@@ -49,9 +49,9 @@ class Pub{
 			$url = base_url().'index.php?/php_test/check_session';
 			//$url = base_url().'php_test/check_session';
 			$data = array(
-				'session_id'=>$session_id,
-				'ip_address'=>$_SERVER["REMOTE_ADDR"],
-				'user_agent'=>$_SERVER["HTTP_USER_AGENT"],
+				'session_id'=>addslashes($session_id),
+				'ip_address'=>addslashes($_SERVER["REMOTE_ADDR"]),
+				'user_agent'=>addslashes($_SERVER["HTTP_USER_AGENT"]),
 			);
 			$data = json_decode($this->CurlPost($url,json_encode($data)));
 			$data = $this->o2a($data);
