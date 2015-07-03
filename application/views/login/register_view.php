@@ -9,11 +9,11 @@
             </tr>
             <tr>
                 <th><label for="pwd">密碼 : </label></th>
-                <td><input type="password" id="pwd" name="pwd" placeholder="password"></td>
+                <td><input type="password" id="pwd" name="pwd" placeholder="password" AUTOCOMPLETE="OFF"></td>
             </tr>
             <tr>
                 <th><label for="repwd">確認密碼 : </label></th>
-                <td><input type="password" id="repwd" name="repwd" placeholder="re-password"></td>
+                <td><input type="password" id="repwd" name="repwd" placeholder="re-password" AUTOCOMPLETE="OFF"></td>
             </tr>
             <tr>
                 <th><label for="email">Enail : </label></th>
