@@ -343,8 +343,11 @@ class Html5_test extends CI_Controller {
 					$data['browsers'] = array() ;
 					foreach ($browsers['data'] as $row)
 					{
-						$version = explode('.', $row['agent_version']) ;
-						$data['browsers'][] = $row['agent_name'].' '.$version[0] ;
+						if( !empty($row['agent_name']) )
+						{
+							$version = explode('.', $row['agent_version']) ;
+							$data['browsers'][] = $row['agent_name'].' '.$version[0] ;
+						}
 					}
 					$data['browsers'] = array_unique($data['browsers'])  ;
 					break;
