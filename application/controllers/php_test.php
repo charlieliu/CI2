@@ -501,6 +501,7 @@ class Php_test extends CI_Controller {
 			'HTTP_X_CLIENT_IP'=>$ip_address_2_2,
 			'HTTP_X_CLUSTER_CLIENT_IP'=>$ip_address_2_3,
 			'REMOTE_ADDR'=>$ip_address_3,
+			'CI_VERSION'=>CI_VERSION,
 		);
 
 
