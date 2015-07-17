@@ -17,7 +17,7 @@
             <input type="reset" id="frm1_reset" value="清除表單">
             <input type="button" id="down_xls" value="downloads xls">
             <input type="hidden" id="frm1_page" name="page" value="">
-            <input type="hidden" id="frm1_page_max" name="page_max" value="20">
+            <input type="hidden" id="frm1_page_max" name="page_max" value="{page_max}">
             <input type="hidden" id="{csrf_name}" name="{csrf_name}" value="{csrf_value}">
         </form>
         <iframe id="ifm_exp" name="ifm_exp" style="display:none;"></iframe>
