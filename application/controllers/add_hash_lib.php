@@ -11,29 +11,47 @@ class Add_hash_lib extends CI_Controller {
 		header("x-frame-options:sammeorigin");
 		header('Content-Type: text/html; charset=utf8');
 
-		echo __LINE__.'/r/n' ;
-
 		// load parser
 		$this->load->library(array('parser','session', 'pub'));
 		$this->load->helper(array('form', 'url'));
-		$this->load->model('php_test_model','',TRUE) ;
+		$this->load->model('add_hash_lib_model','',TRUE) ;
 	}
 
 	public function index()
 	{
-		$total = $this->php_test_model->get_hash_test_num() ;// for WIN8's apache
-		$total = isset($total[0]['total']) ? intval($total[0]['total']) : (isset($total['total']) ? intval($total['total']) : intval($total) ) ;
+		$total = $this->db_count();
 
-		if( $total<(62*62*62*62) )
+		/* top 500 pwds + top 500 ios pwds + default john */
+		/*
+		if( $total<3953 )
 		{
-			$this->_add_hash_lib(4);
+			echo 'After john members = '.$total.'<br>';
 			$this->_add_top_500_pwds();
+			$total = $this->db_count();
+			echo 'Before john members = '.$total.'<br>';
+		}
+		*/
+
+		/* 62*62*62*62 = 14776336 */
+		if( $total<14776336 )
+		{
+			echo 'After loop members = '.$total.'<br>';
+			$this->_add_hash_lib(4);
+			$total = $this->db_count();
+			echo 'Before loop members = '.$total.'<br>';
 		}
 	}
 
 	/**
 	 * @author Charlie Liu <liuchangli0107@gmail.com>
-	 */private function _add_top_500_pwds()
+	 */
+	private function db_count()
+	{
+		$total = $this->add_hash_lib_model->get_hash_test_num() ;// for WIN8's apache
+		$total = isset($total[0]['total']) ? intval($total[0]['total']) : (isset($total['total']) ? intval($total['total']) : intval($total) ) ;
+		return $total ;
+	}
+	private function _add_top_500_pwds()
 	{
 		$toppwds = array(
 			'123456','pa#sword','12345678','1234','p#ssy','12345','dragon','qwerty','696969','mustang','password','passy',
@@ -423,33 +441,39 @@ class Add_hash_lib extends CI_Controller {
 		);
 		foreach ( $toppwds as $key=>$val )
 		{
-			$this->php_test_model->query_hash_test($val);
+			$this->add_hash_lib_model->query_hash_test($val);
 		};
 	}
-	private function _add_hash_lib($level=0,$arr_add='')
+	private function _add_hash_lib($level=0,$arr_add='',$seed_type='default')
 	{
 		// lib
-		/*
-		$level_1 = array(
-			'`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
-			'~','!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',
-			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
-			'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
-			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'",
-			'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"',
-			'z', 'x', 'c', 'v', 'b', 'n', 'm',',', '.', '/',' ',
-			'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?',
-		);
-		*/
-		$level_1 = array(
-			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-			'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
-			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
-			'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
-			'z', 'x', 'c', 'v', 'b', 'n', 'm',
-			'Z', 'X', 'C', 'V', 'B', 'N', 'M',
-		);
+		switch ($seed_type)
+		{
+			case 'keyboard':
+				$level_1 = array(
+					'`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
+					'~','!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',
+					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
+					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
+					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'",
+					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"',
+					'z', 'x', 'c', 'v', 'b', 'n', 'm',',', '.', '/',' ',
+					'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?',
+				);
+				break;
+			default:
+				$level_1 = array(
+					'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+					'z', 'x', 'c', 'v', 'b', 'n', 'm',
+					'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+				);
+				break;
+		};
+		echo 'seed_type = '.$seed_type.'<br>';
 
 		$arr_1 = (is_array($arr_add) && !empty($arr_add) ) ? $arr_add : $level_1;
 		$arr_2 = $level_1;
@@ -465,39 +489,32 @@ class Add_hash_lib extends CI_Controller {
 			{
 				foreach ( $arr_2 as $val_2 )
 				{
-					$this->php_test_model->query_hash_test($val_2);
+					$this->add_hash_lib_model->query_hash_test($val_2);
 				}
 			}
 		}
 		else if( $loop>1 )
 		{
-			if(is_array($arr_add) && !empty($arr_add) )
+			for ($i=0; $i<=$loop; $i++)
 			{
-				for ($i=0; $i<=$loop; $i++)
-				{
-					$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-				}
-			}
-			else
-			{
-				for ($i=0; $i<$loop; $i++)
-				{
-					$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-				}
+				$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
 			}
 		}
 	}
 
-	private function _add_hash_lib_loop($arr_1,$arr_2)
+	private function _add_hash_lib_loop($arr_1,$arr_2,$min_len=3)
 	{
+		$min_len = intval($min_len);
 		$output = array();
 		foreach ( $arr_1 as $val_1 )
 		{
 			foreach ( $arr_2 as $val_2 )
 			{
-				$this->php_test_model->query_hash_test($val_1.$val_2);
 				$output[] = $val_1.$val_2;
-				echo $val_1.$val_2.'<br>';
+				if( mb_strlen($val_1.$val_2)>$min_len )
+				{
+					$this->add_hash_lib_model->query_hash_test($val_1.$val_2);
+				}
 			}
 		}
 		return $output ;

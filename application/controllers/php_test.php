@@ -808,29 +808,6 @@ class Php_test extends CI_Controller {
 		$this->pub->remove_view_space($view);
 	}
 
-	public function toppwds()
-	{
-		$mun = $this->php_test_model->get_hash_test_num();
-		if( !empty($mun[0]['total']) )
-		{
-			$mun = intval($mun[0]['total']) ;
-		}
-		else
-		{
-			print_r($mun);
-			exit() ;
-		}
-		$list = $this->php_test_model->query_hash_test('',1,$mun,false);
-		foreach ($list['data'] as $key => $row)
-		{
-			if(!empty($row['hash_key']))
-			{
-				echo $row['hash_key'].'<br>' ;
-			}
-		}
-		exit;
-	}
-
 	public function decode_test()
 	{
 		//$this->check_session();
@@ -1557,7 +1534,8 @@ class Php_test extends CI_Controller {
 		$page = intval($post['page']) ;
 		$total = $this->php_test_model->get_hash_test_num() ;// for WIN8's apache
 		$total = isset($total[0]['total']) ? intval($total[0]['total']) : (isset($total['total']) ? intval($total['total']) : intval($total) ) ;
-		//echo 'LINE : '.__LINE__.'total='.$total.'<br>' ;
+
+		/* top 500 pwds + top 500 ios pwds + default john = 3953 */
 		if( $total<3953 )
 		{
 			/* add lib */
@@ -1725,6 +1703,29 @@ class Php_test extends CI_Controller {
 		$data = array_merge($header,$pwd_data['data']) ;
 		$this->load->library('excel');
 		$this->excel->Array2xls($data,'get_pwd_excel') ;
+	}
+
+	public function toppwds()
+	{
+		$mun = $this->php_test_model->get_hash_test_num();
+		if( !empty($mun[0]['total']) )
+		{
+			$mun = intval($mun[0]['total']) ;
+		}
+		else
+		{
+			print_r($mun);
+			exit() ;
+		}
+		$list = $this->php_test_model->query_hash_test('',1,$mun,false);
+		foreach ($list['data'] as $key => $row)
+		{
+			if(!empty($row['hash_key']))
+			{
+				echo $row['hash_key'].'<br>' ;
+			}
+		}
+		exit;
 	}
 
 	private function _add_top_500_pwds()
@@ -2119,82 +2120,6 @@ class Php_test extends CI_Controller {
 		{
 			$this->php_test_model->query_hash_test($val);
 		};
-	}
-
-	private function _add_hash_lib($level=0,$arr_add='')
-	{
-		// lib
-		/*
-		$level_1 = array(
-			'`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
-			'~','!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',
-			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
-			'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
-			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'",
-			'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"',
-			'z', 'x', 'c', 'v', 'b', 'n', 'm',',', '.', '/',' ',
-			'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?',
-		);
-		*/
-		$level_1 = array(
-			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-			'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
-			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
-			'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
-			'z', 'x', 'c', 'v', 'b', 'n', 'm',
-			'Z', 'X', 'C', 'V', 'B', 'N', 'M',
-		);
-
-		$arr_1 = (is_array($arr_add) && !empty($arr_add) ) ? $arr_add : $level_1;
-		$arr_2 = $level_1;
-
-		$loop = intval($level);
-		if( $loop==1 )
-		{
-			if(is_array($arr_add) && !empty($arr_add) )
-			{
-				$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-			}
-			else
-			{
-				foreach ( $arr_2 as $val_2 )
-				{
-					$this->php_test_model->query_hash_test($val_2);
-				}
-			}
-		}
-		else if( $loop>1 )
-		{
-			if(is_array($arr_add) && !empty($arr_add) )
-			{
-				for ($i=0; $i<=$loop; $i++)
-				{
-					$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-				}
-			}
-			else
-			{
-				for ($i=0; $i<$loop; $i++)
-				{
-					$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-				}
-			}
-		}
-	}
-
-	private function _add_hash_lib_loop($arr_1,$arr_2)
-	{
-		$output = array();
-		foreach ( $arr_1 as $val_1 )
-		{
-			foreach ( $arr_2 as $val_2 )
-			{
-				$this->php_test_model->query_hash_test($val_1.$val_2);
-				$output[] = $val_1.$val_2;
-			}
-		}
-		return $output ;
 	}
 
 	public function get_url($tag='')
