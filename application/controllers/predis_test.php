@@ -53,27 +53,52 @@ class Predis_test extends CI_Controller {
 	// 測試分類畫面
 	public function index()
 	{
-		$grid_data['redis_act'][]= array(
-			'title'=>'適合全體類型的命令',
-			'act'=>array(
-				// 適合全體類型的命令
-				'SELECT'=>'SELECT index 選擇數據庫',
-				'KEYS'=>'KEYS pattern 返回匹配的key列表 (KEYS foo*:查找foo開頭的keys)',
-				'DBSIZE'=>'DBSIZE返回當前數據庫鍵的總數',
-				'EXISTS'=>'EXISTS key 判斷一個鍵是否存在;存在返回 1;否則返回0;',
-				'TYPE'=>'TYPE key 返回某個key元素的數據類型 ( none:不存在,string:字符,hash:雜湊,list:列表,set,zset)',
-				'RANDOMKEY'=>'RANDOMKEY 隨機獲得一個已經存在的鍵，如果當前數據庫爲空，則返回空字符串',
-				'RENAME'=>'RENAME oldname newname更改key的名字，新鍵如果存在將被覆蓋',
-				'RENAMENX'=>'RENAMENX oldname newname 更改key的名字，如果名字存在則更改失敗',
-				'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
-				'EXPIRE'=>'EXPIRE key count 設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
-				'PERSIST'=>'PERSIST key 清除某個key的過期時間',
-				'TTL'=>'TTL查找某個key還有多長時間過期,返回時間秒',
-				'MOVE'=>'MOVE key dbindex 將指定鍵從當前數據庫移到目標數據庫 dbindex。成功返回 1;否則返回0（源數據庫不存在key或目標數據庫已存在同名key）;',
-				'FLUSHDB'=>'FLUSHDB 清空當前數據庫中的所有鍵',
-				'FLUSHALL'=>'FLUSHALL 清空所有數據庫中的所有鍵',
-			)
-		);
+		if( base_url()=='http://localhost/' )
+		{
+			$grid_data['redis_act'][]= array(
+				'title'=>'適合全體類型的命令',
+				'act'=>array(
+					// 適合全體類型的命令
+					'SELECT'=>'SELECT index 選擇數據庫',
+					'KEYS'=>'KEYS pattern 返回匹配的key列表 (KEYS foo*:查找foo開頭的keys)',
+					'DBSIZE'=>'DBSIZE返回當前數據庫鍵的總數',
+					'EXISTS'=>'EXISTS key 判斷一個鍵是否存在;存在返回 1;否則返回0;',
+					'TYPE'=>'TYPE key 返回某個key元素的數據類型 ( none:不存在,string:字符,hash:雜湊,list:列表,set,zset)',
+					'RANDOMKEY'=>'RANDOMKEY 隨機獲得一個已經存在的鍵，如果當前數據庫爲空，則返回空字符串',
+					'RENAME'=>'RENAME oldname newname更改key的名字，新鍵如果存在將被覆蓋',
+					'RENAMENX'=>'RENAMENX oldname newname 更改key的名字，如果名字存在則更改失敗',
+					'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
+					'EXPIRE'=>'EXPIRE key count 設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
+					'PERSIST'=>'PERSIST key 清除某個key的過期時間',
+					'TTL'=>'TTL查找某個key還有多長時間過期,返回時間秒',
+					'MOVE'=>'MOVE key dbindex 將指定鍵從當前數據庫移到目標數據庫 dbindex。成功返回 1;否則返回0（源數據庫不存在key或目標數據庫已存在同名key）;',
+					'FLUSHDB'=>'FLUSHDB 清空當前數據庫中的所有鍵',
+					'FLUSHALL'=>'FLUSHALL 清空所有數據庫中的所有鍵',
+				)
+			);
+		}
+		else
+		{
+			$grid_data['redis_act'][]= array(
+				'title'=>'適合全體類型的命令',
+				'act'=>array(
+					// 適合全體類型的命令
+					'SELECT'=>'SELECT index 選擇數據庫',
+					'KEYS'=>'KEYS pattern 返回匹配的key列表 (KEYS foo*:查找foo開頭的keys)',
+					'DBSIZE'=>'DBSIZE返回當前數據庫鍵的總數',
+					'EXISTS'=>'EXISTS key 判斷一個鍵是否存在;存在返回 1;否則返回0;',
+					'TYPE'=>'TYPE key 返回某個key元素的數據類型 ( none:不存在,string:字符,hash:雜湊,list:列表,set,zset)',
+					'RANDOMKEY'=>'RANDOMKEY 隨機獲得一個已經存在的鍵，如果當前數據庫爲空，則返回空字符串',
+					'RENAME'=>'RENAME oldname newname更改key的名字，新鍵如果存在將被覆蓋',
+					'RENAMENX'=>'RENAMENX oldname newname 更改key的名字，如果名字存在則更改失敗',
+					'DEL'=>'DEL key 刪除某個key,或是一系列key;DEL key1 key2 key3 key4',
+					'EXPIRE'=>'EXPIRE key count 設置某個key的過期時間（秒）,(EXPIRE bruce 1000：設置bruce這個key1000秒後系統自動刪除)注意：如果在還沒有過期的時候，對值進行了改變，那麼那個值會被清除。',
+					'PERSIST'=>'PERSIST key 清除某個key的過期時間',
+					'TTL'=>'TTL查找某個key還有多長時間過期,返回時間秒',
+					'MOVE'=>'MOVE key dbindex 將指定鍵從當前數據庫移到目標數據庫 dbindex。成功返回 1;否則返回0（源數據庫不存在key或目標數據庫已存在同名key）;',
+				)
+			);
+		}
 		$grid_data['redis_act'][]= array(
 			'title'=>'處理字符串的命令',
 			'act'=>array(

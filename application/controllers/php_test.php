@@ -1535,8 +1535,8 @@ class Php_test extends CI_Controller {
 		$total = $this->php_test_model->get_hash_test_num() ;// for WIN8's apache
 		$total = isset($total[0]['total']) ? intval($total[0]['total']) : (isset($total['total']) ? intval($total['total']) : intval($total) ) ;
 
-		/* top 500 pwds + top 500 ios pwds + default john = 3953 */
-		if( $total<3953 )
+		/* top 500 pwds + top 500 ios pwds + default john = 4138 */
+		if( $total<4138 )
 		{
 			/* add lib */
 			$this->_add_top_500_pwds();

@@ -338,6 +338,12 @@ class Html5_test extends CI_Controller {
 					$data['grid_view'] = $this->parser->parse('html5_test/test_'.$in.'_grid_view', array('type_arr'=>$type_arr), true);
 					break;
 				case '3':
+					// count 瀏覽器 版本
+					$user_agent_num = intval($this->html_test_model->query_user_agent_num());
+					if( $user_agent_num<37 )
+					{
+						$this->_add_user_agent_list() ;
+					}
 					$data['title'] .= ' -- &lt;datalist&gt;' ;
 					$browsers = $this->html_test_model->query_browsers();
 					$data['browsers'] = array() ;
@@ -388,6 +394,65 @@ class Html5_test extends CI_Controller {
 		if( $in=='3' )
 		{
 			echo 'var URLs = "'.base_url().'html5_test/test/3";' ;
+		}
+	}
+
+	private function _add_user_agent_list()
+	{
+		// User Agent Overrider 偏好設定
+		$user_Agent_list = array() ;
+
+		# Linux
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:37.0) Gecko/20100101 Firefox/37.0' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:39.0) Gecko/20100101 Firefox/39.0' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.21 (KHTML, like Gecko) Arora/0.11.0 Safari/537.21' ;
+		$user_Agent_list[] = 'Dillo/3.0.3' ;
+		$user_Agent_list[] = 'ELinks/0.12~pre6-4ubuntu1 (textmode; Ubuntu; Linux 3.13.0-37-generic x86_64; 80x24-2)' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/538.15 (KHTML, like Gecko) Version/8.0 Safari/538.15 Ubuntu/14.04 (3.10.3-0ubuntu2) Epiphany/3.10.3' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X; zh-tw) AppleWebKit/537+ (KHTML, like Gecko) Version/5.0 Safari/537.6+ Midori/0.4' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36 OPR/28.0.1750.48' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.21 (KHTML, like Gecko) QupZilla/1.6.0 Safari/537.21' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64) KHTML/4.14.2 (like Gecko) Konqueror/4.14' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (X11; Linux x86_64; rv:25.3) Gecko/20150425 Firefox/31.9 PaleMoon/25.3.2' ;
+
+		# Mac
+		$user_Agent_list[] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14' ;
+
+		# Windows
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)' ;
+		$user_Agent_list[] = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)' ;
+		$user_Agent_list[] = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0)' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36 OPR/29.0.1795.47' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0' ;
+
+		# Android
+		$user_Agent_list[] = 'Mozilla/5.0 (Android; Mobile; rv:29.0) Gecko/29.0 Firefox/29.0' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Linux; Android 4.1.2; LT26w Build/6.2.B.1.96) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.93 Mobile Safari/537.36' ;
+
+		# iOS
+		$user_Agent_list[] = 'Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) CriOS/34.0.1847.18 Mobile/11B554a Safari/9537.53' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B554a Safari/9537.53' ;
+		$user_Agent_list[] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/8.0.5 Safari/600.5.17' ;
+
+		foreach ($user_Agent_list as $value)
+		{
+			$row = $this->pub->check_UserAgent($value) ;
+			$this->php_test_model->query_user_agent($row) ;
 		}
 	}
 }

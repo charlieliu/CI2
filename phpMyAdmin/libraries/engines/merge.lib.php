@@ -1,8 +1,20 @@
 <?php
-/* $Id: merge.lib.php 8104 2005-12-07 10:49:43Z cybot_tm $ */
-// vim: expandtab sw=4 ts=4 sts=4:
+/* vim: set expandtab sw=4 ts=4 sts=4: */
+/**
+ * The MERGE storage engine
+ *
+ * @package PhpMyAdmin-Engines
+ */
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
-class PMA_StorageEngine_merge extends PMA_StorageEngine
+/**
+ * The MERGE storage engine
+ *
+ * @package PhpMyAdmin-Engines
+ */
+class PMA_StorageEngine_Merge extends PMA_StorageEngine
 {
 }
 

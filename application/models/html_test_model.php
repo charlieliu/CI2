@@ -43,5 +43,13 @@ class Html_test_model extends CI_Model {
 		}
 		return array('data'=>$data,'total'=>$total,) ;
 	}
+
+	public function query_user_agent_num()
+	{
+		$sql = "SELECT COUNT(UA_id) AS total FROM `user_agent` ;";
+		$query = $this->db->query($sql) ;
+		$data = $query->result_array() ;
+		return $data[0]['total'] ;
+	}
 }
 ?>

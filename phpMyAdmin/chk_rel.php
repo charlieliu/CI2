@@ -1,24 +1,27 @@
 <?php
-/* $Id: chk_rel.php 9602 2006-10-25 12:25:01Z nijel $ */
-// vim: expandtab sw=4 ts=4 sts=4:
-
-
+/* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
- * Gets some core libraries
+ * Displays status of phpMyAdmin configuration storage
+ *
+ * @package PhpMyAdmin
  */
-require_once('./libraries/common.lib.php');
-require_once('./libraries/db_common.inc.php');
-require_once('./libraries/relation.lib.php');
 
+require_once 'libraries/common.inc.php';
 
-/**
- * Gets the relation settings
- */
-$cfgRelation = PMA_getRelationsParam(TRUE);
+// If request for creating all PMA tables.
+if (isset($_REQUEST['create_pmadb'])) {
+    PMA_fixPMATables($GLOBALS['db']);
+}
 
+$cfgRelation = PMA_getRelationsParam();
+// If request for creating missing PMA tables.
+if (isset($_REQUEST['fix_pmadb'])) {
+    PMA_fixPMATables($cfgRelation['db']);
+}
 
-/**
- * Displays the footer
- */
-require_once('./libraries/footer.inc.php');
+$response = PMA_Response::getInstance();
+$response->addHTML(
+    PMA_getRelationsParamDiagnostic($cfgRelation)
+);
+
 ?>

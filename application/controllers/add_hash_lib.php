@@ -1,6 +1,8 @@
 <?php
 set_time_limit ( 604800 );
+//echo 'LINE : '.__LINE__.'<br>' ;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+//echo 'LINE : '.__LINE__.'<br>' ;
 
 class Add_hash_lib extends CI_Controller {
 
@@ -10,19 +12,23 @@ class Add_hash_lib extends CI_Controller {
 		ini_set("session.cookie_httponly", 1);
 		header("x-frame-options:sammeorigin");
 		header('Content-Type: text/html; charset=utf8');
+		//echo 'LINE : '.__LINE__.'<br>' ;
 
 		// load parser
 		$this->load->library(array('parser','session', 'pub'));
+		//echo 'LINE : '.__LINE__.'<br>' ;
 		$this->load->helper(array('form', 'url'));
+		//echo 'LINE : '.__LINE__.'<br>' ;
 		$this->load->model('add_hash_lib_model','',TRUE) ;
+		//echo 'LINE : '.__LINE__.'<br>' ;
 	}
 
 	public function index()
 	{
+		/*
 		$total = $this->db_count();
 
-		/* top 500 pwds + top 500 ios pwds + default john */
-		/*
+		// top 500 pwds + top 500 ios pwds + default john
 		if( $total<3953 )
 		{
 			echo 'After john members = '.$total.'<br>';
@@ -30,9 +36,8 @@ class Add_hash_lib extends CI_Controller {
 			$total = $this->db_count();
 			echo 'Before john members = '.$total.'<br>';
 		}
-		*/
 
-		/* 62*62*62*62 = 14776336 */
+		// 62*62*62*62 = 14776336
 		if( $total<14776336 )
 		{
 			echo 'After loop members = '.$total.'<br>';
@@ -40,6 +45,49 @@ class Add_hash_lib extends CI_Controller {
 			$total = $this->db_count();
 			echo 'Before loop members = '.$total.'<br>';
 		}
+		*/
+		echo 'lib numbers = '.$this->add_hash_lib_model->get_hash_test_num().'<br><br>' ;
+		$arr_seed = array(
+			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+			'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+			'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+			'z', 'x', 'c', 'v', 'b', 'n', 'm',
+			'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+		);
+		foreach ($arr_seed as $key => $value)
+		{
+			$break1 = $this->add_hash_lib_model->query_hash_test($value.'111',1,1,false) ;
+			$break2 = $this->add_hash_lib_model->query_hash_test($value.'ggg',1,1,false) ;
+			$break3 = $this->add_hash_lib_model->query_hash_test($value.'MMM',1,1,false) ;
+			if( $break1['status']!='100' || $break2['status']!='100'|| $break3['status']!='100' )
+			{
+				echo base_url().'add_hash_lib/add_rainbowtable_mysql/'.$key.'/mysql<br>' ;
+				//header('Location: '.base_url().'add_hash_lib/add_rainbowtable_mysql/'.$key.'/mysql');
+				exit();
+			}
+		}
+	}
+
+	public function add_rainbowtable_mysql($seed='', $db_type='mysql')
+	{
+		$arr_seed = array(
+			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+			'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+			'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+			'z', 'x', 'c', 'v', 'b', 'n', 'm',
+			'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+		);
+		$seed = intval($seed) ;
+		if(isset($arr_seed[$seed]) )
+		{
+			$this->_add_hash_lib(3, array($arr_seed[$seed]), 'default', $db_type);
+		}
+		header('Location: '.base_url().'add_hash_lib');
+		exit();
 	}
 
 	/**
@@ -51,6 +99,141 @@ class Add_hash_lib extends CI_Controller {
 		$total = isset($total[0]['total']) ? intval($total[0]['total']) : (isset($total['total']) ? intval($total['total']) : intval($total) ) ;
 		return $total ;
 	}
+
+	private function _add_hash_lib($level=0,$arr_add='',$seed_type='default',$db_type='')
+	{
+		// lib
+		switch ($seed_type)
+		{
+			case 'alpha':
+				$level_1 = array(
+					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+					'z', 'x', 'c', 'v', 'b', 'n', 'm',
+				);
+				break;
+			case 'ALPHA':
+				$level_1 = array(
+					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+					'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+				);
+				break;
+			case 'numbers':
+				$level_1 = array(
+					'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+				);
+				break;
+			case 'keyboard':
+				$level_1 = array(
+					'`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
+					'~','!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',
+					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
+					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
+					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'",
+					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"',
+					'z', 'x', 'c', 'v', 'b', 'n', 'm',',', '.', '/',' ',
+					'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?',
+				);
+				break;
+			default:
+				$level_1 = array(
+					'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
+					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+					'z', 'x', 'c', 'v', 'b', 'n', 'm',
+					'Z', 'X', 'C', 'V', 'B', 'N', 'M',
+				);
+				break;
+		};
+		//echo 'seed_type = '.$seed_type.'<br>';
+
+		$arr_1 = (is_array($arr_add) && !empty($arr_add) ) ? $arr_add : $level_1;
+		$arr_2 = $level_1;
+
+		$loop = intval($level);
+		if( $loop==1 )
+		{
+			if(is_array($arr_add) && !empty($arr_add) )
+			{
+				$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
+			}
+			else
+			{
+				foreach ( $arr_2 as $arr_2 )
+				{
+					$this->add_hash_lib_model->query_hash_test($val_2);
+				}
+			}
+		}
+		else if( $loop>1 )
+		{
+			for ($i=0; $i<$loop; $i++)
+			{
+				$arr_1 = $this->_add_hash_lib_loop($arr_1, $arr_2, 3, $db_type);
+			}
+			echo 'count($arr_1) = '.count($arr_1).'<br>' ;
+		}
+	}
+
+	private function _add_hash_lib_loop($arr_1, $arr_2, $min_len=3, $db_type='')
+	{
+		$min_len = intval($min_len);
+		$output = array();
+		foreach ( $arr_1 as $val_1 )
+		{
+			foreach ( $arr_2 as $val_2 )
+			{
+				$output[] = $val_1.$val_2;
+				if( mb_strlen($val_1.$val_2)>$min_len )
+				{
+					if( $db_type=='mysql' )
+					{
+						$result = $this->add_hash_lib_model->query_hash_test($val_1.$val_2);
+					}
+					else if( $db_type=='redis' )
+					{
+						$result = $this->add_hash_lib_model->add_hash_redis($val_1.$val_2);
+					}
+					else
+					{
+						$result = array() ;
+					}
+					if( !empty($result['status']) && $result['status']=='100' )
+					{
+						if( isset($result['result']) && is_array($result['result']) )
+						{
+							foreach ($result['result'] as $key => $value)
+							{
+								if( empty($value) )
+								{
+									echo 'LINE : '.__LINE__.'<br>' ;
+									print_r($result);
+									echo '<br>' ;
+									exit($val_1.$val_2);
+								}
+							}
+						}
+						else
+						{
+							//echo $val_1.$val_2.'<br>' ;
+						}
+					}
+					else
+					{
+						echo 'LINE : '.__LINE__.'<br>' ;
+						print_r($result);
+						echo '<br>' ;
+						exit($val_1.$val_2);
+					}
+				}
+			}
+		}
+		return $output ;
+	}
+
 	private function _add_top_500_pwds()
 	{
 		$toppwds = array(
@@ -443,81 +626,6 @@ class Add_hash_lib extends CI_Controller {
 		{
 			$this->add_hash_lib_model->query_hash_test($val);
 		};
-	}
-	private function _add_hash_lib($level=0,$arr_add='',$seed_type='default')
-	{
-		// lib
-		switch ($seed_type)
-		{
-			case 'keyboard':
-				$level_1 = array(
-					'`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
-					'~','!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',
-					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
-					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
-					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'",
-					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"',
-					'z', 'x', 'c', 'v', 'b', 'n', 'm',',', '.', '/',' ',
-					'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?',
-				);
-				break;
-			default:
-				$level_1 = array(
-					'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-					'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-					'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
-					'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
-					'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
-					'z', 'x', 'c', 'v', 'b', 'n', 'm',
-					'Z', 'X', 'C', 'V', 'B', 'N', 'M',
-				);
-				break;
-		};
-		echo 'seed_type = '.$seed_type.'<br>';
-
-		$arr_1 = (is_array($arr_add) && !empty($arr_add) ) ? $arr_add : $level_1;
-		$arr_2 = $level_1;
-
-		$loop = intval($level);
-		if( $loop==1 )
-		{
-			if(is_array($arr_add) && !empty($arr_add) )
-			{
-				$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-			}
-			else
-			{
-				foreach ( $arr_2 as $val_2 )
-				{
-					$this->add_hash_lib_model->query_hash_test($val_2);
-				}
-			}
-		}
-		else if( $loop>1 )
-		{
-			for ($i=0; $i<=$loop; $i++)
-			{
-				$arr_2 = $this->_add_hash_lib_loop($arr_1,$arr_2);
-			}
-		}
-	}
-
-	private function _add_hash_lib_loop($arr_1,$arr_2,$min_len=3)
-	{
-		$min_len = intval($min_len);
-		$output = array();
-		foreach ( $arr_1 as $val_1 )
-		{
-			foreach ( $arr_2 as $val_2 )
-			{
-				$output[] = $val_1.$val_2;
-				if( mb_strlen($val_1.$val_2)>$min_len )
-				{
-					$this->add_hash_lib_model->query_hash_test($val_1.$val_2);
-				}
-			}
-		}
-		return $output ;
 	}
 }
 ?>

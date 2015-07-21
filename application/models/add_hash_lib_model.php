@@ -42,7 +42,7 @@ class Add_hash_lib_model extends CI_Model {
 		{
 			if( $is_add )
 			{
-				$this->add_hash_test($hash_key);
+				return $this->add_hash_test($hash_key);
 			}
 			else
 			{
@@ -91,7 +91,8 @@ class Add_hash_lib_model extends CI_Model {
 	{
 		$sql = "SELECT count(`pwd`) AS total  FROM `rainbowtable` ;";
 		$query = $this->db->query($sql);
-		return $query->result_array() ;
+		$data = $query->result_array() ;
+		return $data[0]['total'] ;
 	}
 	public function add_hash_test($hash_key='')
 	{
@@ -123,6 +124,26 @@ class Add_hash_lib_model extends CI_Model {
 			$status = 200;
 		}
 		return array('status'=>$status,'data'=>$data,'total'=>$total,'act'=>'add_hash_test',);
+	}
+
+	public function add_hash_redis($hash_key='')
+	{
+		if( $hash_key!='' )
+		{
+			$this->load->library('redis') ;
+			$status = '100' ;
+			$result['pwd'] = $this->redis->sadd('pwd', $hash_key) ;
+			$result['md5'] = $this->redis->set(('md5:'.$hash_key.':pwd'), md5($hash_key)) ;
+			$result['sha1'] = $this->redis->set(('sha1:'.$hash_key.':pwd'), sha1($hash_key)) ;
+			$result['sha256'] = $this->redis->set(('sha256:'.$hash_key.':pwd'), hash('sha256',$hash_key)) ;
+			$result['sha512'] = $this->redis->set(('sha512:'.$hash_key.':pwd'), hash('sha512',$hash_key)) ;
+		}
+		else
+		{
+			$status = '200' ;
+			$result = '' ;
+		}
+		return array('status'=>$status,'result'=>$result,'act'=>'add_hash_redis',);
 	}
 }
 ?>

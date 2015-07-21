@@ -1,11 +1,13 @@
 <?php
-/* $Id: server_common.inc.php 9057 2006-05-18 16:53:40Z lem9 $ */
-// vim: expandtab sw=4 ts=4 sts=4:
-
+/* vim: set expandtab sw=4 ts=4 sts=4: */
 /**
- * Gets some core libraries
+ * Shared code for server pages
+ *
+ * @package PhpMyAdmin
  */
-require_once('./libraries/common.lib.php');
+if (! defined('PHPMYADMIN')) {
+    exit;
+}
 
 /**
  * Handles some variables that may have been sent by the calling script
@@ -14,46 +16,38 @@ require_once('./libraries/common.lib.php');
  *       the Database panel
  */
 if (empty($viewing_mode)) {
-    unset($db, $table);
+    $db = $table = '';
 }
 
 /**
  * Set parameters for links
  */
-$url_query = PMA_generate_common_url((isset($db) ? $db : ''));
+$GLOBALS['url_query'] = PMA_URL_getCommon(array('db' => $db));
 
 /**
  * Defines the urls to return to in case of error in a sql statement
  */
-$err_url = 'main.php' . $url_query;
+$err_url = 'index.php' . $GLOBALS['url_query'];
 
 /**
- * Displays the headers
+ * @global boolean Checks for superuser privileges
  */
-require_once('./libraries/header.inc.php');
-
-/**
- * Checks for superuser privileges
- */
-
-$is_superuser  = PMA_isSuperuser();
+$GLOBALS['is_superuser'] = $GLOBALS['dbi']->isSuperuser();
+$GLOBALS['is_grantuser'] = $GLOBALS['dbi']->isUserType('grant');
+$GLOBALS['is_createuser'] = $GLOBALS['dbi']->isUserType('create');
 
 // now, select the mysql db
-if ($is_superuser) {
-    PMA_DBI_select_db('mysql', $userlink);
+if ($GLOBALS['is_superuser'] && ! PMA_DRIZZLE) {
+    $GLOBALS['dbi']->selectDb('mysql', $GLOBALS['userlink']);
 }
 
-$has_binlogs = FALSE;
-$binlogs = PMA_DBI_try_query('SHOW MASTER LOGS', null, PMA_DBI_QUERY_STORE);
-if ($binlogs) {
-    if (PMA_DBI_num_rows($binlogs) > 0) {
-        $binary_logs = array();
-        while ($row = PMA_DBI_fetch_array($binlogs)) {
-            $binary_logs[] = $row[0];
-        }
-        $has_binlogs = TRUE;
-    }
-    PMA_DBI_free_result($binlogs);
-}
-unset($binlogs);
+PMA_Util::checkParameters(
+    array('is_superuser', 'url_query'), false
+);
+
+/**
+ * shared functions for server page
+ */
+require_once './libraries/server_common.lib.php';
+
 ?>

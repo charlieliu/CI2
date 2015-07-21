@@ -239,11 +239,17 @@ class Pub{
 		return $arr;
 	}
 
-	public function get_UserAgent(){
+	public function get_UserAgent()
+	{
 		// IE請參考
 		// http://msdn.microsoft.com/en-us/library/ie/hh869301(v=vs.85).aspx
 
 		$str = !empty($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : '' ;
+		return $this->check_UserAgent($str) ;
+	}
+
+	public function check_UserAgent($str)
+	{
 		$output = array(
 			"O" => $str,// 原始 HTTP_USER_AGENT
 			"A" => '',  // 瀏覽器 種類 IE/Firefox/Chrome/Safari/Opera
