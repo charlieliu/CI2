@@ -4,8 +4,9 @@
     <div class="content_block">
         <p>informations:</p>
         <ol>
-            <li>Top 500 web passwords is form index 1 to index 500</li>
-            <li>Top 500 icloud passwords is form index 501 to index 991</li>
+            <li>Top 500 web passwords</li>
+            <li>Top 500 icloud passwords</li>
+            <li>Some passwords from  hack tool(john)</li>
             <li>Sometime icloud passwords is same as web passwords</li>
         </ol>
     </div>

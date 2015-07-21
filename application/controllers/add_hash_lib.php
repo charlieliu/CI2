@@ -25,6 +25,10 @@ class Add_hash_lib extends CI_Controller {
 
 	public function index()
 	{
+		if( base_url()!='http://localhost/' && base_url()!='http://127.0.0.1/' )
+		{
+			exit(base_url());
+		}
 		/*
 		$total = $this->db_count();
 
@@ -72,6 +76,11 @@ class Add_hash_lib extends CI_Controller {
 
 	public function add_rainbowtable_mysql($seed='', $db_type='mysql')
 	{
+		if( base_url()!='http://localhost/' && base_url()!='http://127.0.0.1/' )
+		{
+			exit(base_url());
+		}
+
 		$arr_seed = array(
 			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
 			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
