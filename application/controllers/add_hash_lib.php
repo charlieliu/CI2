@@ -50,7 +50,7 @@ class Add_hash_lib extends CI_Controller {
 			echo 'Before loop members = '.$total.'<br>';
 		}
 		*/
-		echo 'lib numbers = '.$this->add_hash_lib_model->get_hash_test_num().'<br><br>' ;
+		$str = 'lib numbers = '.$this->add_hash_lib_model->get_hash_test_num().'<br><br>' ;
 		$arr_seed = array(
 			'1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
 			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
@@ -67,14 +67,13 @@ class Add_hash_lib extends CI_Controller {
 			$break3 = $this->add_hash_lib_model->query_hash_test($value.'MMM',1,1,false) ;
 			if( $break1['status']!='100' || $break2['status']!='100'|| $break3['status']!='100' )
 			{
-				echo base_url().'add_hash_lib/add_rainbowtable_mysql/'.$key.'/mysql<br>' ;
-				//header('Location: '.base_url().'add_hash_lib/add_rainbowtable_mysql/'.$key.'/mysql');
-				exit();
+				$url = base_url().'add_hash_lib/add_rainbowtable/'.$key.'/mysql' ;
+				exit($this->_get_script($str, $url));
 			}
 		}
 	}
 
-	public function add_rainbowtable_mysql($seed='', $db_type='mysql')
+	public function add_rainbowtable($seed='', $db_type='mysql')
 	{
 		if( base_url()!='http://localhost/' && base_url()!='http://127.0.0.1/' )
 		{
@@ -240,6 +239,22 @@ class Add_hash_lib extends CI_Controller {
 				}
 			}
 		}
+		return $output ;
+	}
+
+	private function _get_script($str, $url)
+	{
+		$output = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><!--HTML5-->' ;
+		$output .= '<meta name="viewport" content="width=device-width, initial-scale=1.0">' ;
+		$output .= '<meta name="title" content="'.__CLASS__.'">' ;
+		$output .= '<meta name="description" content="'.__CLASS__.'">' ;
+		$output .= '<meta property="og:image" content="'.base_url().'images/joba.jpg">' ;
+		$output .= '<meta http-equiv="X-Content-Type-Options" content="nosniff">' ;
+		$output .= '<meta http-equiv="x-frame-options" content="SAMEORIGIN">' ;
+		$output .= '<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->' ;
+		$output .= '<title>'.__CLASS__.'</title></head><body>'.$str.'<br>'.$url ;
+		$output .= '<noscript>Your browser does not support JavaScript!</noscript>' ;
+		$output .= '<script type="text/javascript">document.location.href="'.$url.'";</script></body></html>' ;
 		return $output ;
 	}
 
